@@ -6,10 +6,15 @@
 - [x] ![도메인/엔티티 모델 정의](https://github.com/dmdwns2/chatting-service/issues/1) 
 - [x] ![API 설계 / UI 설계](https://github.com/dmdwns2/chatting-service/issues/3)
 - [ ] 기능 구현
-  - [ ] 회원
-  - [ ] 채팅방
-  - [ ] 채팅
-  - [ ] 채팅내역 저장
+  - [ ] 회원가입
+  - [ ] 로그인
+  - [ ] 채팅방 목록 조회
+  - [ ] 채팅방 입장
+  - [ ] 채팅방 개설
+  - [ ] 채팅방 나가기
+  - [ ] 유저 추방
+  - [ ] 메시지 갱신
+  - [ ] 메시지 전송
 - [ ] UI 구현
   - [ ] 로그인 화면
   - [ ] 채팅방 목록 화면
