@@ -2,7 +2,7 @@
 첫 개인 토이프로젝트 채팅서비스
 
 ### To do
-- [ ] 도메인 모델 정의 
+- [ ] ![도메인 모델 정의](https://github.com/dmdwns2/chatting-service/issues/1) 
 - [ ] 엔티티 정의
 - [ ] API 설계
 - [ ] 기능 구현
