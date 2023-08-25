@@ -2,6 +2,7 @@
 첫 개인 토이프로젝트 채팅서비스
 
 ### To do
+- [ ] 유스케이스 다이어그램 그려보기
 - [ ] ![도메인 모델 정의](https://github.com/dmdwns2/chatting-service/issues/1) 
 - [ ] 엔티티 정의
 - [ ] API 설계
