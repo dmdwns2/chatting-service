@@ -3,9 +3,8 @@
 
 ### To do
 - [ ] ![유스케이스 다이어그램](https://github.com/dmdwns2/chatting-service/issues/2)
-- [ ] ![도메인 모델 정의](https://github.com/dmdwns2/chatting-service/issues/1) 
-- [ ] 엔티티 정의
-- [ ] API 설계
+- [ ] ![도메인/엔티티 모델 정의](https://github.com/dmdwns2/chatting-service/issues/1) 
+- [ ] ![API 설계 / UI 설계](https://github.com/dmdwns2/chatting-service/issues/3)
 - [ ] 기능 구현
   - [ ] 회원
   - [ ] 채팅방
