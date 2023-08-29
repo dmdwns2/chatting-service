@@ -10,6 +10,17 @@ CREATE TABLE `chatting`.`chat_room` (
   PRIMARY KEY (`chatroom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `chatting`.`user` (
+  `user` bigint NOT NULL AUTO_INCREMENT,
+  `created_date` datetime(6) DEFAULT NULL,
+  `deleted_date` datetime(6) DEFAULT NULL,
+  `last_modified_date` datetime(6) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `nickname` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `chatting`.`chatting` (
   `chatting` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime(6) DEFAULT NULL,
@@ -40,13 +51,3 @@ CREATE TABLE `chatting`.`user_chat_room` (
   CONSTRAINT `FKr5vgy1wp8ldg8c8jq5ugye0a0` FOREIGN KEY (`chatroom`) REFERENCES `chat_room` (`chatroom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `chatting`.`user` (
-  `user` bigint NOT NULL AUTO_INCREMENT,
-  `created_date` datetime(6) DEFAULT NULL,
-  `deleted_date` datetime(6) DEFAULT NULL,
-  `last_modified_date` datetime(6) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `nickname` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
