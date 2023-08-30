@@ -15,6 +15,9 @@ $ make docker-compose-down
 ```
 
 ## To do
+
+- [ ] ![클린 아키텍처 적용](https://github.com/dmdwns2/chatting-service/issues/8)
+---
 - [x] ![유스케이스 다이어그램](https://github.com/dmdwns2/chatting-service/issues/2)
 - [x] ![도메인/엔티티 모델 정의](https://github.com/dmdwns2/chatting-service/issues/1) 
 - [x] ![API 설계 / UI 설계](https://github.com/dmdwns2/chatting-service/issues/3)
