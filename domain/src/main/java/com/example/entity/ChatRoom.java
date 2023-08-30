@@ -1,8 +1,6 @@
-package com.example.chattingservice.chatroom.entity;
+package com.example.entity;
 
-import com.example.chattingservice.chatting.entity.Chatting;
-import com.example.chattingservice.common.entity.BaseEntity;
-import com.example.chattingservice.userchatroom.entity.UserChatRoom;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 @Entity
-public class ChatRoom extends BaseEntity {
+public class ChatRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
