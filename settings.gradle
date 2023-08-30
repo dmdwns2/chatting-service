@@ -1,1 +1,8 @@
 rootProject.name = 'chatting-service'
+include 'data'
+include 'presentation'
+include 'domain'
+include 'domain'
+include 'data'
+include 'presentation'
+
