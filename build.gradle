@@ -8,7 +8,12 @@ repositories {
     mavenCentral()
 }
 
-bootJar.enabled = false
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
 
 subprojects {
     group = 'com.example'
@@ -51,18 +56,21 @@ subprojects {
 
 project(':data') {
     dependencies {
-        compileOnly project(':data')
+        bootJar { enabled = false }
+        jar { enabled = true }
     }
 }
 
 project(':domain') {
     dependencies {
-        compileOnly project(':domain')
+        bootJar { enabled = false }
+        jar { enabled = true }
     }
 }
 
 project(':presentation') {
     dependencies {
-        compileOnly project(':domain')
+        bootJar { enabled = false }
+        jar { enabled = true }
     }
 }
