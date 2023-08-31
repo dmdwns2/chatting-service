@@ -5,13 +5,13 @@
 
 ```shell
 # Start mysql
-$ make docker-compose-up
+data $ make docker-compose-up
 
 # Start server
 $ ./gradlew bootRun
 
 # Stop mysql
-$ make docker-compose-down
+data $ make docker-compose-down
 ```
 
 ## To do
