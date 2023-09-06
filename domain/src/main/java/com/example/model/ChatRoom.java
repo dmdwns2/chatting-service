@@ -1,6 +1,6 @@
 package com.example.entity;
 
-public class ChatRoom {
+public class ChatRoomModel {
 
     private final Long id;
     private final String title;
