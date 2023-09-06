@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 @Entity
-public class UserChatRoom {
+public class UserChatRoomJPAEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +16,10 @@ public class UserChatRoom {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
-    private final User user;
+    private final UserJPAEntity userJPAEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom")
-    private final ChatRoom chatroom;
+    private final ChatRoomJPAEntity chatroom;
 
 }

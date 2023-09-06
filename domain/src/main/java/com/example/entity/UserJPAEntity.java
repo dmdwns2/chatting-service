@@ -9,7 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 @Entity
-public class User {
+public class UserJPAEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class User {
     private final String nickname;
 
     @OneToMany(mappedBy = "user")
-    private final List<Chatting> chattingList;
+    private final List<ChattingJPAEntity> chattingJPAEntityList;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private final List<UserChatRoom> chatroomList;
+    private final List<UserChatRoomJPAEntity> chatroomList;
 }
