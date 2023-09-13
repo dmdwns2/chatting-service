@@ -1,4 +1,6 @@
 rootProject.name = 'chatting-service'
-include 'data'
+include 'persistence'
 include 'presentation'
 include 'domain'
+include 'application'
+
