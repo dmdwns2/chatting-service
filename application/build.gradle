@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(path: ':persistence')
+    implementation project(path: ':domain')
+}

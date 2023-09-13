@@ -54,7 +54,7 @@ subprojects {
 
 }
 
-project(':data') {
+project(':persistence') {
     dependencies {
         bootJar { enabled = false }
         jar { enabled = true }
@@ -72,5 +72,10 @@ project(':presentation') {
     dependencies {
         bootJar { enabled = false }
         jar { enabled = true }
+    }
+}
+
+project(':application') {
+    dependencies {
     }
 }
