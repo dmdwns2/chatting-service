@@ -1,4 +1,4 @@
-package com.example.usecase.stereotype;
+package com.example.stereotype;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
