@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import jakarta.persistence.*;
+
 import lombok.Data;
 
 @Entity(name = "user_chatroom")
@@ -19,5 +20,4 @@ public class UserChatRoomJPAEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
     private ChatRoomJPAEntity chatroom;
-
 }

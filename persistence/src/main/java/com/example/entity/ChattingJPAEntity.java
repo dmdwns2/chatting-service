@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import jakarta.persistence.*;
+
 import lombok.Data;
 
 @Entity(name = "chatting")
