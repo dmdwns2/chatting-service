@@ -11,7 +11,7 @@ import java.util.List;
 public class UserJPAEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user")
+    @Column(name = "user_id")
     private Long id;
     @Column(name = "name", nullable = false, unique = true)
     private String name;
@@ -21,7 +21,7 @@ public class UserJPAEntity {
     private String nickname;
 
     @OneToMany(mappedBy = "user")
-    private List<ChattingJPAEntity> chattingJPAEntityList;
+    private List<ChattingJPAEntity> chatting;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserChatRoomJPAEntity> chatroomList;
 }
