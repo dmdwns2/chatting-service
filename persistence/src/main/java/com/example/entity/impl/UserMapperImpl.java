@@ -17,7 +17,7 @@ class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User EntityToModel(UserJPAEntity entity) {
+    public User entityToModel(UserJPAEntity entity) {
         return User.of(entity.getName(), entity.getPassword(), entity.getNickname());
     }
 }
