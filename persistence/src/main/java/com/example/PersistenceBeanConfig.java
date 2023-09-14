@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = "com.example.domain")
-public class DomainBeanConfig {
+@ComponentScan(basePackages = "com.example.persistence")
+public class PersistenceBeanConfig {
 }
