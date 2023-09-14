@@ -8,7 +8,7 @@
 $ make -C persistence docker-compose-up
 
 # Start server
-$ ./gradlew :application:bootJar        
+$ ./gradlew :application:bootJar
 $ java -jar application/build/libs/application-0.0.1-SNAPSHOT.jar
 
 
