@@ -2,26 +2,25 @@ package com.example.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-@Getter
-@Entity
+@Entity(name = "chatroom")
+@Table(name = "chatroom")
+@Data
 public class ChatRoomJPAEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chatroom")
-    private final Long id;
+    @Column(name = "chatroom_id")
+    private Long id;
     @Column(name = "title")
-    private final String title;
+    private String title;
     @Column(name = "owner")
-    private final String owner;
+    private String owner;
 
     @OneToMany(mappedBy = "chatroom")
-    private final List<ChattingJPAEntity> chattingJPAEntityList;
+    private List<ChattingJPAEntity> chattingList;
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.ALL)
-    private final List<UserChatRoomJPAEntity> userList;
+    private List<UserChatRoomJPAEntity> userList;
 }

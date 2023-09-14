@@ -1,4 +1,5 @@
 dependencies {
     implementation project(path: ':domain')
     runtimeOnly 'com.mysql:mysql-connector-j'
+    testImplementation 'com.h2database:h2:2.1.214.redhat-00001'
 }
