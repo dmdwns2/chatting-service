@@ -1,7 +1,7 @@
 package com.example.usecase;
 
-import com.example.value.SignUpCommand;
-import com.example.value.UserCreatedEvent;
+import com.example.dto.SignUpCommand;
+import com.example.dto.UserCreatedEvent;
 
 public interface SignUpUseCase {
     UserCreatedEvent join(SignUpCommand command);

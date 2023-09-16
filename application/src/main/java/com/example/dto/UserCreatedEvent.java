@@ -1,4 +1,4 @@
-package com.example.value;
+package com.example.dto;
 
 import lombok.Value;
 

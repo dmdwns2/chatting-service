@@ -1,8 +1,8 @@
 package com.example.adapter;
 
+import com.example.data.UserMapper;
 import com.example.model.User;
 import com.example.port.*;
-import com.example.repository.UserMapper;
 import com.example.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
