@@ -1,4 +1,5 @@
 dependencies {
     implementation project(path: ':persistence')
     implementation project(path: ':domain')
+    implementation 'at.favre.lib:bcrypt:0.10.2'
 }

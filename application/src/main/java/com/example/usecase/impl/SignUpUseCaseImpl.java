@@ -1,5 +1,6 @@
 package com.example.usecase.impl;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.example.dto.SignUpCommand;
 import com.example.dto.UserCreatedEvent;
 import com.example.exception.DuplicateNameException;
@@ -46,7 +47,13 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
             throw new DuplicateNicknameException(command.getNickname());
         }
 
-        User user = User.of(command.getName(), command.getPassword(), command.getNickname());
+        String hashedPassword = BCrypt.withDefaults().hashToString(12, command.getPassword().toCharArray());
+        BCrypt.Result result = BCrypt.verifyer().verify(command.getPassword().toCharArray(), hashedPassword);
+        if(!result.verified){
+            throw new RuntimeException("An error occurred during the password hashing process.");
+        }
+
+        User user = User.of(command.getName(), hashedPassword, command.getNickname());
 
         saveUserPort.save(user);
 
