@@ -30,10 +30,19 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
     @Transactional
     @Override
     public UserCreatedEvent join(SignUpCommand command) {
-        if(existsNamePort.existsName(command.getName())) {
+        if (command.getName().length() > 20 || command.getName().length() < 3) {
+            throw new RuntimeException("The ID should be at least 3 characters and no more than 20 characters.");
+        }
+        if (command.getPassword().length() > 50 || command.getPassword().length() < 4) {
+            throw new RuntimeException("The password should be at least 4 characters and no more than 50 characters.");
+        }
+        if (command.getNickname().length() > 8 || command.getNickname().length() < 1) {
+            throw new RuntimeException("The nickname should be at least 1 character and no more than 8 characters.");
+        }
+        if (existsNamePort.existsName(command.getName())) {
             throw new DuplicateNameException(command.getName());
         }
-        if(existsNicknamePort.existsNickname(command.getNickname())) {
+        if (existsNicknamePort.existsNickname(command.getNickname())) {
             throw new DuplicateNicknameException(command.getNickname());
         }
 
