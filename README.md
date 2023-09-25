@@ -8,8 +8,7 @@
 $ make -C persistence docker-compose-up
 
 # Start server
-$ ./gradlew :application:bootJar
-$ java -jar application/build/libs/application-0.0.1-SNAPSHOT.jar
+$ ./gradlew :presentation:bootRun
 
 # Stop mysql
 $ make -C persistence docker-compose-down
@@ -24,7 +23,7 @@ $ make -C persistence docker-compose-down
 - [x] ![API 설계 / UI 설계](https://github.com/dmdwns2/chatting-service/issues/3)
 - [x] ![Schema 설계](https://github.com/dmdwns2/chatting-service/issues/7)
 - [ ] 기능 구현
-  - [ ] 회원가입
+  - [x] 회원가입
   - [ ] 로그인
   - [ ] 채팅방 목록 조회
   - [ ] 채팅방 입장
@@ -34,6 +33,7 @@ $ make -C persistence docker-compose-down
   - [ ] 메시지 갱신
   - [ ] 메시지 전송
 - [ ] UI 구현
+  - [x] 회원가입 화면
   - [ ] 로그인 화면
   - [ ] 채팅방 목록 화면
   - [ ] 채팅방 화면
