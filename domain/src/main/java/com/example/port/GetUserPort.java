@@ -7,5 +7,6 @@ import java.util.Set;
 
 public interface GetUserPort {
     Page<User> list(String query, int page);
+
     Set<User> listByName(Set<String> name);
 }

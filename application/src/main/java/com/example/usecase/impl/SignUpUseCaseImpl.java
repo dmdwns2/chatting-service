@@ -49,7 +49,7 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
 
         String hashedPassword = BCrypt.withDefaults().hashToString(12, command.getPassword().toCharArray());
         BCrypt.Result result = BCrypt.verifyer().verify(command.getPassword().toCharArray(), hashedPassword);
-        if(!result.verified){
+        if (!result.verified) {
             throw new RuntimeException("An error occurred during the password hashing process.");
         }
 

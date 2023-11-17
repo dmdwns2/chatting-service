@@ -1,8 +1,8 @@
 package com.example.data.impl;
 
 import com.example.data.UserMapper;
-import com.example.model.User;
 import com.example.entity.UserJPAEntity;
+import com.example.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +18,6 @@ class UserMapperImpl implements UserMapper {
 
     @Override
     public User entityToModel(UserJPAEntity entity) {
-        return User.of(entity.getName(),entity.getPassword(),entity.getNickname());
+        return User.of(entity.getName(), entity.getPassword(), entity.getNickname());
     }
 }

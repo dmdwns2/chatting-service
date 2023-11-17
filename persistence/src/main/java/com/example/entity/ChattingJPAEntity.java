@@ -1,7 +1,6 @@
 package com.example.entity;
 
 import jakarta.persistence.*;
-
 import lombok.Data;
 
 @Entity(name = "chatting")
@@ -12,7 +11,7 @@ public class ChattingJPAEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatting_id")
     private Long id;
-    @Column(name = "message",columnDefinition = "TEXT")
+    @Column(name = "message", columnDefinition = "TEXT")
     private String message;
 
     @ManyToOne(fetch = FetchType.LAZY)

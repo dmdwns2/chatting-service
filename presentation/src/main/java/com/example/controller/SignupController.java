@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/chattings")
 public class SignupController {
-
     private final SignUpUseCase signUpUseCase;
 
     @GetMapping("/signup")
@@ -30,7 +29,7 @@ public class SignupController {
 
     @PostMapping
     public String signup(@Validated SignupForm signupForm, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return signupForm(model);
         }
 

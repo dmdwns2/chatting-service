@@ -12,9 +12,8 @@ import java.util.Set;
 
 @Component
 class UserPersistenceAdapter implements ExistsNamePort, ExistsNicknamePort, SaveUserPort, LoadUserPort, GetUserPort {
-
     private final UserRepository userRepository;
-    private final UserMapper  userMapper;
+    private final UserMapper userMapper;
 
     UserPersistenceAdapter(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;

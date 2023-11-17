@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 public class SignUpUseCaseImplTest {
-
     @Mock
     private ExistsNamePort existsNamePort;
 
@@ -38,7 +37,7 @@ public class SignUpUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         signUpUseCase = new SignUpUseCaseImpl(
                 existsNamePort,

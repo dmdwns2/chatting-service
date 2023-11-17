@@ -11,7 +11,7 @@ public class User {
     private final String password;
     private final String nickname;
 
-    public static User of(String name, String password, String nickname){
+    public static User of(String name, String password, String nickname) {
         return new User(name, password, nickname);
     }
 }
