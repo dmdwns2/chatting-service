@@ -3,6 +3,8 @@
 
 ## How to Run
 
+[Start Server에서 ./gradlew: /bin/sh^M: bad interpreter 에러 발생 시](https://github.com/dmdwns2/chatting-service/issues/28)
+
 ```shell
 # Start mysql
 $ make -C persistence docker-compose-up
