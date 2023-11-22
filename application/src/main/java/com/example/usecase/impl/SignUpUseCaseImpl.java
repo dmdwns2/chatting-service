@@ -31,6 +31,21 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
     @Transactional
     @Override
     public UserCreatedEvent join(SignUpCommand command) {
+        validate(command);
+        String hashedPassword = BCrypt.withDefaults().hashToString(12, command.getPassword().toCharArray());
+        BCrypt.Result result = BCrypt.verifyer().verify(command.getPassword().toCharArray(), hashedPassword);
+        if (!result.verified) {
+            throw new RuntimeException("An error occurred during the password hashing process.");
+        }
+
+        User user = User.of(command.getName(), hashedPassword, command.getNickname());
+
+        saveUserPort.save(user);
+
+        return new UserCreatedEvent(user.getName(), currentDataTimePort.now());
+    }
+
+    private void validate(SignUpCommand command) {
         if (command.getName().length() > 20 || command.getName().length() < 3) {
             throw new RuntimeException("The ID should be at least 3 characters and no more than 20 characters.");
         }
@@ -46,17 +61,5 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
         if (existsNicknamePort.existsNickname(command.getNickname())) {
             throw new DuplicateNicknameException(command.getNickname());
         }
-
-        String hashedPassword = BCrypt.withDefaults().hashToString(12, command.getPassword().toCharArray());
-        BCrypt.Result result = BCrypt.verifyer().verify(command.getPassword().toCharArray(), hashedPassword);
-        if (!result.verified) {
-            throw new RuntimeException("An error occurred during the password hashing process.");
-        }
-
-        User user = User.of(command.getName(), hashedPassword, command.getNickname());
-
-        saveUserPort.save(user);
-
-        return new UserCreatedEvent(user.getName(), currentDataTimePort.now());
     }
 }

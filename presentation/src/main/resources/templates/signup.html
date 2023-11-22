@@ -24,7 +24,8 @@
                                        th:classappend="${#fields.hasErrors('name')} ? is-danger">
                             </label>
                         </div>
-                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="help is-danger">Name is invalid</p>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="help is-danger">Name is
+                            invalid</p>
                     </div>
                     <div class="field">
                         <label class="label">Password</label>
@@ -32,7 +33,8 @@
                             <input class="input" type="password" th:field="*{name}" placeholder="Password"
                                    th:classappend="${#fields.hasErrors('password')} ? is-danger">
                         </div>
-                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help is-danger">Password is invalid</p>
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help is-danger">
+                            Password is invalid</p>
                     </div>
                     <div class="field">
                         <label class="label">Nickname</label>
@@ -40,7 +42,8 @@
                             <input class="input" type="text" th:field="*{nickname}" placeholder="User Nickname"
                                    th:classappend="${#fields.hasErrors('nickname')} ? is-danger">
                         </div>
-                        <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="help is-danger">Nickname is invalid</p>
+                        <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="help is-danger">
+                            Nickname is invalid</p>
                     </div>
                     <div class="field is-grouped">
                         <div class="control">
