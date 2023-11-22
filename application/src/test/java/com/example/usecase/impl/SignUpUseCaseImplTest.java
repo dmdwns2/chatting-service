@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -33,6 +34,9 @@ public class SignUpUseCaseImplTest {
     @Mock
     private CurrentDataTimePort currentDataTimePort;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     private SignUpUseCaseImpl signUpUseCase;
 
     @BeforeEach
@@ -43,8 +47,8 @@ public class SignUpUseCaseImplTest {
                 existsNamePort,
                 existsNicknamePort,
                 saveUserPort,
-                currentDataTimePort
-        );
+                currentDataTimePort,
+                passwordEncoder);
     }
 
     @Test

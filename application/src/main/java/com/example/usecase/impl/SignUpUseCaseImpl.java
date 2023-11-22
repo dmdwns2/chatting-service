@@ -1,6 +1,5 @@
 package com.example.usecase.impl;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.example.dto.SignUpCommand;
 import com.example.dto.UserCreatedEvent;
 import com.example.exception.DuplicateNameException;
@@ -13,6 +12,7 @@ import com.example.port.SaveUserPort;
 import com.example.stereotype.UseCase;
 import com.example.usecase.SignUpUseCase;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @UseCase
 public class SignUpUseCaseImpl implements SignUpUseCase {
@@ -20,23 +20,21 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
     private final ExistsNicknamePort existsNicknamePort;
     private final SaveUserPort saveUserPort;
     private final CurrentDataTimePort currentDataTimePort;
+    private final PasswordEncoder passwordEncoder;
 
-    public SignUpUseCaseImpl(ExistsNamePort existsNamePort, ExistsNicknamePort existsNicknamePort, SaveUserPort saveUserPort, CurrentDataTimePort currentDataTimePort) {
+    public SignUpUseCaseImpl(ExistsNamePort existsNamePort, ExistsNicknamePort existsNicknamePort, SaveUserPort saveUserPort, CurrentDataTimePort currentDataTimePort, PasswordEncoder passwordEncoder) {
         this.existsNamePort = existsNamePort;
         this.existsNicknamePort = existsNicknamePort;
         this.saveUserPort = saveUserPort;
         this.currentDataTimePort = currentDataTimePort;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     @Override
     public UserCreatedEvent join(SignUpCommand command) {
         validate(command);
-        String hashedPassword = BCrypt.withDefaults().hashToString(12, command.getPassword().toCharArray());
-        BCrypt.Result result = BCrypt.verifyer().verify(command.getPassword().toCharArray(), hashedPassword);
-        if (!result.verified) {
-            throw new RuntimeException("An error occurred during the password hashing process.");
-        }
+        String hashedPassword = passwordEncoder.encode(command.getPassword());
 
         User user = User.of(command.getName(), hashedPassword, command.getNickname());
 
