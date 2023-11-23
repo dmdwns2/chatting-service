@@ -39,6 +39,6 @@ public class SignupController {
                 signupForm.getNickname()
         ));
         model.addAttribute("name", userCreatedEvent.getName());
-        return "redirect:/login";
+        return "redirect:/chattings/login";
     }
 }

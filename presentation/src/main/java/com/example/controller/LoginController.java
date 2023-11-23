@@ -2,6 +2,8 @@ package com.example.controller;
 
 import com.example.dto.LoginCommand;
 import com.example.dto.UserLoggedInEvent;
+import com.example.exception.NotFoundUserException;
+import com.example.exception.NotMatchPasswordException;
 import com.example.form.LoginForm;
 import com.example.usecase.LoginUseCase;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,6 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return loginForm(model);
         }
-
         try {
             UserLoggedInEvent userLoggedInEvent = loginUseCase.login(new LoginCommand(
                     loginForm.getName(),
@@ -40,9 +41,18 @@ public class LoginController {
             ));
             model.addAttribute("loginSuccess", true);
         } catch (RuntimeException e) {
-            model.addAttribute("loginError", "Incorrect password");
+            handleLoginException(e, model);
         }
-
         return "home";
+    }
+
+    private void handleLoginException(RuntimeException e, Model model) {
+        if (e instanceof NotMatchPasswordException) {
+            model.addAttribute("loginError", "Incorrect password");
+        } else if (e instanceof NotFoundUserException) {
+            model.addAttribute("loginError", "User not found");
+        } else {
+            model.addAttribute("loginError", e.getMessage());
+        }
     }
 }
