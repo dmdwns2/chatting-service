@@ -15,7 +15,7 @@
                 <h2 class="title">Signup</h2>
             </div>
             <div class="block">
-                <form th:action="@{'/signup'}" method="post" th:object="${signupForm}">
+                <form th:action="@{'/chattings/signup'}" method="post" th:object="${signupForm}">
                     <div class="field">
                         <label class="label">Name</label>
                         <div class="control">
@@ -30,7 +30,7 @@
                     <div class="field">
                         <label class="label">Password</label>
                         <div class="control">
-                            <input class="input" type="password" th:field="*{name}" placeholder="Password"
+                            <input class="input" type="password" th:field="*{password}" placeholder="Password"
                                    th:classappend="${#fields.hasErrors('password')} ? is-danger">
                         </div>
                         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help is-danger">
