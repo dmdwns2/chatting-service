@@ -32,29 +32,32 @@ public class LoginUseCaseImpl implements LoginUseCase {
     @Transactional
     @Override
     public UserLoggedInEvent login(LoginCommand command) {
+        validateCommand(command);
         UserJPAEntity user = userRepository.findByName(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
-
-        validate(command.getPassword(), user.getPassword());
+        validatePasswordMatching(command.getPassword(), user.getPassword());
 
         SimpleGrantedAuthority userAuthority = new SimpleGrantedAuthority("ROLE_USER");
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 user.getName(),
                 user.getPassword(),
                 Collections.singletonList(userAuthority)
         );
-
-        String authToken = generateAuthToken(authentication);
+        String authToken = tokenProvider.createToken(authentication);
 
         return new UserLoggedInEvent(user.getName(), authToken);
     }
 
-    private String generateAuthToken(Authentication authentication) {
-        return tokenProvider.createToken(authentication);
+    private void validateCommand(LoginCommand command) {
+        if (command.getName().length() > 20 || command.getName().length() < 3) {
+            throw new RuntimeException("Invalid input. please try again");
+        }
+        if (command.getPassword().length() > 50 || command.getPassword().length() < 4) {
+            throw new RuntimeException("Invalid input. please try again");
+        }
     }
 
-    public void validate(String rawPassword, String encodedPassword) {
+    private void validatePasswordMatching(String rawPassword, String encodedPassword) {
         if (passwordEncoder.matches(rawPassword, encodedPassword)) {
             return;
         }
