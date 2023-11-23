@@ -39,7 +39,6 @@ public class SignupController {
                 signupForm.getNickname()
         ));
         model.addAttribute("name", userCreatedEvent.getName());
-        return "redirect:/signup";
-//TODO    return "redirect:/login";
+        return "redirect:/login";
     }
 }
