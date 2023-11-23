@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.dto.LoginCommand;
-import com.example.dto.UserLoggedInEvent;
 import com.example.exception.NotFoundUserException;
 import com.example.exception.NotMatchPasswordException;
 import com.example.form.LoginForm;
@@ -35,7 +34,7 @@ public class LoginController {
             return loginForm(model);
         }
         try {
-            UserLoggedInEvent userLoggedInEvent = loginUseCase.login(new LoginCommand(
+            loginUseCase.login(new LoginCommand(
                     loginForm.getName(),
                     loginForm.getPassword()
             ));
