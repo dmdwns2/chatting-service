@@ -27,7 +27,7 @@ public class SignupController {
         return "signup";
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public String signup(@Validated SignupForm signupForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return signupForm(model);
@@ -39,7 +39,6 @@ public class SignupController {
                 signupForm.getNickname()
         ));
         model.addAttribute("name", userCreatedEvent.getName());
-        return "redirect:/signup";
-//TODO    return "redirect:/login";
+        return "redirect:/chattings/login";
     }
 }

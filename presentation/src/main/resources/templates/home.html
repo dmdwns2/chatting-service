@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title th:text="|Home|">Home</title>
+</head>
+<body>
+<div class="container">
+    <main id="content">
+        <section class="login-section">
+            <div class="block">
+                <h2 class="title">Login Test</h2>
+                <div th:if="${loginSuccess}">
+                    <p class="has-text-success">Login successful!</p>
+                </div>
+                <div th:if="${loginError}">
+                    <p class="has-text-danger" th:text="${loginError}"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>
