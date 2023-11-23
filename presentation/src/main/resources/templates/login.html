@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title th:text="|Login|">Login</title>
+</head>
+<body>
+<div class="container">
+    <main id="content">
+        <section class="login-section">
+            <div class="block">
+                <h2 class="title">Login</h2>
+            </div>
+            <div class="login-body">
+                <div class="container has-text-centered">
+                    <div class="columns">
+                        <div class="column is-half is-offset-one-quarter">
+                            <div class="box">
+                                <form th:action="@{/login}" method="post">
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-large" type="name" name="name"
+                                                   placeholder="Name" autofocus="">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-large" type="password" name="password"
+                                                   placeholder="Password">
+                                        </div>
+                                    </div>
+                                    <button class="button is-block is-info is-large is-fullwidth">
+                                        <span>Login</span>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>
