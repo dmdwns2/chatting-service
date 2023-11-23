@@ -30,7 +30,7 @@ $ make -C persistence docker-compose-down
 - [x] ![Schema 설계](https://github.com/dmdwns2/chatting-service/issues/7)
 - [ ] 기능 구현
   - [x] 회원가입
-  - [ ] 로그인
+  - [x] 로그인
   - [ ] 채팅방 목록 조회
   - [ ] 채팅방 입장
   - [ ] 채팅방 개설
@@ -40,7 +40,7 @@ $ make -C persistence docker-compose-down
   - [ ] 메시지 전송
 - [ ] UI 구현
   - [x] 회원가입 화면
-  - [ ] 로그인 화면
+  - [x] 로그인 화면
   - [ ] 채팅방 목록 화면
   - [ ] 채팅방 화면
 - [ ] 성능 테스트
