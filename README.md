@@ -22,7 +22,7 @@ $ make -C persistence docker-compose-down
 
 ## To do
 
-- [ ] ![클린 아키텍처 적용](https://github.com/dmdwns2/chatting-service/issues/8)
+- [x] ![클린 아키텍처 적용](https://github.com/dmdwns2/chatting-service/issues/8)
 ---
 - [x] ![유스케이스 다이어그램](https://github.com/dmdwns2/chatting-service/issues/2)
 - [x] ![도메인/엔티티 모델 정의](https://github.com/dmdwns2/chatting-service/issues/1) 
@@ -31,9 +31,9 @@ $ make -C persistence docker-compose-down
 - [ ] 기능 구현
   - [x] 회원가입
   - [x] 로그인
+  - [x] 채팅방 생성
   - [ ] 채팅방 목록 조회
   - [ ] 채팅방 입장
-  - [ ] 채팅방 개설
   - [ ] 채팅방 나가기
   - [ ] 유저 추방
   - [ ] 메시지 갱신
