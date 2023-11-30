@@ -9,4 +9,8 @@ import lombok.Getter;
 public class ChatRoom {
     private final String title;
     private final String owner;
+
+    public static ChatRoom of(String title, String owner) {
+        return new ChatRoom(title, owner);
+    }
 }
