@@ -18,8 +18,7 @@ $ make -C persistence docker-compose-down
 
 ## convention
 
-- ![Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
-
+- Google Java Style Guide
 - ![Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
 
 ## To do
