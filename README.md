@@ -12,15 +12,14 @@ $ make -C persistence docker-compose-up
 # Start server
 $ ./gradlew :presentation:bootRun
 
-# Stop server
-$ ./gradlew -stop
-
 # Stop mysql
 $ make -C persistence docker-compose-down
 ```
 
 ## convention
-- ![Google Java Style Guide](https://newwisdom.tistory.com/96)
+
+- ![Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+
 - ![Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
 
 ## To do
