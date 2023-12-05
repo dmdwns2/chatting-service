@@ -12,9 +12,6 @@ $ make -C persistence docker-compose-up
 # Start server
 $ ./gradlew :presentation:bootRun
 
-# Stop server
-$ ./gradlew -stop
-
 # Stop mysql
 $ make -C persistence docker-compose-down
 ```
