@@ -33,7 +33,7 @@ $ make -C persistence docker-compose-down
   - [x] 회원가입
   - [x] 로그인
   - [x] 채팅방 생성
-  - [ ] 채팅방 목록 조회
+  - [x] 채팅방 목록 조회
   - [ ] 채팅방 입장
   - [ ] 채팅방 나가기
   - [ ] 유저 추방
