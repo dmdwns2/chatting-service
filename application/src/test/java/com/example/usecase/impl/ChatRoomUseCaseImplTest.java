@@ -5,6 +5,7 @@ import com.example.dto.ChatRoomCreatedEvent;
 import com.example.exception.ExistsChatRoomException;
 import com.example.port.CurrentDataTimePort;
 import com.example.port.ExistsChatRoomPort;
+import com.example.port.LoadChatRoomPort;
 import com.example.port.SaveChatRoomPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,9 @@ class ChatRoomUseCaseImplTest {
     private SaveChatRoomPort saveChatRoomPort;
 
     @Mock
+    private LoadChatRoomPort loadChatRoomPort;
+
+    @Mock
     private CurrentDataTimePort currentDataTimePort;
 
     private ChatRoomUseCaseImpl chatRoomUseCase;
@@ -37,6 +41,7 @@ class ChatRoomUseCaseImplTest {
         chatRoomUseCase = new ChatRoomUseCaseImpl(
                 existsChatRoomPort,
                 saveChatRoomPort,
+                loadChatRoomPort,
                 currentDataTimePort
         );
     }
