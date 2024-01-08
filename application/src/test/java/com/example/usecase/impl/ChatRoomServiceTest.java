@@ -7,6 +7,7 @@ import com.example.port.CurrentDataTimePort;
 import com.example.port.ExistsChatRoomPort;
 import com.example.port.LoadChatRoomPort;
 import com.example.port.SaveChatRoomPort;
+import com.example.ChatRoomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
-class ChatRoomUseCaseImplTest {
+class ChatRoomServiceTest {
     @Mock
     private ExistsChatRoomPort existsChatRoomPort;
 
@@ -32,13 +33,13 @@ class ChatRoomUseCaseImplTest {
     @Mock
     private CurrentDataTimePort currentDataTimePort;
 
-    private ChatRoomUseCaseImpl chatRoomUseCase;
+    private ChatRoomService chatRoomUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        chatRoomUseCase = new ChatRoomUseCaseImpl(
+        chatRoomUseCase = new ChatRoomService(
                 existsChatRoomPort,
                 saveChatRoomPort,
                 loadChatRoomPort,
