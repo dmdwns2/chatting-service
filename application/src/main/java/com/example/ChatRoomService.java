@@ -1,4 +1,4 @@
-package com.example.usecase.impl;
+package com.example;
 
 import com.example.dto.ChatRoomCreateCommand;
 import com.example.dto.ChatRoomCreatedEvent;
@@ -9,23 +9,23 @@ import com.example.port.CurrentDataTimePort;
 import com.example.port.ExistsChatRoomPort;
 import com.example.port.LoadChatRoomPort;
 import com.example.port.SaveChatRoomPort;
-import com.example.stereotype.UseCase;
 import com.example.usecase.ChatRoomUseCase;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@UseCase
-public class ChatRoomUseCaseImpl implements ChatRoomUseCase {
+@Service
+public class ChatRoomService implements ChatRoomUseCase {
     private final ExistsChatRoomPort existsChatRoomPort;
     private final SaveChatRoomPort saveChatRoomPort;
     private final LoadChatRoomPort loadChatRoomPort;
     private final CurrentDataTimePort currentDataTimePort;
 
-    public ChatRoomUseCaseImpl(ExistsChatRoomPort existsChatRoomPort, SaveChatRoomPort saveChatRoomPort
+    public ChatRoomService(ExistsChatRoomPort existsChatRoomPort, SaveChatRoomPort saveChatRoomPort
             , LoadChatRoomPort loadChatRoomPort, CurrentDataTimePort currentDataTimePort) {
         this.existsChatRoomPort = existsChatRoomPort;
         this.saveChatRoomPort = saveChatRoomPort;
