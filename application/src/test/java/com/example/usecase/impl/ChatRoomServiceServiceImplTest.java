@@ -1,13 +1,10 @@
 package com.example.usecase.impl;
 
-import com.example.dto.ChatRoomCreateCommand;
+import com.example.ChatRoomServiceServiceImpl;
+import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomCreatedEvent;
 import com.example.exception.ExistsChatRoomException;
-import com.example.port.CurrentDataTimePort;
-import com.example.port.ExistsChatRoomPort;
-import com.example.port.LoadChatRoomPort;
-import com.example.port.SaveChatRoomPort;
-import com.example.ChatRoomService;
+import com.example.port.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
-class ChatRoomServiceTest {
+class ChatRoomServiceServiceImplTest {
     @Mock
     private ExistsChatRoomPort existsChatRoomPort;
 
@@ -33,17 +30,25 @@ class ChatRoomServiceTest {
     @Mock
     private CurrentDataTimePort currentDataTimePort;
 
-    private ChatRoomService chatRoomUseCase;
+    @Mock
+    private LoadUserPort loadUserPort;
+
+    @Mock
+    private SaveUserChatRoomPort saveUserChatRoomPort;
+
+    private ChatRoomServiceServiceImpl chatRoomUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        chatRoomUseCase = new ChatRoomService(
+        chatRoomUseCase = new ChatRoomServiceServiceImpl(
                 existsChatRoomPort,
                 saveChatRoomPort,
                 loadChatRoomPort,
-                currentDataTimePort
+                currentDataTimePort,
+                loadUserPort,
+                saveUserChatRoomPort
         );
     }
 
@@ -51,7 +56,7 @@ class ChatRoomServiceTest {
     @Test
     void create_success() {
         String name = "messi";
-        ChatRoomCreateCommand command = new ChatRoomCreateCommand("아무나");
+        ChatRoomCreateRequest command = new ChatRoomCreateRequest("아무나");
         when(existsChatRoomPort.existsChatRoom(command.getTitle())).thenReturn(false);
         when(currentDataTimePort.now()).thenReturn(LocalDateTime.now());
 
@@ -65,7 +70,7 @@ class ChatRoomServiceTest {
     @Test
     void create_exists_chatroom() {
         String name = "messi";
-        ChatRoomCreateCommand command = new ChatRoomCreateCommand("아무나");
+        ChatRoomCreateRequest command = new ChatRoomCreateRequest("아무나");
         when(existsChatRoomPort.existsChatRoom(name)).thenReturn(true);
 
         assertThatThrownBy(() -> chatRoomUseCase.create(command, name))

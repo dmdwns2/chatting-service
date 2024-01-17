@@ -3,6 +3,6 @@ package com.example.dto;
 import lombok.Value;
 
 @Value
-public class ChatRoomCreateCommand {
+public class ChatRoomCreateRequest {
     String title;
 }
