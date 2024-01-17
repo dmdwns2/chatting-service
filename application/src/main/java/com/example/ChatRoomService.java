@@ -1,6 +1,8 @@
 package com.example;
 
-import com.example.dto.*;
+import com.example.dto.ChatRoomCreateRequest;
+import com.example.dto.ChatRoomCreatedEvent;
+import com.example.dto.ChatRoomDto;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -10,5 +12,7 @@ public interface ChatRoomService {
 
     List<ChatRoomDto> getList(Pageable pageable);
 
-    void join(String owner , String name);
+    void join(String owner, String name);
+
+    void exit(String owner, String name);
 }

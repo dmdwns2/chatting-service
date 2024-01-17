@@ -2,6 +2,7 @@ package com.example.adapter;
 
 import com.example.data.ChatRoomMapper;
 import com.example.model.ChatRoom;
+import com.example.port.DeleteChatRoomPort;
 import com.example.port.ExistsChatRoomPort;
 import com.example.port.LoadChatRoomPort;
 import com.example.port.SaveChatRoomPort;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatRoomPort, LoadChatRoomPort {
+class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatRoomPort, LoadChatRoomPort, DeleteChatRoomPort {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomMapper chatRoomMapper;
 
@@ -40,5 +41,10 @@ class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatRoomPort
     @Override
     public void save(ChatRoom chatRoom) {
         chatRoomRepository.save(chatRoomMapper.modelToEntity(chatRoom));
+    }
+
+    @Override
+    public void delete(String name) {
+        chatRoomRepository.deleteChatRoomByName(name);
     }
 }
