@@ -34,7 +34,7 @@ $ make -C persistence docker-compose-down
   - [x] 로그인
   - [x] 채팅방 생성
   - [x] 채팅방 목록 조회
-  - [ ] 채팅방 입장
+  - [x] 채팅방 입장
   - [ ] 채팅방 나가기
   - [ ] 유저 추방
   - [ ] 메시지 갱신
