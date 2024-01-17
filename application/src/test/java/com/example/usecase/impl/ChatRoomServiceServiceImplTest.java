@@ -36,6 +36,12 @@ class ChatRoomServiceServiceImplTest {
     @Mock
     private SaveUserChatRoomPort saveUserChatRoomPort;
 
+    @Mock
+    private DeleteUserChatRoomPort deleteUserChatRoomPort;
+
+    @Mock
+    private DeleteChatRoomPort deleteChatRoomPort;
+
     private ChatRoomServiceServiceImpl chatRoomUseCase;
 
     @BeforeEach
@@ -48,7 +54,9 @@ class ChatRoomServiceServiceImplTest {
                 loadChatRoomPort,
                 currentDataTimePort,
                 loadUserPort,
-                saveUserChatRoomPort
+                saveUserChatRoomPort,
+                deleteUserChatRoomPort,
+                deleteChatRoomPort
         );
     }
 

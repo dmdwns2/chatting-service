@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoomJPAEntity, Long> {
     Optional<ChatRoomJPAEntity> findByOwner(String name);
+
+    void deleteChatRoomByName(String name);
 }
