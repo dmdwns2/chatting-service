@@ -42,4 +42,11 @@ public class ChatRoomController {
         chatRoomService.join(owner, name);
         return Response.success("enter the chat room");
     }
+
+    @DeleteMapping("/room/exit/{owner}")
+    public Response<String> exit(@PathVariable String owner, Authentication authentication) {
+        String name = authentication.getName();
+        chatRoomService.exit(owner, name);
+        return Response.success("came out of the chat room");
+    }
 }
