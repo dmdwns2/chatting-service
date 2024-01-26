@@ -16,30 +16,29 @@
             <div class="chat-room-body">
                 <div class="container">
                     <div class="columns is-multiline">
-                        <!-- Example Chat Room -->
-                        <div class="column is-one-third">
+                        <!-- Loop through Chat Rooms -->
+                        <div th:each="room : ${allChatRooms.content}" class="column is-one-third">
                             <div class="box">
-                                <h3 class="subtitle">Room 1</h3>
-                                <p>Description for Room 1.</p>
-                                <a href="/chattings/room1" class="button is-info">Enter Room</a>
+                                <h3 class="subtitle" th:text="${room.title}">Room Name</h3>
+                                <p th:text="${room.owner}">Owner</p>
+                                <a th:href="@{/chattings/{owner}/join(owner=${room.owner})}" class="button is-info">Enter
+                                    Room</a>
                             </div>
                         </div>
-
-                        <!-- Example Chat Room -->
-                        <div class="column is-one-third">
-                            <div class="box">
-                                <h3 class="subtitle">Room 2</h3>
-                                <p>Description for Room 2.</p>
-                                <a href="/chattings/room2" class="button is-info">Enter Room</a>
-                            </div>
-                        </div>
-
-                        <!-- Add more chat rooms as needed -->
-
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Pagination Links -->
+        <nav class="pagination is-centered" th:if="${allChatRooms.totalPages > 1}">
+            <ul class="pagination-list">
+                <li th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
+                    th:class="${pageNumber} == ${nowPage} ? 'pagination-link is-current' : 'pagination-link'">
+                    <a th:href="@{'/rooms?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
+                </li>
+            </ul>
+        </nav>
     </main>
 </div>
 </body>

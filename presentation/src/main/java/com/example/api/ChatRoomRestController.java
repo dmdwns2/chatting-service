@@ -35,14 +35,14 @@ public class ChatRoomRestController {
         return Response.success("got a list of chat rooms");
     }
 
-    @PostMapping("/rooms/join/{owner}")
+    @PostMapping("/rooms/{owner}/join")
     public Response<String> join(@PathVariable String owner, Authentication authentication) {
         String name = authentication.getName();
         chatRoomService.join(owner, name);
         return Response.success("enter the chat room");
     }
 
-    @DeleteMapping("/room/exit/{owner}")
+    @DeleteMapping("/room/{owner}/exit")
     public Response<String> exit(@PathVariable String owner, Authentication authentication) {
         String name = authentication.getName();
         chatRoomService.exit(owner, name);
