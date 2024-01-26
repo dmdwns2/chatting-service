@@ -25,6 +25,6 @@ public class UserChatRoomPersistenceAdapter implements SaveUserChatRoomPort, Del
 
     @Override
     public void delete(String name) {
-        userChatRoomRepository.deleteUserChatRoomByName(name);
+        userChatRoomRepository.deleteUserChatRoomByUser_Name(name);
     }
 }

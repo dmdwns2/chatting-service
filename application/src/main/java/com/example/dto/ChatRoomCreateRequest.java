@@ -1,8 +1,11 @@
 package com.example.dto;
 
-import lombok.Value;
+import lombok.*;
 
-@Value
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChatRoomCreateRequest {
     String title;
 }
