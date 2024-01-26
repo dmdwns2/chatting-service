@@ -2,16 +2,16 @@ package com.example.controller;
 
 import com.example.ChatRoomService;
 import com.example.dto.ChatRoomCreateRequest;
-import com.example.dto.ChatRoomDto;
-import com.example.dto.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,34 +19,22 @@ import java.util.List;
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
-    @PostMapping("/rooms")
-    public Response<String> create(@RequestBody @Valid ChatRoomCreateRequest chatRoomCreateRequest,
-                                   Authentication authentication) {
-        String name = authentication.getName();
-        chatRoomService.create(chatRoomCreateRequest, name);
-        return Response.success("created a chatroom");
+    @GetMapping("/create")
+    public String createForm(Model model) {
+        model.addAttribute("chatRoomCreateRequest", new ChatRoomCreateRequest());
+        return "createForm";
     }
 
-    @GetMapping("/rooms")
-    public Response<String> getList(Pageable pageable) {
-        List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
-        if (allChatRooms.size() == 0) {
-            return Response.error("there is no chat room");
+    @PostMapping("/create")
+    public String create(@Valid @ModelAttribute ChatRoomCreateRequest form, BindingResult result,
+                         Authentication authentication) {
+        if (result.hasErrors()) {
+            return "createForm";
         }
-        return Response.success("got a list of chat rooms");
+        String name = authentication.getName();
+        chatRoomService.create(form, name);
+        return "chatroomlist";
     }
 
-    @PostMapping("/rooms/join/{owner}")
-    public Response<String> join(@PathVariable String owner, Authentication authentication) {
-        String name = authentication.getName();
-        chatRoomService.join(owner, name);
-        return Response.success("enter the chat room");
-    }
 
-    @DeleteMapping("/room/exit/{owner}")
-    public Response<String> exit(@PathVariable String owner, Authentication authentication) {
-        String name = authentication.getName();
-        chatRoomService.exit(owner, name);
-        return Response.success("came out of the chat room");
-    }
 }
