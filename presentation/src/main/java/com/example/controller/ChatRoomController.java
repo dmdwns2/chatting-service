@@ -47,6 +47,13 @@ public class ChatRoomController {
         return "home"; // TODO : home -> chatroom
     }
 
+    @DeleteMapping("/rooms/{owner}/leave")
+    public String exit(@PathVariable String owner, Authentication authentication) {
+        String name = authentication.getName();
+        chatRoomService.exit(owner, name);
+        return "chatroomlist";
+    }
+
     @GetMapping("/rooms")
     public String getList(Model model, Pageable pageable) {
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
