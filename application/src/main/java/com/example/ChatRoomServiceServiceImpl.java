@@ -50,7 +50,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         if (existsChatRoomPort.existsChatRoom(name)) {
             throw new ExistsChatRoomException();
         }
-        ChatRoom chatRoom = ChatRoom.of(chatRoomCreateRequest.getTitle(), name);
+        com.example.model.ChatRoom chatRoom = com.example.model.ChatRoom.of(chatRoomCreateRequest.getTitle(), name);
 
         saveChatRoomPort.save(chatRoom);
         return new ChatRoomCreatedEvent(chatRoom.getOwner(), chatRoom.getTitle(), currentDataTimePort.now());
@@ -58,7 +58,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
 
     @Override
     public List<ChatRoomDto> getList(Pageable pageable) {
-        Page<ChatRoom> pages = loadChatRoomPort.findAll(pageable);
+        Page<com.example.model.ChatRoom> pages = loadChatRoomPort.findAll(pageable);
         return getChatRoomDto(pages);
     }
 
@@ -93,7 +93,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         }
     }
 
-    private static List<ChatRoomDto> getChatRoomDto(Page<ChatRoom> pages) {
+    private static List<ChatRoomDto> getChatRoomDto(Page<com.example.model.ChatRoom> pages) {
         return pages.stream()
                 .map(ChatRoomDto::of)
                 .collect(Collectors.toList());
