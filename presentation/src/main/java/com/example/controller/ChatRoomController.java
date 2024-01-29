@@ -5,6 +5,7 @@ import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -51,7 +52,7 @@ public class ChatRoomController {
     public String exit(@PathVariable String owner, Authentication authentication) {
         String name = authentication.getName();
         chatRoomService.exit(owner, name);
-        return "chatroomlist";
+        return "redirect:/chattings/rooms";
     }
 
     @GetMapping("/rooms")

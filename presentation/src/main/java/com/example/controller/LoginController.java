@@ -5,11 +5,11 @@ import com.example.exception.NotFoundUserException;
 import com.example.exception.NotMatchPasswordException;
 import com.example.form.LoginForm;
 import com.example.usecase.LoginUseCase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +29,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated LoginForm loginForm, BindingResult bindingResult, Model model) {
+    public String login(@Valid LoginForm loginForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return loginForm(model);
         }
@@ -41,6 +41,7 @@ public class LoginController {
             model.addAttribute("loginSuccess", true);
         } catch (RuntimeException e) {
             handleLoginException(e, model);
+            return "login";
         }
         return "home";
     }
