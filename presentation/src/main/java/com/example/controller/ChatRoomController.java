@@ -51,7 +51,7 @@ public class ChatRoomController {
     public String exit(@PathVariable String owner, Authentication authentication) {
         String name = authentication.getName();
         chatRoomService.exit(owner, name);
-        return "chatroomlist";
+        return "redirect:/chattings/rooms";
     }
 
     @GetMapping("/rooms")
