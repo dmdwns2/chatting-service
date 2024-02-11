@@ -13,11 +13,12 @@ class UserMapperImpl implements UserMapper {
         entity.setName(user.getName());
         entity.setPassword(user.getPassword());
         entity.setNickname(user.getNickname());
+        entity.setIsLogin(user.isLogin());
         return entity;
     }
 
     @Override
     public User entityToModel(UserJPAEntity entity) {
-        return User.of(entity.getName(), entity.getPassword(), entity.getNickname());
+        return User.of(entity.getName(), entity.getPassword(), entity.getNickname(), entity.getIsLogin());
     }
 }

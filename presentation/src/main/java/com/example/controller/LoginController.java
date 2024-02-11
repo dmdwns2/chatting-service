@@ -1,10 +1,13 @@
 package com.example.controller;
 
+import com.example.LoginService;
 import com.example.dto.LoginCommand;
+import com.example.dto.LogoutCommand;
 import com.example.exception.NotFoundUserException;
 import com.example.exception.NotMatchPasswordException;
 import com.example.form.LoginForm;
-import com.example.LoginService;
+import com.example.security.LoginCheck;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,7 +32,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid LoginForm loginForm, BindingResult bindingResult, Model model) {
+    public String login(@Valid LoginForm loginForm, BindingResult bindingResult, Model model,
+                        HttpSession session) {
         if (bindingResult.hasErrors()) {
             return loginForm(model);
         }
@@ -39,10 +43,20 @@ public class LoginController {
                     loginForm.getPassword()
             ));
             model.addAttribute("loginSuccess", true);
+            session.setAttribute("user", loginForm.getName());
         } catch (RuntimeException e) {
             handleLoginException(e, model);
             return "login";
         }
+        return "home";
+    }
+
+    @LoginCheck
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        String name = session.getAttribute("user").toString();
+        loginService.logout(new LogoutCommand(name));
+        session.invalidate();
         return "home";
     }
 

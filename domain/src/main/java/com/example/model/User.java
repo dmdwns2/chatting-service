@@ -10,8 +10,9 @@ public class User {
     private final String name;
     private final String password;
     private final String nickname;
+    private final boolean isLogin;
 
-    public static User of(String name, String password, String nickname) {
-        return new User(name, password, nickname);
+    public static User of(String name, String password, String nickname, Boolean isLogin) {
+        return new User(name, password, nickname, isLogin);
     }
 }

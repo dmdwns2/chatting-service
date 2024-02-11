@@ -5,7 +5,6 @@ import com.example.dto.LoginCommand;
 import com.example.dto.UserLoggedInEvent;
 import com.example.entity.UserJPAEntity;
 import com.example.exception.NotMatchPasswordException;
-import com.example.jwt.TokenProvider;
 import com.example.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,13 +27,10 @@ public class LoginServiceImplTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @Mock
-    private TokenProvider tokenProvider;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        loginUseCase = new LoginServiceImpl(userRepository, passwordEncoder, tokenProvider);
+        loginUseCase = new LoginServiceImpl(userRepository, passwordEncoder);
     }
 
     @DisplayName("로그인 성공")
