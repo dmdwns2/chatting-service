@@ -17,7 +17,7 @@
             <div class="block">
                 <form th:action="@{'/chattings/create'}" method="post" th:object="${chatRoomCreateRequest}">
                     <div class="field">
-                        <label class="label">Name</label>
+                        <label class="label">Title</label>
                         <div class="control">
                             <label>
                                 <input class="input" type="text" th:field="*{title}" placeholder="Title"

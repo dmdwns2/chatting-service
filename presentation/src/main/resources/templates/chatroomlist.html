@@ -7,6 +7,11 @@
     <title th:text="|Chat Rooms|">Chat Rooms</title>
 </head>
 <body>
+<div>
+    <button type="button" class="button is-block is-info is-small" style="margin:0px -20px 20px 0px;"
+            th:onclick="|location.href='@{/chattings/create}'|"> 채팅방 생성
+    </button>
+</div>
 <div class="container">
     <main id="content">
         <section class="chat-room-section">
@@ -29,7 +34,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Pagination Links -->
         <nav class="pagination is-centered" th:if="${allChatRooms.totalPages > 1}">
             <ul class="pagination-list">
