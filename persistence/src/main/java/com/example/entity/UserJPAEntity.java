@@ -20,6 +20,8 @@ public class UserJPAEntity {
     @Column(name = "nickname", nullable = false, unique = true)
     private String nickname;
 
+    private Boolean isLogin;
+
     @OneToMany(mappedBy = "user")
     private List<ChattingJPAEntity> chatting;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

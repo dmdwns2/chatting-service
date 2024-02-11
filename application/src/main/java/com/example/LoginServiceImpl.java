@@ -1,28 +1,25 @@
 package com.example;
 
 import com.example.dto.LoginCommand;
+import com.example.dto.LogoutCommand;
 import com.example.dto.UserLoggedInEvent;
+import com.example.dto.UserLoggedOutEvent;
 import com.example.entity.UserJPAEntity;
 import com.example.exception.NotFoundUserException;
 import com.example.exception.NotMatchPasswordException;
-import com.example.jwt.TokenProvider;
 import com.example.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenProvider tokenProvider;
 
     @Transactional
     @Override
@@ -31,17 +28,19 @@ public class LoginServiceImpl implements LoginService {
         UserJPAEntity user = userRepository.findByName(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         validatePasswordMatching(command.getPassword(), user.getPassword());
+        user.setIsLogin(true);
+        userRepository.save(user);
+        return new UserLoggedInEvent(user.getName(), LocalDateTime.now());
+    }
 
-        SimpleGrantedAuthority userAuthority = new SimpleGrantedAuthority("ROLE_USER");
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                user.getName(),
-                user.getPassword(),
-                Collections.singletonList(userAuthority)
-        );
-        String authToken = tokenProvider.createToken(authentication);
-
-        System.out.println("token : " + authToken);
-        return new UserLoggedInEvent(user.getName(), authToken);
+    @Transactional
+    @Override
+    public UserLoggedOutEvent logout(LogoutCommand command) {
+        UserJPAEntity user = userRepository.findByName(command.getName())
+                .orElseThrow(() -> new NotFoundUserException(command.getName()));
+        user.setIsLogin(false);
+        userRepository.save(user);
+        return new UserLoggedOutEvent(user.getName(), LocalDateTime.now());
     }
 
     private void validateCommand(LoginCommand command) {

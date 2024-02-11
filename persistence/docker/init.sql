@@ -12,6 +12,7 @@ CREATE TABLE `chatting`.`user` (
   `name` varchar(255) NOT NULL,
   `nickname` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `is_login` tinyint(1) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UK_gj2fy3dcix7ph7k8684gka40c` (`name`),
   UNIQUE KEY `UK_n4swgcf30j6bmtb4l4cjryuym` (`nickname`)

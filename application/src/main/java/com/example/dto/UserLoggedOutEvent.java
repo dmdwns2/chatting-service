@@ -5,7 +5,7 @@ import lombok.Value;
 import java.time.LocalDateTime;
 
 @Value
-public class UserLoggedInEvent {
+public class UserLoggedOutEvent {
     String name;
     LocalDateTime createdAt;
 }

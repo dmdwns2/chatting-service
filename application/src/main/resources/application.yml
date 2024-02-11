@@ -2,6 +2,3 @@ spring:
   config:
     import:
       - classpath:/application-local.yml
-jwt:
-  secret: examplesecretkeexamplesecretkeyexamplesecretkeyexamplesecretkeyexamplesecretkeyexamplesecretkeyyy
-  token-validity-in-seconds: 3600

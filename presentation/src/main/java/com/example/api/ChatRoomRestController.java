@@ -4,10 +4,10 @@ import com.example.ChatRoomService;
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomDto;
 import com.example.dto.Response;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +20,8 @@ public class ChatRoomRestController {
 
     @PostMapping("/rooms")
     public Response<String> create(@RequestBody @Valid ChatRoomCreateRequest chatRoomCreateRequest,
-                                   Authentication authentication) {
-        String name = authentication.getName();
+                                   HttpSession session) {
+        String name = session.getAttribute("user").toString();
         chatRoomService.create(chatRoomCreateRequest, name);
         return Response.success("created a chatroom");
     }
@@ -36,15 +36,15 @@ public class ChatRoomRestController {
     }
 
     @PostMapping("/rooms/{owner}/join")
-    public Response<String> join(@PathVariable String owner, Authentication authentication) {
-        String name = authentication.getName();
+    public Response<String> join(@PathVariable String owner, HttpSession session) {
+        String name = session.getAttribute("user").toString();
         chatRoomService.join(owner, name);
         return Response.success("enter the chat room");
     }
 
     @DeleteMapping("/room/{owner}/exit")
-    public Response<String> exit(@PathVariable String owner, Authentication authentication) {
-        String name = authentication.getName();
+    public Response<String> exit(@PathVariable String owner, HttpSession session) {
+        String name = session.getAttribute("user").toString();
         chatRoomService.exit(owner, name);
         return Response.success("came out of the chat room");
     }

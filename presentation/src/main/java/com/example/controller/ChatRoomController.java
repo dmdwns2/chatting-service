@@ -3,13 +3,13 @@ package com.example.controller;
 import com.example.ChatRoomService;
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomDto;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,25 +31,25 @@ public class ChatRoomController {
 
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute ChatRoomCreateRequest form, BindingResult result,
-                         Authentication authentication) {
+                         HttpSession session) {
         if (result.hasErrors()) {
             return "createForm";
         }
-        String name = authentication.getName();
+        String name = session.getAttribute("user").toString();
         chatRoomService.create(form, name);
         return "chatroomlist";
     }
 
     @PostMapping("/rooms/{owner}/join")
-    public String join(@PathVariable String owner, Authentication authentication) {
-        String name = authentication.getName();
+    public String join(@PathVariable String owner, HttpSession session) {
+        String name = session.getAttribute("user").toString();
         chatRoomService.join(owner, name);
         return "home"; // TODO : home -> chatroom
     }
 
     @DeleteMapping("/rooms/{owner}/leave")
-    public String exit(@PathVariable String owner, Authentication authentication) {
-        String name = authentication.getName();
+    public String exit(@PathVariable String owner, HttpSession session) {
+        String name = session.getAttribute("user").toString();
         chatRoomService.exit(owner, name);
         return "redirect:/chattings/rooms";
     }
