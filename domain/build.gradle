@@ -1,5 +1,4 @@
 dependencies {
     implementation 'org.springframework:spring-context:5.2.21.RELEASE'
     implementation 'org.springframework:spring-core:6.0.11'
-
 }
