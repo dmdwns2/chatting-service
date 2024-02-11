@@ -4,7 +4,7 @@ import com.example.dto.LoginCommand;
 import com.example.exception.NotFoundUserException;
 import com.example.exception.NotMatchPasswordException;
 import com.example.form.LoginForm;
-import com.example.usecase.LoginUseCase;
+import com.example.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/chattings")
 public class LoginController {
-    private final LoginUseCase loginUseCase;
+    private final LoginService loginService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -34,7 +34,7 @@ public class LoginController {
             return loginForm(model);
         }
         try {
-            loginUseCase.login(new LoginCommand(
+            loginService.login(new LoginCommand(
                     loginForm.getName(),
                     loginForm.getPassword()
             ));

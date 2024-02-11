@@ -1,8 +1,8 @@
-package com.example.usecase;
+package com.example;
 
 import com.example.dto.LoginCommand;
 import com.example.dto.UserLoggedInEvent;
 
-public interface LoginUseCase {
+public interface LoginService {
     UserLoggedInEvent login(LoginCommand command);
 }
