@@ -1,5 +1,6 @@
 package com.example.usecase.impl;
 
+import com.example.LoginServiceImpl;
 import com.example.dto.LoginCommand;
 import com.example.dto.UserLoggedInEvent;
 import com.example.entity.UserJPAEntity;
@@ -17,9 +18,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
-public class LoginUseCaseImplTest {
+public class LoginServiceImplTest {
 
-    private LoginUseCaseImpl loginUseCase;
+    private LoginServiceImpl loginUseCase;
 
     @Mock
     private UserRepository userRepository;
@@ -33,7 +34,7 @@ public class LoginUseCaseImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        loginUseCase = new LoginUseCaseImpl(userRepository, passwordEncoder, tokenProvider);
+        loginUseCase = new LoginServiceImpl(userRepository, passwordEncoder, tokenProvider);
     }
 
     @DisplayName("로그인 성공")

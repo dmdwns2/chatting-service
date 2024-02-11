@@ -9,26 +9,20 @@ import com.example.port.CurrentDataTimePort;
 import com.example.port.ExistsNamePort;
 import com.example.port.ExistsNicknamePort;
 import com.example.port.SaveUserPort;
-import com.example.stereotype.UseCase;
 import com.example.usecase.SignUpUseCase;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-@UseCase
+@Service
+@RequiredArgsConstructor
 public class SignUpUseCaseImpl implements SignUpUseCase {
     private final ExistsNamePort existsNamePort;
     private final ExistsNicknamePort existsNicknamePort;
     private final SaveUserPort saveUserPort;
     private final CurrentDataTimePort currentDataTimePort;
     private final PasswordEncoder passwordEncoder;
-
-    public SignUpUseCaseImpl(ExistsNamePort existsNamePort, ExistsNicknamePort existsNicknamePort, SaveUserPort saveUserPort, CurrentDataTimePort currentDataTimePort, PasswordEncoder passwordEncoder) {
-        this.existsNamePort = existsNamePort;
-        this.existsNicknamePort = existsNicknamePort;
-        this.saveUserPort = saveUserPort;
-        this.currentDataTimePort = currentDataTimePort;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Transactional
     @Override

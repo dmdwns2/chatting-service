@@ -1,4 +1,4 @@
-package com.example.usecase.impl;
+package com.example;
 
 import com.example.dto.LoginCommand;
 import com.example.dto.UserLoggedInEvent;
@@ -7,27 +7,22 @@ import com.example.exception.NotFoundUserException;
 import com.example.exception.NotMatchPasswordException;
 import com.example.jwt.TokenProvider;
 import com.example.repository.UserRepository;
-import com.example.stereotype.UseCase;
-import com.example.usecase.LoginUseCase;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-@UseCase
-public class LoginUseCaseImpl implements LoginUseCase {
+@Service
+@RequiredArgsConstructor
+public class LoginServiceImpl implements LoginService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-
-    public LoginUseCaseImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenProvider = tokenProvider;
-    }
 
     @Transactional
     @Override
@@ -45,6 +40,7 @@ public class LoginUseCaseImpl implements LoginUseCase {
         );
         String authToken = tokenProvider.createToken(authentication);
 
+        System.out.println("token : " + authToken);
         return new UserLoggedInEvent(user.getName(), authToken);
     }
 
