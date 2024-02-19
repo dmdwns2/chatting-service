@@ -19,7 +19,7 @@ import java.util.List;
 public class ChatMsgController {
     private final ChatMsgService chatMsgService;
 
-    @PostMapping("/{roomId}/messages")
+    @PostMapping("/messages/{roomId}")
     @LoginCheck
     public void sendChat(@PathVariable Long roomId, @RequestBody @Valid ChatMsgRequest message
             , HttpSession session) {
@@ -27,13 +27,13 @@ public class ChatMsgController {
         chatMsgService.sendMessage(message, userId, roomId);
     }
 
-    @GetMapping("/{roomId}/messages")
+    @GetMapping("/messages/{roomId}")
     @LoginCheck
     public void getChatList(
             @PathVariable Long roomId,
             @RequestParam(required = false) Long lastId,
             HttpSession session) {
         Long userId = (Long) session.getAttribute("user");
-        List<ChatMsgDto> roomChatMsgList = chatMsgService.getChatMsgList(roomId, userId, lastId);
+        chatMsgService.getChatMsgList(roomId, userId, lastId);
     }
 }

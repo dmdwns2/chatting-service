@@ -35,17 +35,17 @@ public class ChatRoomRestController {
         return Response.success("got a list of chat rooms");
     }
 
-    @PostMapping("/rooms/{owner}/join")
-    public Response<String> join(@PathVariable Long owner, HttpSession session) {
+    @PostMapping("/rooms/rooms/leave/{roomId}/{roomId}")
+    public Response<String> join(@PathVariable Long roomId, HttpSession session) {
         Long userId = (Long) session.getAttribute("user");
-        chatRoomService.join(owner, userId);
+        chatRoomService.join(roomId, userId);
         return Response.success("enter the chat room");
     }
 
-    @DeleteMapping("/room/{owner}/exit")
-    public Response<String> exit(@PathVariable Long owner, HttpSession session) {
+    @DeleteMapping("/rooms/leave/{roomId}")
+    public Response<String> exit(@PathVariable Long roomId, HttpSession session) {
         Long userId = (Long) session.getAttribute("user");
-        chatRoomService.exit(owner, userId);
+        chatRoomService.exit(roomId, userId);
         return Response.success("came out of the chat room");
     }
 }
