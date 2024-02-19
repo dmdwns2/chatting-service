@@ -3,13 +3,13 @@ package com.example.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "chatting")
-@Table(name = "chatting")
+@Entity(name = "chatmsg")
+@Table(name = "chatmsg")
 @Data
-public class ChattingJPAEntity {
+public class ChatMsgJPAEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chatting_id")
+    @Column(name = "chatmsg_id")
     private Long id;
     @Column(name = "message", columnDefinition = "TEXT")
     private String message;

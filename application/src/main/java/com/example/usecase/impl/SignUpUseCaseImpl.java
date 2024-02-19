@@ -6,7 +6,7 @@ import com.example.exception.DuplicateNameException;
 import com.example.exception.DuplicateNicknameException;
 import com.example.model.User;
 import com.example.port.CurrentDataTimePort;
-import com.example.port.ExistsNamePort;
+import com.example.port.ExistsUserPort;
 import com.example.port.ExistsNicknamePort;
 import com.example.port.SaveUserPort;
 import com.example.usecase.SignUpUseCase;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SignUpUseCaseImpl implements SignUpUseCase {
-    private final ExistsNamePort existsNamePort;
+    private final ExistsUserPort existsUserPort;
     private final ExistsNicknamePort existsNicknamePort;
     private final SaveUserPort saveUserPort;
     private final CurrentDataTimePort currentDataTimePort;
@@ -30,7 +30,8 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
         validate(command);
         String hashedPassword = passwordEncoder.encode(command.getPassword());
 
-        User user = User.of(command.getName(), hashedPassword, command.getNickname(), false);
+        User user = User.of(
+                command.getId(), command.getName(), hashedPassword, command.getNickname(), false);
 
         saveUserPort.save(user);
 
@@ -47,7 +48,7 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
         if (command.getNickname().length() > 8 || command.getNickname().length() < 1) {
             throw new RuntimeException("The nickname should be at least 1 character and no more than 8 characters.");
         }
-        if (existsNamePort.existsName(command.getName())) {
+        if (existsUserPort.existsUser(command.getId())) {
             throw new DuplicateNameException(command.getName());
         }
         if (existsNicknamePort.existsNickname(command.getNickname())) {

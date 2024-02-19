@@ -7,6 +7,7 @@ import com.example.port.ExistsChatRoomPort;
 import com.example.port.LoadChatRoomPort;
 import com.example.port.SaveChatRoomPort;
 import com.example.repository.ChatRoomRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -14,23 +15,29 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatRoomPort, LoadChatRoomPort, DeleteChatRoomPort {
+@RequiredArgsConstructor
+public class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatRoomPort, LoadChatRoomPort, DeleteChatRoomPort {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomMapper chatRoomMapper;
 
-    public ChatRoomPersistenceAdapter(ChatRoomRepository chatRoomRepository, ChatRoomMapper chatRoomMapper) {
-        this.chatRoomRepository = chatRoomRepository;
-        this.chatRoomMapper = chatRoomMapper;
+    @Override
+    public boolean existsChatRoomById(Long roomId) {
+        return chatRoomRepository.findChatRoomById(roomId).isPresent();
     }
 
     @Override
-    public boolean existsChatRoom(String name) {
-        return chatRoomRepository.findByOwner(name).isPresent();
+    public boolean existsChatRoomByOwner(Long owner) {
+        return chatRoomRepository.findChatRoomByOwner(owner).isPresent();
     }
 
     @Override
-    public Optional<ChatRoom> load(String name) {
-        return chatRoomRepository.findByOwner(name).map(chatRoomMapper::entityToModel);
+    public Optional<ChatRoom> load(Long chatRoomId) {
+        return chatRoomRepository.findChatRoomById(chatRoomId).map(chatRoomMapper::entityToModel);
+    }
+
+    @Override
+    public Optional<ChatRoom> loadByOwner(Long owner) {
+        return chatRoomRepository.findChatRoomByOwner(owner).map(chatRoomMapper::entityToModel);
     }
 
     @Override
@@ -44,7 +51,7 @@ class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatRoomPort
     }
 
     @Override
-    public void delete(String name) {
-        chatRoomRepository.deleteChatRoomByOwner(name);
+    public void delete(Long roomId) {
+        chatRoomRepository.deleteChatRoomById(roomId);
     }
 }

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Value
 public class ChatRoomCreatedEvent {
-    String name;
+    Long owner;
     String title;
     LocalDateTime createdAt;
 }

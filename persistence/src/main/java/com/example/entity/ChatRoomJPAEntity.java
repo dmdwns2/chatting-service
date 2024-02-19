@@ -17,10 +17,10 @@ public class ChatRoomJPAEntity {
     @Column(name = "title")
     private String title;
     @Column(name = "owner")
-    private String owner;
+    private Long owner;
 
     @OneToMany(mappedBy = "chatroom")
-    private List<ChattingJPAEntity> chattingList;
+    private List<ChatMsgJPAEntity> chatmsgList;
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.ALL)
     private List<UserChatRoomJPAEntity> userList;
 }

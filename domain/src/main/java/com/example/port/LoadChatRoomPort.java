@@ -7,7 +7,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface LoadChatRoomPort {
-    Optional<ChatRoom> load(String name);
+    Optional<ChatRoom> load(Long roomId);
+    Optional<ChatRoom> loadByOwner(Long owner);
 
     Page<ChatRoom> findAll(Pageable pageable);
 }

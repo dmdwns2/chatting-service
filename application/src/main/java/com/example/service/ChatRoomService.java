@@ -1,4 +1,4 @@
-package com.example;
+package com.example.service;
 
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomCreatedEvent;
@@ -8,11 +8,11 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ChatRoomService {
-    ChatRoomCreatedEvent create(ChatRoomCreateRequest chatRoomCreateRequest, String name);
+    ChatRoomCreatedEvent create(ChatRoomCreateRequest chatRoomCreateRequest, Long userId);
 
     List<ChatRoomDto> getList(Pageable pageable);
 
-    void join(String owner, String name);
+    void join(Long owner, Long userId);
 
-    void exit(String owner, String name);
+    void exit(Long owner, Long userId);
 }

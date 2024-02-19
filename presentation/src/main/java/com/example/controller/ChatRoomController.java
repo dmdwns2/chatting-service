@@ -1,8 +1,8 @@
 package com.example.controller;
 
-import com.example.ChatRoomService;
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomDto;
+import com.example.service.ChatRoomService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,22 +35,22 @@ public class ChatRoomController {
         if (result.hasErrors()) {
             return "createForm";
         }
-        String name = session.getAttribute("user").toString();
-        chatRoomService.create(form, name);
+        Long userId = (Long) session.getAttribute("user");
+        chatRoomService.create(form, userId);
         return "chatroomlist";
     }
 
     @PostMapping("/rooms/{owner}/join")
-    public String join(@PathVariable String owner, HttpSession session) {
-        String name = session.getAttribute("user").toString();
-        chatRoomService.join(owner, name);
+    public String join(@PathVariable Long owner, HttpSession session) {
+        Long userId = (Long) session.getAttribute("user");
+        chatRoomService.join(owner, userId);
         return "home"; // TODO : home -> chatroom
     }
 
     @DeleteMapping("/rooms/{owner}/leave")
-    public String exit(@PathVariable String owner, HttpSession session) {
-        String name = session.getAttribute("user").toString();
-        chatRoomService.exit(owner, name);
+    public String exit(@PathVariable Long owner, HttpSession session) {
+        Long userId = (Long) session.getAttribute("user");
+        chatRoomService.exit(owner, userId);
         return "redirect:/chattings/rooms";
     }
 

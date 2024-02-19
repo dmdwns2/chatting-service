@@ -8,13 +8,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.Objects;
+
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (handler instanceof HandlerMethod && ((HandlerMethod) handler).hasMethodAnnotation(LoginCheck.class)) {
             HttpSession session = request.getSession();
-            if (session == null || session.getAttribute("user") == null) {
+            if (Objects.isNull(session) || Objects.isNull(session.getAttribute("user"))) {
                 throw new NotMatchPasswordException();
             }
         }

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ChatRoomDto {
     private String title;
-    private String owner;
+    private Long owner;
 
     public static ChatRoomDto of(ChatRoom chatRoom) {
         return new ChatRoomDto(chatRoom.getTitle(), chatRoom.getOwner());

@@ -8,7 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoomJPAEntity, Long> {
-    Optional<ChatRoomJPAEntity> findByOwner(String name);
+    Optional<ChatRoomJPAEntity> findChatRoomById(Long roomId);
+    Optional<ChatRoomJPAEntity> findChatRoomByOwner(Long owner);
 
-    void deleteChatRoomByOwner(String owner);
+    void deleteChatRoomById(Long roomId);
 }

@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.LoginService;
+import com.example.service.LoginService;
 import com.example.dto.LoginCommand;
 import com.example.dto.LogoutCommand;
 import com.example.exception.NotFoundUserException;
