@@ -1,6 +1,6 @@
 package com.example.usecase.impl;
 
-import com.example.LoginServiceImpl;
+import com.example.service.LoginServiceImpl;
 import com.example.dto.LoginCommand;
 import com.example.dto.UserLoggedInEvent;
 import com.example.entity.UserJPAEntity;

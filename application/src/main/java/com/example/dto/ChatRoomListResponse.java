@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatRoomListResponse {
     private String title;
-    private String owner;
+    private Long owner;
     private LocalDateTime createdDate;
 }

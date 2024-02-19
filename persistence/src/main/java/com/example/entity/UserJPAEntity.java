@@ -23,7 +23,7 @@ public class UserJPAEntity {
     private Boolean isLogin;
 
     @OneToMany(mappedBy = "user")
-    private List<ChattingJPAEntity> chatting;
+    private List<ChatMsgJPAEntity> chatmsgList;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserChatRoomJPAEntity> chatroomList;
 }

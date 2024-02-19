@@ -1,4 +1,4 @@
-package com.example;
+package com.example.service;
 
 import com.example.dto.LoginCommand;
 import com.example.dto.LogoutCommand;

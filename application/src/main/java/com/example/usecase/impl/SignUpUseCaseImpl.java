@@ -30,7 +30,12 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
         validate(command);
         String hashedPassword = passwordEncoder.encode(command.getPassword());
 
-        User user = User.of(command.getName(), hashedPassword, command.getNickname(), false);
+        User user = User.builder()
+                .name(command.getName())
+                .password(hashedPassword)
+                .nickname(command.getNickname())
+                .isLogin(false)
+                .build();
 
         saveUserPort.save(user);
 

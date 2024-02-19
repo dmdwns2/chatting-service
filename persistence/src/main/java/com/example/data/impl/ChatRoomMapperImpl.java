@@ -10,6 +10,7 @@ public class ChatRoomMapperImpl implements ChatRoomMapper {
     @Override
     public ChatRoomJPAEntity modelToEntity(ChatRoom chatRoom) {
         ChatRoomJPAEntity entity = new ChatRoomJPAEntity();
+        entity.setId(chatRoom.getId());
         entity.setTitle(chatRoom.getTitle());
         entity.setOwner(chatRoom.getOwner());
         return entity;
@@ -17,6 +18,6 @@ public class ChatRoomMapperImpl implements ChatRoomMapper {
 
     @Override
     public ChatRoom entityToModel(ChatRoomJPAEntity entity) {
-        return ChatRoom.of(entity.getTitle(), entity.getOwner());
+        return ChatRoom.of(entity.getId(), entity.getTitle(), entity.getOwner());
     }
 }

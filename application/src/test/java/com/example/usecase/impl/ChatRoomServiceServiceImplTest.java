@@ -1,10 +1,11 @@
 package com.example.usecase.impl;
 
-import com.example.ChatRoomServiceServiceImpl;
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomCreatedEvent;
 import com.example.exception.ExistsChatRoomException;
+import com.example.model.User;
 import com.example.port.*;
+import com.example.service.ChatRoomServiceServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -63,28 +65,32 @@ class ChatRoomServiceServiceImplTest {
     @DisplayName("채팅방 생성 성공")
     @Test
     void create_success() {
-        String name = "messi";
+        Long userId = 1L;
         ChatRoomCreateRequest command = new ChatRoomCreateRequest("아무나");
-        when(existsChatRoomPort.existsChatRoom(command.getTitle())).thenReturn(false);
+        when(existsChatRoomPort.existsChatRoomByOwner(userId)).thenReturn(false);
         when(currentDataTimePort.now()).thenReturn(LocalDateTime.now());
+        when(loadUserPort.load(userId)).thenReturn(Optional.of(
+                User.of(userId,"m","n","s",false)));
 
-        ChatRoomCreatedEvent result = chatRoomUseCase.create(command, name);
+        ChatRoomCreatedEvent result = chatRoomUseCase.create(command, userId);
 
         assertThat(command.getTitle()).isEqualTo(result.getTitle());
-        assertThat(name).isEqualTo(result.getName());
+        assertThat(userId).isEqualTo(result.getOwner());
     }
 
     @DisplayName("이미 채팅방이 존재하는 경우 에러 발생")
     @Test
     void create_exists_chatroom() {
-        String name = "messi";
+        Long userId = 1L;
         ChatRoomCreateRequest command = new ChatRoomCreateRequest("아무나");
-        when(existsChatRoomPort.existsChatRoom(name)).thenReturn(true);
+        when(existsChatRoomPort.existsChatRoomByOwner(userId)).thenReturn(true);
+        when(loadUserPort.load(userId)).thenReturn(Optional.of(
+                User.of(userId,"m","n","s",false)));
 
-        assertThatThrownBy(() -> chatRoomUseCase.create(command, name))
+        assertThatThrownBy(() -> chatRoomUseCase.create(command, userId))
                 .isInstanceOf(ExistsChatRoomException.class)
                 .hasMessage("There is a chatroom that already exists.");
 
-        verify(existsChatRoomPort, times(1)).existsChatRoom(anyString());
+        verify(existsChatRoomPort, times(1)).existsChatRoomByOwner(any());
     }
 }

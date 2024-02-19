@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat</title>
+  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/main.css" rel="stylesheet">
   <style>
         /* CSS 스타일링은 여기에 작성합니다 */
-    </style>
+  </style>
 </head>
 <body>
 <header>
@@ -16,7 +18,7 @@
 <div class="chat-container">
   <div class="messages">
     <!-- 채팅 메시지 표시 -->
-    <ul>
+    <ul id="conversation" class="table table-striped">
       <li class="sent">Sent message</li>
       <li class="received">Received message</li>
       <!-- 채팅 메시지는 이곳에 동적으로 추가됩니다. -->
@@ -25,7 +27,7 @@
 
   <div class="input-area">
     <input type="text" id="messageInput" placeholder="Type your message...">
-    <button onclick="sendMessage()">Send</button>
+    <button id="send" class="btn btn-default" onclick="sendMessage()">Send</button>
   </div>
 </div>
 
@@ -33,11 +35,19 @@
   <!-- 채팅방 참여자 목록과 나가기 버튼 -->
 </footer>
 
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/app.js"></script>
 <script>
-        // JavaScript 로직은 여기에 작성합니다
-        function sendMessage() {
-            // 메시지 전송 로직을 구현합니다.
-        }
-    </script>
+    // JavaScript 로직은 여기에 작성합니다
+    function sendMessage() {
+        // 메시지 전송 로직을 구현합니다.
+        var messageInput = document.getElementById("messageInput");
+        var message = messageInput.value;
+        // message를 서버로 전송하는 로직을 여기에 추가합니다.
+        messageInput.value = ""; // 메시지 입력 필드를 비웁니다.
+    }
+</script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import com.example.data.UserMapper;
 import com.example.model.User;
 import com.example.port.*;
 import com.example.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -11,13 +12,15 @@ import java.util.Optional;
 import java.util.Set;
 
 @Component
-class UserPersistenceAdapter implements ExistsNamePort, ExistsNicknamePort, SaveUserPort, LoadUserPort, GetUserPort {
+@RequiredArgsConstructor
+public class UserPersistenceAdapter implements
+        ExistsNamePort, ExistsUserPort, ExistsNicknamePort, SaveUserPort, LoadUserPort, GetUserPort {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    UserPersistenceAdapter(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
+    @Override
+    public boolean existsUser(Long userId) {
+        return userRepository.findById(userId).isPresent();
     }
 
     @Override
@@ -36,8 +39,8 @@ class UserPersistenceAdapter implements ExistsNamePort, ExistsNicknamePort, Save
     }
 
     @Override
-    public Optional<User> load(String name) {
-        return userRepository.findByName(name).map(userMapper::entityToModel);
+    public Optional<User> load(Long userId) {
+        return userRepository.findById(userId).map(userMapper::entityToModel);
     }
 
     @Override

@@ -1,11 +1,7 @@
 package com.example.port;
 
-import com.example.model.ChatRoom;
-
-import java.util.Optional;
-
 public interface ExistsChatRoomPort {
-    boolean existsChatRoom(String name);
+    boolean existsChatRoomById(Long roomId);
 
-    Optional<ChatRoom> load(String name);
+    boolean existsChatRoomByOwner(Long owner);
 }

@@ -5,18 +5,14 @@ import com.example.model.UserChatRoom;
 import com.example.port.DeleteUserChatRoomPort;
 import com.example.port.SaveUserChatRoomPort;
 import com.example.repository.UserChatRoomRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserChatRoomPersistenceAdapter implements SaveUserChatRoomPort, DeleteUserChatRoomPort {
     private final UserChatRoomRepository userChatRoomRepository;
     private final UserChatRoomMapper userChatRoomMapper;
-
-    public UserChatRoomPersistenceAdapter(UserChatRoomRepository userChatRoomRepository
-            , UserChatRoomMapper userChatRoomMapper) {
-        this.userChatRoomRepository = userChatRoomRepository;
-        this.userChatRoomMapper = userChatRoomMapper;
-    }
 
     @Override
     public void save(UserChatRoom userChatRoom) {
@@ -24,7 +20,7 @@ public class UserChatRoomPersistenceAdapter implements SaveUserChatRoomPort, Del
     }
 
     @Override
-    public void delete(String name) {
-        userChatRoomRepository.deleteUserChatRoomByUser_Name(name);
+    public void delete(Long id) {
+        userChatRoomRepository.deleteUserChatRoomById(id);
     }
 }

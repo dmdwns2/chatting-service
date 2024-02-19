@@ -1,5 +1,5 @@
 package com.example.port;
 
-public interface DeleteUserChatRoomPort {
+public interface DeleteChatMsgPort {
     void delete(Long id);
 }

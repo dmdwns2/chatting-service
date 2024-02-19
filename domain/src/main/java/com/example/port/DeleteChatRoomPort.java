@@ -1,5 +1,5 @@
 package com.example.port;
 
 public interface DeleteChatRoomPort {
-    void delete(String name);
+    void delete(Long chatRoomId);
 }

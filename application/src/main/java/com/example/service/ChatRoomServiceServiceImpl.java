@@ -1,4 +1,4 @@
-package com.example;
+package com.example.service;
 
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomCreatedEvent;
@@ -34,11 +34,15 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
 
     @Transactional
     @Override
-    public ChatRoomCreatedEvent create(ChatRoomCreateRequest chatRoomCreateRequest, String name) {
-        if (existsChatRoomPort.existsChatRoom(name)) {
+    public ChatRoomCreatedEvent create(ChatRoomCreateRequest chatRoomCreateRequest, Long userId) {
+        if (existsChatRoomPort.existsChatRoomByOwner(userId)) {
             throw new ExistsChatRoomException();
         }
-        com.example.model.ChatRoom chatRoom = com.example.model.ChatRoom.of(chatRoomCreateRequest.getTitle(), name);
+        User user = loadUserPort.load(userId).orElseThrow(() -> new NotFoundUserException(userId.toString()));
+        ChatRoom chatRoom = ChatRoom.builder()
+                .owner(user.getId())
+                .title(chatRoomCreateRequest.getTitle())
+                .build();
 
         saveChatRoomPort.save(chatRoom);
         return new ChatRoomCreatedEvent(chatRoom.getOwner(), chatRoom.getTitle(), currentDataTimePort.now());
@@ -46,19 +50,19 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
 
     @Override
     public List<ChatRoomDto> getList(Pageable pageable) {
-        Page<com.example.model.ChatRoom> pages = loadChatRoomPort.findAll(pageable);
+        Page<ChatRoom> pages = loadChatRoomPort.findAll(pageable);
         return getChatRoomDto(pages);
     }
 
     @Transactional
     @Override
-    public void join(String owner, String name) {
-        if (!existsChatRoomPort.existsChatRoom(owner)) {
+    public void join(Long roomId, Long userId) {
+        if (!existsChatRoomPort.existsChatRoomById(roomId)) {
             throw new NotExistsChatRoomException();
         }
-        ChatRoom chatRoom = loadChatRoomPort.load(owner)
+        ChatRoom chatRoom = loadChatRoomPort.load(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
-        User user = loadUserPort.load(name).orElseThrow(() -> new NotFoundUserException(name));
+        User user = loadUserPort.load(userId).orElseThrow(() -> new NotFoundUserException(userId.toString()));
         UserChatRoom userChatRoom = UserChatRoom.builder()
                 .user(user)
                 .chatRoom(chatRoom)
@@ -68,20 +72,20 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
 
     @Override
     @Transactional
-    public void exit(String owner, String name) {
-        ChatRoom chatRoom = loadChatRoomPort.load(owner)
+    public void exit(Long userId, Long roomId) {
+        ChatRoom chatRoom = loadChatRoomPort.load(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
 
-        if (Objects.equals(chatRoom.getOwner(), name)) {
-            deleteUserChatRoomPort.delete(name);
-            deleteChatRoomPort.delete(name);
+        if (Objects.equals(chatRoom.getOwner(), userId)) {
+            deleteUserChatRoomPort.delete(userId);
+            deleteChatRoomPort.delete(userId);
         }
-        if (!Objects.equals(chatRoom.getOwner(), name)) {
-            deleteUserChatRoomPort.delete(name);
+        if (!Objects.equals(chatRoom.getId(), userId)) {
+            deleteUserChatRoomPort.delete(userId);
         }
     }
 
-    private static List<ChatRoomDto> getChatRoomDto(Page<com.example.model.ChatRoom> pages) {
+    private static List<ChatRoomDto> getChatRoomDto(Page<ChatRoom> pages) {
         return pages.stream()
                 .map(ChatRoomDto::of)
                 .collect(Collectors.toList());

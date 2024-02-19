@@ -3,21 +3,19 @@ package com.example.data.impl;
 import com.example.data.UserChatRoomMapper;
 import com.example.entity.UserChatRoomJPAEntity;
 import com.example.model.UserChatRoom;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserChatRoomMapperImpl implements UserChatRoomMapper {
     private final UserMapperImpl userMapper;
     private final ChatRoomMapperImpl chatRoomMapper;
 
-    public UserChatRoomMapperImpl(UserMapperImpl userMapper, ChatRoomMapperImpl chatRoomMapper) {
-        this.userMapper = userMapper;
-        this.chatRoomMapper = chatRoomMapper;
-    }
-
     @Override
     public UserChatRoomJPAEntity modelToEntity(UserChatRoom userChatRoom) {
         UserChatRoomJPAEntity entity = new UserChatRoomJPAEntity();
+        entity.setId(userChatRoom.getId());
         entity.setUser(userMapper.modelToEntity(userChatRoom.getUser()));
         entity.setChatroom(chatRoomMapper.modelToEntity(userChatRoom.getChatRoom()));
         return entity;
@@ -25,7 +23,8 @@ public class UserChatRoomMapperImpl implements UserChatRoomMapper {
 
     @Override
     public UserChatRoom entityToModel(UserChatRoomJPAEntity userChatroomJPAEntity) {
-        return UserChatRoom.of(userMapper.entityToModel(userChatroomJPAEntity.getUser()),
+        return UserChatRoom.of(userChatroomJPAEntity.getId(),
+                userMapper.entityToModel(userChatroomJPAEntity.getUser()),
                 chatRoomMapper.entityToModel(userChatroomJPAEntity.getChatroom()));
     }
 }

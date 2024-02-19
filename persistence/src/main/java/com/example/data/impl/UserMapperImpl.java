@@ -10,6 +10,7 @@ class UserMapperImpl implements UserMapper {
     @Override
     public UserJPAEntity modelToEntity(User user) {
         UserJPAEntity entity = new UserJPAEntity();
+        entity.setId(user.getId());
         entity.setName(user.getName());
         entity.setPassword(user.getPassword());
         entity.setNickname(user.getNickname());
@@ -19,6 +20,7 @@ class UserMapperImpl implements UserMapper {
 
     @Override
     public User entityToModel(UserJPAEntity entity) {
-        return User.of(entity.getName(), entity.getPassword(), entity.getNickname(), entity.getIsLogin());
+        return User.of(
+                entity.getId(), entity.getName(), entity.getPassword(), entity.getNickname(), entity.getIsLogin());
     }
 }
