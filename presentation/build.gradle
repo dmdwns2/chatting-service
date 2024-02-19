@@ -3,4 +3,6 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
     implementation 'org.hibernate:hibernate-validator:8.0.1.Final'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.1'
+    implementation 'org.webjars:bootstrap:5.3.2'
+
 }
