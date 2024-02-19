@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatMsgRepository extends JpaRepository<ChatMsgJPAEntity, Long> {
-    void deleteChatMsgByChatRoom_Id(Long chatRoomId);
+    void deleteChatMsgByChatroom_Id(Long chatRoomId);
 }

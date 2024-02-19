@@ -16,7 +16,7 @@ public class ChatMsgPersistenceAdapter implements SaveChatMsgPort, DeleteChatMsg
 
     @Override
     public void delete(Long chatRoomId) {
-        chatMsgRepository.deleteChatMsgByChatRoom_Id(chatRoomId);
+        chatMsgRepository.deleteChatMsgByChatroom_Id(chatRoomId);
     }
 
     @Override

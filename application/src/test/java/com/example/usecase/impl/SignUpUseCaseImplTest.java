@@ -5,8 +5,8 @@ import com.example.dto.UserCreatedEvent;
 import com.example.exception.DuplicateNameException;
 import com.example.exception.DuplicateNicknameException;
 import com.example.port.CurrentDataTimePort;
+import com.example.port.ExistsNamePort;
 import com.example.port.ExistsNicknamePort;
-import com.example.port.ExistsUserPort;
 import com.example.port.SaveUserPort;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 public class SignUpUseCaseImplTest {
     @Mock
-    private ExistsUserPort existsUserPort;
+    private ExistsNamePort existsNamePort;
 
     @Mock
     private ExistsNicknamePort existsNicknamePort;
@@ -44,7 +44,7 @@ public class SignUpUseCaseImplTest {
         MockitoAnnotations.openMocks(this);
 
         signUpUseCase = new SignUpUseCaseImpl(
-                existsUserPort,
+                existsNamePort,
                 existsNicknamePort,
                 saveUserPort,
                 currentDataTimePort,
@@ -53,8 +53,8 @@ public class SignUpUseCaseImplTest {
 
     @Test
     void join_ValidUser_ReturnsUserCreatedEvent() {
-        SignUpCommand command = new SignUpCommand(1L, "messi", "2022wc", "leo");
-        when(existsUserPort.existsUser(command.getId())).thenReturn(false);
+        SignUpCommand command = new SignUpCommand("messi", "2022wc", "leo");
+        when(existsNamePort.existsName(command.getName())).thenReturn(false);
         when(existsNicknamePort.existsNickname(command.getNickname())).thenReturn(false);
         when(currentDataTimePort.now()).thenReturn(LocalDateTime.now());
 
@@ -66,14 +66,14 @@ public class SignUpUseCaseImplTest {
 
     @Test
     void join_InvalidName_ThrowsRuntimeException() {
-        SignUpCommand command = new SignUpCommand(1L, "messssssssssssssssssssssi", "2022wc", "leo");
+        SignUpCommand command = new SignUpCommand("messssssssssssssssssssssi", "2022wc", "leo");
 
         assertThrows(RuntimeException.class, () -> signUpUseCase.join(command));
     }
 
     @Test
     void join_InvalidPassword_ThrowsRuntimeException() {
-        SignUpCommand command = new SignUpCommand(1L, "messi", "2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022" +
+        SignUpCommand command = new SignUpCommand("messi", "2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022" +
                 "wcwinner2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022wcwinner", "leo");
 
         assertThrows(RuntimeException.class, () -> signUpUseCase.join(command));
@@ -81,22 +81,22 @@ public class SignUpUseCaseImplTest {
 
     @Test
     void join_InvalidNickname_ThrowsRuntimeException() {
-        SignUpCommand command = new SignUpCommand(1L, "messi", "2022wc", "leoooooooooooooooooooo");
+        SignUpCommand command = new SignUpCommand("messi", "2022wc", "leoooooooooooooooooooo");
 
         assertThrows(RuntimeException.class, () -> signUpUseCase.join(command));
     }
 
     @Test
     void join_DuplicateName_ThrowsDuplicateNameException() {
-        SignUpCommand command = new SignUpCommand(1L, "messi", "2022wc", "leo");
-        when(existsUserPort.existsUser(command.getId())).thenReturn(true);
+        SignUpCommand command = new SignUpCommand("messi", "2022wc", "leo");
+        when(existsNamePort.existsName(command.getName())).thenReturn(true);
 
         assertThrows(DuplicateNameException.class, () -> signUpUseCase.join(command));
     }
 
     @Test
     void join_DuplicateNickname_ThrowsDuplicateNicknameException() {
-        SignUpCommand command = new SignUpCommand(1L, "messi", "2022wc", "leo");
+        SignUpCommand command = new SignUpCommand("messi", "2022wc", "leo");
         when(existsNicknamePort.existsNickname(command.getNickname())).thenReturn(true);
 
         assertThrows(DuplicateNicknameException.class, () -> signUpUseCase.join(command));

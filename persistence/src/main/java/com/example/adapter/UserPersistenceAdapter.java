@@ -13,13 +13,19 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements ExistsUserPort, ExistsNicknamePort, SaveUserPort, LoadUserPort, GetUserPort {
+public class UserPersistenceAdapter implements
+        ExistsNamePort, ExistsUserPort, ExistsNicknamePort, SaveUserPort, LoadUserPort, GetUserPort {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Override
     public boolean existsUser(Long userId) {
         return userRepository.findById(userId).isPresent();
+    }
+
+    @Override
+    public boolean existsName(String name) {
+        return userRepository.findByName(name).isPresent();
     }
 
     @Override
