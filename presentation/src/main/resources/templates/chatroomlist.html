@@ -25,8 +25,8 @@
                         <div th:each="room : ${allChatRooms.content}" class="column is-one-third">
                             <div class="box">
                                 <h3 class="subtitle" th:text="${room.title}">Room Name</h3>
-                                <p th:text="${room.owner}">Owner</p>
-                                <a th:href="@{/chattings/{owner}/join(owner=${room.owner})}" class="button is-info">Enter
+                                <p th:text="${room.roomId}">Owner</p>
+                                <a th:href="@{/chattings/join/{roomId}(roomId=${room.roomId})}" class="button is-info">Enter
                                     Room</a>
                             </div>
                         </div>

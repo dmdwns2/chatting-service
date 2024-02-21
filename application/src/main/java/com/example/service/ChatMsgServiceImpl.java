@@ -55,7 +55,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     @Override
     @Transactional(readOnly = true)
     public List<ChatMsgDto> getChatMsgList(Long roomId, Long userId, Long lastId) {
-        List<ChatMsgJPAEntity> chatMsgsList = loadChatMsgCustomPort.findOwnerByChatMsg(roomId, lastId);
+        List<ChatMsgJPAEntity> chatMsgsList = loadChatMsgCustomPort.findChatroomIdByChatMsg(roomId, lastId);
         List<ChatMsgDto> chatMsgDtos = new ArrayList<>();
 
         for (ChatMsgJPAEntity chatMsg : chatMsgsList) {
@@ -70,5 +70,11 @@ public class ChatMsgServiceImpl implements ChatMsgService {
             }
         }
         return chatMsgDtos;
+    }
+
+    @Override
+    @Transactional
+    public Long findUserIdByName(String name) {
+        return loadUserPort.load(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
     }
 }

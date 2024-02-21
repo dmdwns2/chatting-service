@@ -10,11 +10,11 @@ import com.example.model.ChatRoom;
 import com.example.model.User;
 import com.example.model.UserChatRoom;
 import com.example.port.*;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +48,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         return new ChatRoomCreatedEvent(chatRoom.getOwner(), chatRoom.getTitle(), currentDataTimePort.now());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ChatRoomDto> getList(Pageable pageable) {
         Page<ChatRoom> pages = loadChatRoomPort.findAll(pageable);
@@ -85,9 +86,16 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         }
     }
 
+    @Override
+    @Transactional
+    public Long findUserIdByName(String name) {
+        return loadUserPort.load(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
+    }
+
     private static List<ChatRoomDto> getChatRoomDto(Page<ChatRoom> pages) {
         return pages.stream()
                 .map(ChatRoomDto::of)
                 .collect(Collectors.toList());
     }
+
 }

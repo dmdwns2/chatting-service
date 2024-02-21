@@ -35,22 +35,25 @@ public class ChatRoomController {
         if (result.hasErrors()) {
             return "createForm";
         }
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.create(form, userId);
         return "chatroomlist";
     }
 
-    @PostMapping("/rooms/{owner}/join")
-    public String join(@PathVariable Long owner, HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
-        chatRoomService.join(owner, userId);
-        return "home"; // TODO : home -> chatroom
+    @PostMapping("/rooms/join/{roomId}")
+    public String join(@PathVariable Long roomId, HttpSession session) {
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
+        chatRoomService.join(roomId, userId);
+        return "chatroom";
     }
 
-    @DeleteMapping("/rooms/{owner}/leave")
-    public String exit(@PathVariable Long owner, HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
-        chatRoomService.exit(owner, userId);
+    @DeleteMapping("/rooms/leave/{roomId}")
+    public String exit(@PathVariable Long roomId, HttpSession session) {
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
+        chatRoomService.exit(roomId, userId);
         return "redirect:/chattings/rooms";
     }
 

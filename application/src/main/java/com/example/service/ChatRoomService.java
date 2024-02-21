@@ -15,4 +15,6 @@ public interface ChatRoomService {
     void join(Long owner, Long userId);
 
     void exit(Long owner, Long userId);
+
+    Long findUserIdByName(String name);
 }
