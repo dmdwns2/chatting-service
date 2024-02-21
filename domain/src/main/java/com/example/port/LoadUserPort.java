@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface LoadUserPort {
     Optional<User> load(Long userId);
+
+    Optional<User> load(String name);
 }

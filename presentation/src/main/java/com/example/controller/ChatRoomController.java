@@ -35,21 +35,24 @@ public class ChatRoomController {
         if (result.hasErrors()) {
             return "createForm";
         }
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.create(form, userId);
         return "chatroomlist";
     }
 
     @PostMapping("/rooms/join/{roomId}")
     public String join(@PathVariable Long roomId, HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.join(roomId, userId);
-        return "home"; // TODO : home -> chatroom
+        return "chatroom";
     }
 
     @DeleteMapping("/rooms/leave/{roomId}")
     public String exit(@PathVariable Long roomId, HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.exit(roomId, userId);
         return "redirect:/chattings/rooms";
     }

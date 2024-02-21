@@ -10,4 +10,6 @@ public interface ChatMsgService {
     ChatMsgResponse sendMessage(ChatMsgRequest message, Long userId, Long roomId);
 
     List<ChatMsgDto> getChatMsgList(Long roomId, Long userId, Long lastId);
+
+    Long findUserIdByName(String name);
 }

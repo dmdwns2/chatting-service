@@ -5,5 +5,5 @@ import com.example.entity.ChatMsgJPAEntity;
 import java.util.List;
 
 public interface LoadChatMsgCustomPort {
-    List<ChatMsgJPAEntity> findOwnerByChatMsg(Long chatMsg, Long lastId);
+    List<ChatMsgJPAEntity> findChatroomIdByChatMsg(Long chatMsg, Long lastId);
 }

@@ -21,7 +21,8 @@ public class ChatRoomRestController {
     @PostMapping("/rooms")
     public Response<String> create(@RequestBody @Valid ChatRoomCreateRequest chatRoomCreateRequest,
                                    HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.create(chatRoomCreateRequest, userId);
         return Response.success("created a chatroom");
     }
@@ -35,16 +36,18 @@ public class ChatRoomRestController {
         return Response.success("got a list of chat rooms");
     }
 
-    @PostMapping("/rooms/rooms/leave/{roomId}/{roomId}")
+    @PostMapping("/rooms/leave/{roomId}")
     public Response<String> join(@PathVariable Long roomId, HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.join(roomId, userId);
         return Response.success("enter the chat room");
     }
 
     @DeleteMapping("/rooms/leave/{roomId}")
     public Response<String> exit(@PathVariable Long roomId, HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.exit(roomId, userId);
         return Response.success("came out of the chat room");
     }

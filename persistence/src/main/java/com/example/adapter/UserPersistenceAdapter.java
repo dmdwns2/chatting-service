@@ -44,6 +44,11 @@ public class UserPersistenceAdapter implements
     }
 
     @Override
+    public Optional<User> load(String name) {
+        return userRepository.findByName(name).map(userMapper::entityToModel);
+    }
+
+    @Override
     public Page<User> list(String query, int page) {
         return null;
     }

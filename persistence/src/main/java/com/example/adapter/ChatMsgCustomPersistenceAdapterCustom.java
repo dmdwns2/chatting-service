@@ -16,7 +16,7 @@ public class ChatMsgCustomPersistenceAdapterCustom implements LoadChatMsgCustomP
     private final EntityManager entityManager;
 
     @Override
-    public List<ChatMsgJPAEntity> findOwnerByChatMsg(Long chatMsg, Long lastId) {
+    public List<ChatMsgJPAEntity> findChatroomIdByChatMsg(Long chatMsg, Long lastId) {
         String first = "select c from chatmsg c where c.chatroom.id =: chatmsg order by c.id asc";
         String paging = "select c from chatmsg c where c.chatroom.id =: chatmsg and c.id > :lastId order by c.id asc";
 
