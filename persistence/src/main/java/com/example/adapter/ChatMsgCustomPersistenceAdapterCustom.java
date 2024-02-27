@@ -16,7 +16,7 @@ public class ChatMsgCustomPersistenceAdapterCustom implements LoadChatMsgCustomP
     private final EntityManager entityManager;
 
     @Override
-    public List<ChatMsgJPAEntity> findChatroomIdByChatMsg(Long chatMsg, Long lastId) {
+    public List<ChatMsgJPAEntity> findChatroomIdByChatMsg(Long chatmsg, Long lastId) {
         String first = "select c from chatmsg c where c.chatroom.id =: chatmsg order by c.id asc";
         String paging = "select c from chatmsg c where c.chatroom.id =: chatmsg and c.id > :lastId order by c.id asc";
 
@@ -25,12 +25,12 @@ public class ChatMsgCustomPersistenceAdapterCustom implements LoadChatMsgCustomP
         if (Objects.isNull(lastId)) {
             query = entityManager
                     .createQuery(first, ChatMsgJPAEntity.class)
-                    .setParameter("chatMsg", chatMsg);
+                    .setParameter("chatmsg", chatmsg);
         }
         if (Objects.nonNull(lastId)) {
             query = entityManager
                     .createQuery(paging, ChatMsgJPAEntity.class)
-                    .setParameter("chatMsg", chatMsg)
+                    .setParameter("chatmsg", chatmsg)
                     .setParameter("lastId", lastId);
         }
         return query
