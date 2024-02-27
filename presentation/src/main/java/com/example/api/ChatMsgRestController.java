@@ -21,7 +21,7 @@ public class ChatMsgRestController {
 
     private final ChatMsgService chatMsgService;
 
-    @PostMapping("/msg/{roomId}")
+    @PostMapping("/messages/{roomId}")
     @LoginCheck
     public ResponseEntity<Object> sendChat(
             @PathVariable Long roomId,
@@ -33,7 +33,7 @@ public class ChatMsgRestController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/msg/{roomId}")
+    @GetMapping("/messages/{roomId}")
     @LoginCheck
     public ResponseEntity<Object> getChatList(
             @PathVariable Long roomId,

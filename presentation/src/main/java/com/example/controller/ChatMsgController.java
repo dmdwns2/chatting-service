@@ -1,19 +1,15 @@
 package com.example.controller;
 
-import com.example.dto.ChatMsgDto;
 import com.example.dto.ChatMsgRequest;
-import com.example.dto.ChatMsgResponse;
 import com.example.security.LoginCheck;
 import com.example.service.ChatMsgService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/chattings")
 public class ChatMsgController {
@@ -23,7 +19,8 @@ public class ChatMsgController {
     @LoginCheck
     public void sendChat(@PathVariable Long roomId, @RequestBody @Valid ChatMsgRequest message
             , HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatMsgService.findUserIdByName(name);
         chatMsgService.sendMessage(message, userId, roomId);
     }
 
@@ -33,7 +30,9 @@ public class ChatMsgController {
             @PathVariable Long roomId,
             @RequestParam(required = false) Long lastId,
             HttpSession session) {
-        Long userId = (Long) session.getAttribute("user");
+        String name = session.getAttribute("user").toString();
+        Long userId = chatMsgService.findUserIdByName(name);
         chatMsgService.getChatMsgList(roomId, userId, lastId);
     }
+
 }
