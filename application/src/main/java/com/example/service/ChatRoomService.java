@@ -4,6 +4,7 @@ import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomCreatedEvent;
 import com.example.dto.ChatRoomDto;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public interface ChatRoomService {
     void join(Long owner, Long userId);
 
     void exit(Long owner, Long userId);
+
+    @Transactional(readOnly = true)
+    int loadNumOfUserByChatRoomId(Long roomId);
 
     Long findUserIdByName(String name);
 }

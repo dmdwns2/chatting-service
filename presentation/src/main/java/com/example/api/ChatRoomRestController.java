@@ -30,13 +30,18 @@ public class ChatRoomRestController {
     @GetMapping("/rooms")
     public Response<String> getList(Pageable pageable) {
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
+        StringBuilder responseBuilder = new StringBuilder();
         if (allChatRooms.size() == 0) {
             return Response.error("there is no chat room");
         }
-        return Response.success("got a list of chat rooms");
+        for (ChatRoomDto room : allChatRooms) {
+            responseBuilder.append("title : ").append(room.getTitle())
+                    .append(" , owner : ").append(room.getOwner()).append("\n");
+        }
+        return Response.success(responseBuilder.toString());
     }
 
-    @PostMapping("/rooms/leave/{roomId}")
+    @PostMapping("/rooms/join/{roomId}")
     public Response<String> join(@PathVariable Long roomId, HttpSession session) {
         String name = session.getAttribute("user").toString();
         Long userId = chatRoomService.findUserIdByName(name);
@@ -50,5 +55,11 @@ public class ChatRoomRestController {
         Long userId = chatRoomService.findUserIdByName(name);
         chatRoomService.exit(roomId, userId);
         return Response.success("came out of the chat room");
+    }
+
+    @GetMapping("/rooms/renew/{roomId}")
+    public Response<String> renewNumOfUser(@PathVariable Long roomId){
+        int numOfUsers = chatRoomService.loadNumOfUserByChatRoomId(roomId);
+        return Response.success("number of users in the current chatroom : " + numOfUsers);
     }
 }
