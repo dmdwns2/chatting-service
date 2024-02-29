@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserChatRoomRepository extends JpaRepository<UserChatRoomJPAEntity, Long> {
     void deleteUserChatRoomById(Long Id);
+    int countByChatroomId(Long roomId);
+    boolean existsByUserIdAndChatroomId(Long userId, Long roomId);
 }

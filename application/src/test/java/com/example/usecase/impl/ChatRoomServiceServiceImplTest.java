@@ -44,6 +44,12 @@ class ChatRoomServiceServiceImplTest {
     @Mock
     private DeleteChatRoomPort deleteChatRoomPort;
 
+    @Mock
+    private LoadNumOfUserByChatRoomPort loadNumOfUserByChatRoomPort;
+
+    @Mock
+    private ExsistUserChatRoomPort exsistUserChatRoomPort;
+
     private ChatRoomServiceServiceImpl chatRoomUseCase;
 
     @BeforeEach
@@ -58,7 +64,9 @@ class ChatRoomServiceServiceImplTest {
                 loadUserPort,
                 saveUserChatRoomPort,
                 deleteUserChatRoomPort,
-                deleteChatRoomPort
+                deleteChatRoomPort,
+                loadNumOfUserByChatRoomPort,
+                exsistUserChatRoomPort
         );
     }
 
