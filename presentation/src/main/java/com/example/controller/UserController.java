@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.service.LoginService;
+import com.example.service.UserService;
 import com.example.dto.LoginCommand;
 import com.example.dto.LogoutCommand;
 import com.example.exception.NotFoundUserException;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/chattings")
-public class LoginController {
-    private final LoginService loginService;
+public class UserController {
+    private final UserService userService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -38,7 +38,7 @@ public class LoginController {
             return loginForm(model);
         }
         try {
-            loginService.login(new LoginCommand(
+            userService.login(new LoginCommand(
                     loginForm.getName(),
                     loginForm.getPassword()
             ));
@@ -55,7 +55,7 @@ public class LoginController {
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         String name = session.getAttribute("user").toString();
-        loginService.logout(new LogoutCommand(name));
+        userService.logout(new LogoutCommand(name));
         session.invalidate();
         return "home";
     }

@@ -6,6 +6,7 @@ import com.example.dto.ChatMsgResponse;
 import com.example.exception.NotExistsClientException;
 import com.example.security.LoginCheck;
 import com.example.service.ChatMsgService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/chattings")
+@Tag(name = "ChatMsg")
 public class ChatMsgRestController {
 
     private final ChatMsgService chatMsgService;

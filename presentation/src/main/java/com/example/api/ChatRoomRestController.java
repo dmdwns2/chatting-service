@@ -4,6 +4,7 @@ import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomDto;
 import com.example.dto.Response;
 import com.example.service.ChatRoomService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/chattings")
+@Tag(name = "ChatRoom")
 public class ChatRoomRestController {
     private final ChatRoomService chatRoomService;
 
