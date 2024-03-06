@@ -16,6 +16,9 @@ $ ./gradlew :presentation:bootRun
 $ make -C persistence docker-compose-down
 ```
 
+### swagger
+http://localhost:8080/swagger-ui/index.html
+
 ## convention
 
 - Google Java Style Guide
@@ -38,5 +41,6 @@ $ make -C persistence docker-compose-down
   - [x] 채팅방 나가기
   - [x] 메시지 갱신
   - [x] 메시지 전송
+- [ ] UI
+  - [x] Swagger : SpringDoc 라이브러리 적용
 - [ ] 성능 테스트
-  - [ ] nGrinder
