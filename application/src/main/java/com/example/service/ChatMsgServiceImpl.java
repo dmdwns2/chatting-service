@@ -24,6 +24,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class ChatMsgServiceImpl implements ChatMsgService {
+
     private final SaveChatMsgPort saveChatMsgPort;
     private final LoadUserPort loadUserPort;
     private final LoadChatRoomPort loadChatRoomPort;
@@ -73,7 +74,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Long findUserIdByName(String name) {
         return loadUserPort.load(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
     }

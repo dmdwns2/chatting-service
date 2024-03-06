@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ChatRoomServiceServiceImpl implements ChatRoomService {
+
     private final ExistsChatRoomPort existsChatRoomPort;
     private final SaveChatRoomPort saveChatRoomPort;
     private final LoadChatRoomPort loadChatRoomPort;
@@ -101,7 +102,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Long findUserIdByName(String name) {
         return loadUserPort.load(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
     }
