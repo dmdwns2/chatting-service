@@ -21,15 +21,18 @@ http://localhost:8080/swagger-ui/index.html
 
 ## How to Login
 1. 회원가입 후 로그인을 진행하면 response로 세션 id 값이 나옵니다. 이것을 복사해줍니다.
-1. If you log in after signing up, you will get a session id value as response. Copy this.
+   
+   If you log in after signing up, you will get a session id value as response. Copy this.
 <img width="577" alt="스크린샷 2024-03-07 오후 8 53 07" src="https://github.com/dmdwns2/chatting-service/assets/105894868/7febbb43-afe4-43fa-b386-8911504d4ca4">
 
 2. 맨 위로 올라가면 오른쪽에 Authorize 버튼이 있습니다. 눌러줍니다.
-2. If you go up to the top, there is an Authorize button on the right, press it.
+   
+   If you go up to the top, there is an Authorize button on the right, press it.
 <img width="1408" alt="스크린샷 2024-03-07 오후 8 53 19" src="https://github.com/dmdwns2/chatting-service/assets/105894868/a6913278-ac8e-49a0-a4fb-83315c7129b3">
 
 3. Value에 1에서 복사해둔 세션 id를 붙여넣고 Authorize 버튼을 눌러줍니다.
-3. Paste the session id copied from 1 into Value and press the Authorize button.
+
+   Paste the session id copied from 1 into Value and press the Authorize button.
 <img width="652" alt="스크린샷 2024-03-07 오후 8 53 30" src="https://github.com/dmdwns2/chatting-service/assets/105894868/d12f5deb-21b2-42ba-a90f-da082dae52d7">
 
 
