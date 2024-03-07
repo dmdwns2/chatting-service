@@ -25,9 +25,10 @@ public class UserRestController {
 
     @PostMapping("/login")
     @Tag(name = "login")
-    public Response<String> login(@RequestBody @Valid LoginForm loginForm) {
+    public Response<String> login(@RequestBody @Valid LoginForm loginForm, HttpSession session) {
         UserLoggedInEvent login = userService.login(new LoginCommand(loginForm.getName(), loginForm.getPassword()));
-        return Response.success("login complete. name : " + login.getName() + " time : " + login.getCreatedAt());
+        session.setAttribute("user", login.getName());
+        return Response.success("login complete. session id : " + session.getId());
     }
 
     @LoginCheck
