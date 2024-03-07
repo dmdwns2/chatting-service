@@ -15,7 +15,7 @@ public interface ChatRoomService {
 
     void join(Long owner, Long userId);
 
-    void exit(Long owner, Long userId);
+    void leave(Long owner, Long userId);
 
     @Transactional(readOnly = true)
     int loadNumOfUserByChatRoomId(Long roomId);

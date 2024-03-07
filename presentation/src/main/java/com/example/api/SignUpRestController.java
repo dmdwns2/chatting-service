@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/chattings")
-@Tag(name = "Signup")
+@RequestMapping("/api/chattings")
 public class SignUpRestController {
 
     private final SignUpUseCase signUpUseCase;
 
+    @Tag(name = "sign up")
     @PostMapping("/signup")
     public Response<String> signup(@RequestBody @Validated SignupForm signupForm) {
         UserCreatedEvent userCreatedEvent = signUpUseCase.join(new SignUpCommand(
