@@ -33,7 +33,7 @@ http://localhost:8080/swagger-ui/index.html
 3. Value에 1에서 복사해둔 세션 id를 붙여넣고 Authorize 버튼을 눌러줍니다.
 
    Paste the session id copied from 1 into Value and press the Authorize button.
-<img width="652" alt="스크린샷 2024-03-07 오후 8 53 30" src="https://github.com/dmdwns2/chatting-service/assets/105894868/d12f5deb-21b2-42ba-a90f-da082dae52d7">
+<img width="648" alt="스크린샷 2024-03-07 오후 9 06 10" src="https://github.com/dmdwns2/chatting-service/assets/105894868/7b144dff-406e-4223-8b15-636b59b7dabd">
 
 
 ## convention
