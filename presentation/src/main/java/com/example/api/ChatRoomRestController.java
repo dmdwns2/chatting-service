@@ -79,7 +79,7 @@ public class ChatRoomRestController {
             stringBuilder.append(name).append(", ");
         }
         if (stringBuilder.length() > 0) {
-            stringBuilder.substring(0, stringBuilder.length() - 2);
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         }
         return Response.success("current user list : " + stringBuilder);
     }
