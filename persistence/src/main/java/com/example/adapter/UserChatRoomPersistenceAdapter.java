@@ -2,18 +2,17 @@ package com.example.adapter;
 
 import com.example.data.UserChatRoomMapper;
 import com.example.model.UserChatRoom;
-import com.example.port.DeleteUserChatRoomPort;
-import com.example.port.ExsistUserChatRoomPort;
-import com.example.port.LoadNumOfUserByChatRoomPort;
-import com.example.port.SaveUserChatRoomPort;
+import com.example.port.*;
 import com.example.repository.UserChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class UserChatRoomPersistenceAdapter implements SaveUserChatRoomPort, DeleteUserChatRoomPort
-        , LoadNumOfUserByChatRoomPort, ExsistUserChatRoomPort {
+        , LoadNumOfUserByChatRoomPort, ExsistUserChatRoomPort, LoadUserListOfChatRoomPort {
     private final UserChatRoomRepository userChatRoomRepository;
     private final UserChatRoomMapper userChatRoomMapper;
 
@@ -35,5 +34,10 @@ public class UserChatRoomPersistenceAdapter implements SaveUserChatRoomPort, Del
     @Override
     public int loadNumOfUserByChatRoom(Long roomId) {
         return userChatRoomRepository.countByChatroomId(roomId);
+    }
+
+    @Override
+    public List<String> findUserNamesByChatRoomId(Long roomId) {
+        return userChatRoomRepository.findUserNamesByChatRoomId(roomId);
     }
 }

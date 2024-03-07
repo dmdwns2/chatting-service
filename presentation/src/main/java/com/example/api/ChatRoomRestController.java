@@ -69,4 +69,18 @@ public class ChatRoomRestController {
         int numOfUsers = chatRoomService.loadNumOfUserByChatRoomId(roomId);
         return Response.success("number of users in the current chatroom : " + numOfUsers);
     }
+
+    @Tag(name = "get user list" , description = "get user list of current chat room")
+    @GetMapping("/rooms/users/{roomId}")
+    public Response<String> getUserList(@PathVariable Long roomId){
+        List<String> userNames = chatRoomService.getUserNamesByChatRoomId(roomId);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String name : userNames) {
+            stringBuilder.append(name).append(", ");
+        }
+        if (stringBuilder.length() > 0) {
+            stringBuilder.substring(0, stringBuilder.length() - 2);
+        }
+        return Response.success("current user list : " + stringBuilder);
+    }
 }
