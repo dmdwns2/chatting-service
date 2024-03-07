@@ -30,7 +30,8 @@ public class ChatRoomRestController {
         return Response.success("created a chatroom");
     }
 
-    @Tag(name = "get chatroom list")
+    @Tag(name = "get chatroom list (plz delete sort parameter)" ,
+            description = "If you delete the sort and put the page and size parameters in it, it works")
     @GetMapping("/rooms")
     public Response<String> getList(Pageable pageable) {
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
