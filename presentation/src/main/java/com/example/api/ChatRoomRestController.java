@@ -15,11 +15,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/chattings")
-@Tag(name = "ChatRoom")
+@RequestMapping("/api/chattings")
 public class ChatRoomRestController {
+
     private final ChatRoomService chatRoomService;
 
+    @Tag(name = "create chatroom")
     @PostMapping("/rooms")
     public Response<String> create(@RequestBody @Valid ChatRoomCreateRequest chatRoomCreateRequest,
                                    HttpSession session) {
@@ -29,6 +30,7 @@ public class ChatRoomRestController {
         return Response.success("created a chatroom");
     }
 
+    @Tag(name = "get chatroom list")
     @GetMapping("/rooms")
     public Response<String> getList(Pageable pageable) {
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
@@ -43,6 +45,7 @@ public class ChatRoomRestController {
         return Response.success(responseBuilder.toString());
     }
 
+    @Tag(name = "join the chatroom")
     @PostMapping("/rooms/join/{roomId}")
     public Response<String> join(@PathVariable Long roomId, HttpSession session) {
         String name = session.getAttribute("user").toString();
@@ -51,16 +54,18 @@ public class ChatRoomRestController {
         return Response.success("enter the chat room");
     }
 
+    @Tag(name = "leave chatroom")
     @DeleteMapping("/rooms/leave/{roomId}")
-    public Response<String> exit(@PathVariable Long roomId, HttpSession session) {
+    public Response<String> leave(@PathVariable Long roomId, HttpSession session) {
         String name = session.getAttribute("user").toString();
         Long userId = chatRoomService.findUserIdByName(name);
-        chatRoomService.exit(roomId, userId);
+        chatRoomService.leave(roomId, userId);
         return Response.success("came out of the chat room");
     }
 
-    @GetMapping("/rooms/renew/{roomId}")
-    public Response<String> renewNumOfUser(@PathVariable Long roomId){
+    @Tag(name = "check number of users" , description = "Check the number of current chat room users")
+    @GetMapping("/rooms/check/{roomId}")
+    public Response<String> checkNumOfUser(@PathVariable Long roomId){
         int numOfUsers = chatRoomService.loadNumOfUserByChatRoomId(roomId);
         return Response.success("number of users in the current chatroom : " + numOfUsers);
     }

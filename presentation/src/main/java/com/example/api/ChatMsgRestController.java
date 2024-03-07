@@ -17,14 +17,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/chattings")
-@Tag(name = "ChatMsg")
+@RequestMapping("/api/chattings")
 public class ChatMsgRestController {
 
     private final ChatMsgService chatMsgService;
 
     @PostMapping("/messages/{roomId}")
     @LoginCheck
+    @Tag(name = "send message")
     public ResponseEntity<Object> sendChat(
             @PathVariable Long roomId,
             @RequestBody @Valid ChatMsgRequest message,
@@ -37,6 +37,7 @@ public class ChatMsgRestController {
 
     @GetMapping("/messages/{roomId}")
     @LoginCheck
+    @Tag(name = "get message list")
     public ResponseEntity<Object> getChatList(
             @PathVariable Long roomId,
             @RequestParam(required = false) Long lastId,
