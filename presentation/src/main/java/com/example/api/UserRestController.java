@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/chattings")
+@RequestMapping("/api/chattings")
 @Tag(name = "User")
 public class UserRestController {
 
     private final UserService userService;
 
     @PostMapping("/login")
+    @Tag(name = "login")
     public Response<String> login(@RequestBody @Valid LoginForm loginForm) {
         UserLoggedInEvent login = userService.login(new LoginCommand(loginForm.getName(), loginForm.getPassword()));
         return Response.success("login complete. name : " + login.getName() + " time : " + login.getCreatedAt());
@@ -32,6 +33,7 @@ public class UserRestController {
 
     @LoginCheck
     @PostMapping("/logout")
+    @Tag(name = "logout")
     public Response<String> logout(HttpSession session) {
         String name = session.getAttribute("user").toString();
         userService.logout(new LogoutCommand(name));

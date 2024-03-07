@@ -50,10 +50,10 @@ public class ChatRoomController {
     }
 
     @DeleteMapping("/rooms/leave/{roomId}")
-    public String exit(@PathVariable Long roomId, HttpSession session) {
+    public String leave(@PathVariable Long roomId, HttpSession session) {
         String name = session.getAttribute("user").toString();
         Long userId = chatRoomService.findUserIdByName(name);
-        chatRoomService.exit(roomId, userId);
+        chatRoomService.leave(roomId, userId);
         return "redirect:/chattings/rooms";
     }
 

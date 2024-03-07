@@ -79,7 +79,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
 
     @Override
     @Transactional
-    public void exit(Long userId, Long roomId) {
+    public void leave(Long userId, Long roomId) {
         ChatRoom chatRoom = loadChatRoomPort.load(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
 
