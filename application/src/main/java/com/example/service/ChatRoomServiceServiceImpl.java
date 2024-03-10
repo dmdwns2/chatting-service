@@ -86,7 +86,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
 
         if (Objects.equals(chatRoom.getOwner(), userId)) {
             deleteUserChatRoomByUserIdPort.deleteByUserIdAndChatRoomId(userId, roomId);
-            deleteChatRoomPort.deleteByChatRoomId(chatRoom.getOwner());
+            deleteChatRoomPort.deleteByChatRoomId(roomId);
         }
         if (!Objects.equals(chatRoom.getId(), userId)) {
             deleteUserChatRoomByUserIdPort.deleteByUserIdAndChatRoomId(userId, roomId);
