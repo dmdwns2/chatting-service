@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,10 +32,11 @@ public class ChatRoomRestController {
         return Response.success("created a chatroom");
     }
 
-    @Tag(name = "get chatroom list (plz delete sort parameter)" ,
-            description = "If you delete the sort and put the page and size parameters in it, it works")
+    @Tag(name = "get chatroom list (default : page = 0, size > 0)")
     @GetMapping("/rooms")
-    public Response<String> getList(Pageable pageable) {
+    public Response<String> getList(int page, int size) {
+        Pageable pageable = new PageRequest(page, size, Sort.unsorted()) {
+        };
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
         StringBuilder responseBuilder = new StringBuilder();
         if (allChatRooms.size() == 0) {
@@ -60,20 +63,20 @@ public class ChatRoomRestController {
     public Response<String> leave(@PathVariable Long roomId, HttpSession session) {
         String name = session.getAttribute("user").toString();
         Long userId = chatRoomService.findUserIdByName(name);
-        chatRoomService.leave(roomId, userId);
+        chatRoomService.leave(userId, roomId);
         return Response.success("came out of the chat room");
     }
 
-    @Tag(name = "check number of users" , description = "Check the number of current chat room users")
+    @Tag(name = "check number of users", description = "Check the number of current chat room users")
     @GetMapping("/rooms/check/{roomId}")
-    public Response<String> checkNumOfUser(@PathVariable Long roomId){
+    public Response<String> checkNumOfUser(@PathVariable Long roomId) {
         int numOfUsers = chatRoomService.loadNumOfUserByChatRoomId(roomId);
         return Response.success("number of users in the current chatroom : " + numOfUsers);
     }
 
-    @Tag(name = "get user list" , description = "get user list of current chat room")
+    @Tag(name = "get user list", description = "get user list of current chat room")
     @GetMapping("/rooms/users/{roomId}")
-    public Response<String> getUserList(@PathVariable Long roomId){
+    public Response<String> getUserList(@PathVariable Long roomId) {
         List<String> userNames = chatRoomService.getUserNamesByChatRoomId(roomId);
         StringBuilder stringBuilder = new StringBuilder();
         for (String name : userNames) {

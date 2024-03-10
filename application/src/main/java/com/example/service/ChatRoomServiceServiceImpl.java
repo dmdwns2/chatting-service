@@ -30,7 +30,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
     private final CurrentDataTimePort currentDataTimePort;
     private final LoadUserPort loadUserPort;
     private final SaveUserChatRoomPort saveUserChatRoomPort;
-    private final DeleteUserChatRoomPort deleteUserChatRoomPort;
+    private final DeleteUserChatRoomByUserIdPort deleteUserChatRoomByUserIdPort;
     private final DeleteChatRoomPort deleteChatRoomPort;
     private final LoadNumOfUserByChatRoomPort loadNumOfUserByChatRoomPort;
     private final ExsistUserChatRoomPort exsistUserChatRoomPort;
@@ -85,11 +85,11 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
                 .orElseThrow(NotExistsChatRoomException::new);
 
         if (Objects.equals(chatRoom.getOwner(), userId)) {
-            deleteUserChatRoomPort.delete(userId);
-            deleteChatRoomPort.delete(userId);
+            deleteUserChatRoomByUserIdPort.deleteByUserIdAndChatRoomId(userId, roomId);
+            deleteChatRoomPort.deleteByChatRoomId(chatRoom.getOwner());
         }
         if (!Objects.equals(chatRoom.getId(), userId)) {
-            deleteUserChatRoomPort.delete(userId);
+            deleteUserChatRoomByUserIdPort.deleteByUserIdAndChatRoomId(userId, roomId);
         }
     }
 

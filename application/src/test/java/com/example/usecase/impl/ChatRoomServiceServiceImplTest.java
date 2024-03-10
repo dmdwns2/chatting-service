@@ -39,7 +39,7 @@ class ChatRoomServiceServiceImplTest {
     private SaveUserChatRoomPort saveUserChatRoomPort;
 
     @Mock
-    private DeleteUserChatRoomPort deleteUserChatRoomPort;
+    private DeleteUserChatRoomByUserIdPort deleteUserChatRoomByUserIdPort;
 
     @Mock
     private DeleteChatRoomPort deleteChatRoomPort;
@@ -49,6 +49,9 @@ class ChatRoomServiceServiceImplTest {
 
     @Mock
     private ExsistUserChatRoomPort exsistUserChatRoomPort;
+
+    @Mock
+    private LoadUserListOfChatRoomPort loadUserListOfChatRoomPort;
 
     private ChatRoomServiceServiceImpl chatRoomUseCase;
 
@@ -63,10 +66,11 @@ class ChatRoomServiceServiceImplTest {
                 currentDataTimePort,
                 loadUserPort,
                 saveUserChatRoomPort,
-                deleteUserChatRoomPort,
+                deleteUserChatRoomByUserIdPort,
                 deleteChatRoomPort,
                 loadNumOfUserByChatRoomPort,
-                exsistUserChatRoomPort
+                exsistUserChatRoomPort,
+                loadUserListOfChatRoomPort
         );
     }
 

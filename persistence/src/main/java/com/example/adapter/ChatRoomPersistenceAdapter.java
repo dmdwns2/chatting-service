@@ -51,7 +51,7 @@ public class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatR
     }
 
     @Override
-    public void delete(Long roomId) {
+    public void deleteByChatRoomId(Long roomId) {
         chatRoomRepository.deleteChatRoomById(roomId);
     }
 }
