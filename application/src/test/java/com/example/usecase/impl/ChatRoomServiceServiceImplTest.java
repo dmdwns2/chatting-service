@@ -86,7 +86,6 @@ class ChatRoomServiceServiceImplTest {
                 User.of(userId, "m", "n", "s", false)));
 
         ChatRoomCreatedEvent result = chatRoomService.create(command, userId);
-
         assertThat(command.getTitle()).isEqualTo(result.getTitle());
         assertThat(userId).isEqualTo(result.getOwner());
     }
