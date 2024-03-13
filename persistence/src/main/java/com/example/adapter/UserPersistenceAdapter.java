@@ -5,16 +5,14 @@ import com.example.model.User;
 import com.example.port.*;
 import com.example.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 public class UserPersistenceAdapter implements
-        ExistsNamePort, ExistsUserPort, ExistsNicknamePort, SaveUserPort, LoadUserPort, GetUserPort {
+        ExistsNamePort, ExistsUserPort, ExistsNicknamePort, SaveUserPort, LoadUserPort {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -39,22 +37,12 @@ public class UserPersistenceAdapter implements
     }
 
     @Override
-    public Optional<User> load(Long userId) {
+    public Optional<User> loadById(Long userId) {
         return userRepository.findById(userId).map(userMapper::entityToModel);
     }
 
     @Override
-    public Optional<User> load(String name) {
+    public Optional<User> loadByName(String name) {
         return userRepository.findByName(name).map(userMapper::entityToModel);
-    }
-
-    @Override
-    public Page<User> list(String query, int page) {
-        return null;
-    }
-
-    @Override
-    public Set<User> listByName(Set<String> name) {
-        return null;
     }
 }

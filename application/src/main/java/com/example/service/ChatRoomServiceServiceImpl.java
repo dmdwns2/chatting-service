@@ -41,7 +41,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         if (existsChatRoomPort.existsChatRoomByOwner(userId)) {
             throw new ExistsChatRoomException();
         }
-        User user = loadUserPort.load(userId).orElseThrow(() -> new NotFoundUserException(userId.toString()));
+        User user = loadUserPort.loadById(userId).orElseThrow(() -> new NotFoundUserException(userId.toString()));
         ChatRoom chatRoom = ChatRoom.builder()
                 .owner(user.getId())
                 .title(chatRoomCreateRequest.getTitle())
@@ -53,7 +53,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
     @Transactional(readOnly = true)
     @Override
     public List<ChatRoomDto> getList(Pageable pageable) {
-        Page<ChatRoom> pages = loadChatRoomPort.findAll(pageable);
+        Page<ChatRoom> pages = loadChatRoomPort.loadChatRoomPage(pageable);
         return getChatRoomDto(pages);
     }
 
@@ -62,12 +62,12 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         if (!existsChatRoomPort.existsChatRoomById(roomId)) {
             throw new NotExistsChatRoomException();
         }
-        if (existsUserChatRoomPort.existsbyuseridandchatroomid(userId, roomId)) {
+        if (existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)) {
             throw new ExistsChatRoomException();
         }
-        ChatRoom chatRoom = loadChatRoomPort.load(roomId)
+        ChatRoom chatRoom = loadChatRoomPort.loadById(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
-        User user = loadUserPort.load(userId).orElseThrow(() -> new NotFoundUserException(userId.toString()));
+        User user = loadUserPort.loadById(userId).orElseThrow(() -> new NotFoundUserException(userId.toString()));
         UserChatRoom userChatRoom = UserChatRoom.builder()
                 .user(user)
                 .chatRoom(chatRoom)
@@ -78,12 +78,12 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
     @Override
     @Transactional
     public void leave(Long userId, Long roomId) {
-        ChatRoom chatRoom = loadChatRoomPort.load(roomId)
+        ChatRoom chatRoom = loadChatRoomPort.loadById(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
 
         if (Objects.equals(chatRoom.getOwner(), userId)) {
             deleteUserChatRoomByUserIdPort.deleteByUserIdAndChatRoomId(userId, roomId);
-            deleteChatRoomPort.deleteByChatRoomId(roomId);
+            deleteChatRoomPort.deleteById(roomId);
         }
         if (!Objects.equals(chatRoom.getId(), userId)) {
             deleteUserChatRoomByUserIdPort.deleteByUserIdAndChatRoomId(userId, roomId);
@@ -96,13 +96,13 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         if (!existsChatRoomPort.existsChatRoomById(roomId)) {
             throw new NotExistsChatRoomException();
         }
-        return loadNumOfUserByChatRoomPort.loadNumOfUserByChatRoom(roomId);
+        return loadNumOfUserByChatRoomPort.loadNumOfUsersByChatRoom(roomId);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Long findUserIdByName(String name) {
-        return loadUserPort.load(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
+        return loadUserPort.loadByName(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         if (!existsChatRoomPort.existsChatRoomById(roomId)) {
             throw new NotExistsChatRoomException();
         }
-        return loadUserListOfChatRoomPort.findUserNamesByChatRoomId(roomId);
+        return loadUserListOfChatRoomPort.loadUserNamesByChatRoomId(roomId);
     }
 
     private static List<ChatRoomDto> getChatRoomDto(Page<ChatRoom> pages) {
