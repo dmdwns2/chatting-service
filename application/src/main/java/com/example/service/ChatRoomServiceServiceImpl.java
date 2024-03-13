@@ -36,7 +36,6 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
     private final ExistsUserChatRoomPort existsUserChatRoomPort;
     private final LoadUserListOfChatRoomPort loadUserListOfChatRoomPort;
 
-    @Transactional
     @Override
     public ChatRoomCreatedEvent create(ChatRoomCreateRequest chatRoomCreateRequest, Long userId) {
         if (existsChatRoomPort.existsChatRoomByOwner(userId)) {
@@ -47,8 +46,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
                 .owner(user.getId())
                 .title(chatRoomCreateRequest.getTitle())
                 .build();
-
-        saveChatRoomPort.save(chatRoom);
+        saveEntryChatRoom(chatRoom);
         return new ChatRoomCreatedEvent(chatRoom.getOwner(), chatRoom.getTitle(), currentDataTimePort.now());
     }
 
@@ -59,7 +57,6 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         return getChatRoomDto(pages);
     }
 
-    @Transactional
     @Override
     public void join(Long roomId, Long userId) {
         if (!existsChatRoomPort.existsChatRoomById(roomId)) {
@@ -75,7 +72,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
                 .user(user)
                 .chatRoom(chatRoom)
                 .build();
-        saveUserChatRoomPort.save(userChatRoom);
+        saveEntryUserChatRoom(userChatRoom);
     }
 
     @Override
@@ -121,5 +118,15 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         return pages.stream()
                 .map(ChatRoomDto::of)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    private void saveEntryUserChatRoom(UserChatRoom userChatRoom) {
+        saveUserChatRoomPort.save(userChatRoom);
+    }
+
+    @Transactional
+    private void saveEntryChatRoom(ChatRoom chatRoom) {
+        saveChatRoomPort.save(chatRoom);
     }
 }

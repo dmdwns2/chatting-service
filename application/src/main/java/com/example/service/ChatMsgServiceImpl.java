@@ -24,13 +24,11 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class ChatMsgServiceImpl implements ChatMsgService {
-
     private final SaveChatMsgPort saveChatMsgPort;
     private final LoadUserPort loadUserPort;
     private final LoadChatRoomPort loadChatRoomPort;
     private final LoadChatMsgCustomPort loadChatMsgCustomPort;
 
-    @Transactional
     @Override
     public ChatMsgResponse sendMessage(ChatMsgRequest message, Long userId, Long roomId) {
         User user = loadUserPort.load(userId)
@@ -49,7 +47,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
                 .message(message.getMessage())
                 .build();
 
-        saveChatMsgPort.save(chatMsg);
+        saveEntryChatMsg(chatMsg);
         return response;
     }
 
@@ -71,6 +69,11 @@ public class ChatMsgServiceImpl implements ChatMsgService {
             }
         }
         return chatMsgDtos;
+    }
+
+    @Transactional
+    private void saveEntryChatMsg(ChatMsg chatMsg) {
+        saveChatMsgPort.save(chatMsg);
     }
 
     @Override

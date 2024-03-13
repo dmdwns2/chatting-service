@@ -24,7 +24,6 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
     private final CurrentDataTimePort currentDataTimePort;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     @Override
     public UserCreatedEvent join(SignUpCommand command) {
         validate(command);
@@ -37,9 +36,13 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
                 .isLogin(false)
                 .build();
 
-        saveUserPort.save(user);
-
+        saveEntryUser(user);
         return new UserCreatedEvent(user.getName(), currentDataTimePort.now());
+    }
+
+    @Transactional
+    private void saveEntryUser(User user) {
+        saveUserPort.save(user);
     }
 
     private void validate(SignUpCommand command) {

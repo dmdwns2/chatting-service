@@ -4,10 +4,11 @@ import com.example.dto.LoginCommand;
 import com.example.dto.LogoutCommand;
 import com.example.dto.UserLoggedInEvent;
 import com.example.dto.UserLoggedOutEvent;
-import com.example.entity.UserJPAEntity;
 import com.example.exception.NotFoundUserException;
 import com.example.exception.NotMatchPasswordException;
-import com.example.repository.UserRepository;
+import com.example.model.User;
+import com.example.port.LoadUserPort;
+import com.example.port.SaveUserPort;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,29 +19,33 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final LoadUserPort loadUserPort;
+    private final SaveUserPort saveUserPort;
 
-    @Transactional
     @Override
     public UserLoggedInEvent login(LoginCommand command) {
         validateCommand(command);
-        UserJPAEntity user = userRepository.findByName(command.getName())
+        User user = loadUserPort.load(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         validatePasswordMatching(command.getPassword(), user.getPassword());
         user.setIsLogin(true);
-        userRepository.save(user);
+        saveEntryUser(user);
         return new UserLoggedInEvent(user.getName(), LocalDateTime.now());
     }
 
-    @Transactional
     @Override
     public UserLoggedOutEvent logout(LogoutCommand command) {
-        UserJPAEntity user = userRepository.findByName(command.getName())
+        User user = loadUserPort.load(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         user.setIsLogin(false);
-        userRepository.save(user);
+        saveEntryUser(user);
         return new UserLoggedOutEvent(user.getName(), LocalDateTime.now());
+    }
+
+    @Transactional
+    private void saveEntryUser(User user) {
+        saveUserPort.save(user);
     }
 
     private void validateCommand(LoginCommand command) {
