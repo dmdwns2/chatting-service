@@ -53,13 +53,13 @@ class ChatRoomServiceServiceImplTest {
     @Mock
     private LoadUserListOfChatRoomPort loadUserListOfChatRoomPort;
 
-    private ChatRoomServiceServiceImpl chatRoomUseCase;
+    private ChatRoomServiceServiceImpl chatRoomServiceService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        chatRoomUseCase = new ChatRoomServiceServiceImpl(
+        chatRoomServiceService = new ChatRoomServiceServiceImpl(
                 existsChatRoomPort,
                 saveChatRoomPort,
                 loadChatRoomPort,
@@ -84,7 +84,7 @@ class ChatRoomServiceServiceImplTest {
         when(loadUserPort.load(userId)).thenReturn(Optional.of(
                 User.of(userId,"m","n","s",false)));
 
-        ChatRoomCreatedEvent result = chatRoomUseCase.create(command, userId);
+        ChatRoomCreatedEvent result = chatRoomServiceService.create(command, userId);
 
         assertThat(command.getTitle()).isEqualTo(result.getTitle());
         assertThat(userId).isEqualTo(result.getOwner());
@@ -99,7 +99,7 @@ class ChatRoomServiceServiceImplTest {
         when(loadUserPort.load(userId)).thenReturn(Optional.of(
                 User.of(userId,"m","n","s",false)));
 
-        assertThatThrownBy(() -> chatRoomUseCase.create(command, userId))
+        assertThatThrownBy(() -> chatRoomServiceService.create(command, userId))
                 .isInstanceOf(ExistsChatRoomException.class)
                 .hasMessage("There is a chatroom that already exists.");
 
