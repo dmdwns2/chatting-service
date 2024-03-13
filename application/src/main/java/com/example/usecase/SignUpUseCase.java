@@ -4,5 +4,5 @@ import com.example.dto.SignUpCommand;
 import com.example.dto.UserCreatedEvent;
 
 public interface SignUpUseCase {
-    UserCreatedEvent join(SignUpCommand command);
+    UserCreatedEvent signup(SignUpCommand command);
 }

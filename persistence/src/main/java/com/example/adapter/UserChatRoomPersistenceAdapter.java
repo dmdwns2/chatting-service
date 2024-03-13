@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class UserChatRoomPersistenceAdapterByUserId implements SaveUserChatRoomPort, DeleteUserChatRoomByUserIdPort
+public class UserChatRoomPersistenceAdapter implements SaveUserChatRoomPort, DeleteUserChatRoomByUserIdPort
         , LoadNumOfUserByChatRoomPort, ExistsUserChatRoomPort, LoadUserListOfChatRoomPort {
     private final UserChatRoomRepository userChatRoomRepository;
     private final UserChatRoomMapper userChatRoomMapper;
@@ -32,12 +32,12 @@ public class UserChatRoomPersistenceAdapterByUserId implements SaveUserChatRoomP
     }
 
     @Override
-    public int loadNumOfUserByChatRoom(Long roomId) {
+    public int loadNumOfUsersByChatRoom(Long roomId) {
         return userChatRoomRepository.countByChatroomId(roomId);
     }
 
     @Override
-    public List<String> findUserNamesByChatRoomId(Long roomId) {
+    public List<String> loadUserNamesByChatRoomId(Long roomId) {
         return userChatRoomRepository.findUserNamesByChatRoomId(roomId);
     }
 }
