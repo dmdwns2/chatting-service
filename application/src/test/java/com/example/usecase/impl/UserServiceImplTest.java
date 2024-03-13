@@ -1,17 +1,20 @@
 package com.example.usecase.impl;
 
-import com.example.service.UserServiceImpl;
 import com.example.dto.LoginCommand;
 import com.example.dto.UserLoggedInEvent;
-import com.example.entity.UserJPAEntity;
 import com.example.exception.NotMatchPasswordException;
-import com.example.repository.UserRepository;
+import com.example.model.User;
+import com.example.port.LoadUserPort;
+import com.example.port.SaveUserPort;
+import com.example.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -22,7 +25,10 @@ public class UserServiceImplTest {
     private UserServiceImpl loginUseCase;
 
     @Mock
-    private UserRepository userRepository;
+    private LoadUserPort loadUserPort;
+
+    @Mock
+    private SaveUserPort saveUserPort;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -30,21 +36,18 @@ public class UserServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        loginUseCase = new UserServiceImpl(userRepository, passwordEncoder);
+        loginUseCase = new UserServiceImpl(passwordEncoder, loadUserPort, saveUserPort);
     }
 
     @DisplayName("로그인 성공")
     @Test
     void testSuccessfulLogin() {
-        String username = "testUser";
-        String rawPassword = "testPassword";
+        String username = "messi";
+        String rawPassword = "worldcup2022";
         String encodedPassword = "hashedPassword";
 
-        UserJPAEntity user = new UserJPAEntity();
-        user.setName(username);
-        user.setPassword(encodedPassword);
-
-        when(userRepository.findByName(username)).thenReturn(java.util.Optional.of(user));
+        when(loadUserPort.load(username)).thenReturn(Optional.of(
+                User.of(1L, username, encodedPassword, "leo", false)));
         when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(true);
 
         UserLoggedInEvent result = loginUseCase.login(new LoginCommand(username, rawPassword));
@@ -56,15 +59,12 @@ public class UserServiceImplTest {
     @DisplayName("로그인 실패")
     @Test
     void testFailedLogin() {
-        String username = "testUser";
+        String username = "messi";
         String rawPassword = "wrongPassword";
         String encodedPassword = "hashedPassword";
 
-        UserJPAEntity user = new UserJPAEntity();
-        user.setName(username);
-        user.setPassword(encodedPassword);
-
-        when(userRepository.findByName(username)).thenReturn(java.util.Optional.of(user));
+        when(loadUserPort.load(username)).thenReturn(Optional.of(
+                User.of(1L, "messi", "worldcup2022", "leo", false)));
         when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(false);
 
         assertThatThrownBy(() -> loginUseCase.login(new LoginCommand(username, rawPassword)))

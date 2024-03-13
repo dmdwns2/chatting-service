@@ -13,9 +13,13 @@ public class User {
     private final String name;
     private final String password;
     private final String nickname;
-    private final boolean isLogin;
+    private boolean isLogin;
 
     public static User of(Long id, String name, String password, String nickname, Boolean isLogin) {
         return new User(id, name, password, nickname, isLogin);
+    }
+
+    public void setIsLogin(boolean isLogin){
+        this.isLogin = isLogin;
     }
 }
