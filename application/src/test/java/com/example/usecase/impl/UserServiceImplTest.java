@@ -46,7 +46,7 @@ public class UserServiceImplTest {
         String rawPassword = "worldcup2022";
         String encodedPassword = "hashedPassword";
 
-        when(loadUserPort.load(username)).thenReturn(Optional.of(
+        when(loadUserPort.loadByName(username)).thenReturn(Optional.of(
                 User.of(1L, username, encodedPassword, "leo", false)));
         when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(true);
 
@@ -63,7 +63,7 @@ public class UserServiceImplTest {
         String rawPassword = "wrongPassword";
         String encodedPassword = "hashedPassword";
 
-        when(loadUserPort.load(username)).thenReturn(Optional.of(
+        when(loadUserPort.loadByName(username)).thenReturn(Optional.of(
                 User.of(1L, "messi", "worldcup2022", "leo", false)));
         when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(false);
 
