@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ChatMsgResponse {
     private Long owner;
-    private String from; // 사용자, user
+    private String from; // 사용자 닉네임, user 닉네임
     private String message;
     private LocalDateTime sendTime;
 }
