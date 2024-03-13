@@ -111,13 +111,13 @@ class ChatRoomServiceImplTest {
         Long userId = 1L;
         Long roomId = 1L;
         when(existsChatRoomPort.existsChatRoomById(userId)).thenReturn(true);
-        when(existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)).thenReturn(false);
+        when(existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId,roomId)).thenReturn(false);
         when(loadUserPort.loadById(userId)).thenReturn(Optional.of(
                 User.of(userId, "user", "n", "nickname", false)));
         when(loadChatRoomPort.loadById(roomId)).thenReturn(Optional.of(
                 ChatRoom.of(roomId, "아무나", 2L)));
 
-        assertThatCode(() -> chatRoomService.join(userId, roomId)).doesNotThrowAnyException();
+        assertThatCode(() -> chatRoomService.join(userId,roomId)).doesNotThrowAnyException();
         verify(existsChatRoomPort, times(1)).existsChatRoomById(userId);
         verify(existsUserChatRoomPort, times(1)).existsByUserIdAndChatRoomId(userId, roomId);
         verify(loadUserPort, times(1)).loadById(userId);
