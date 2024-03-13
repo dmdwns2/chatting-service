@@ -33,7 +33,7 @@ public class SignupController {
             return signupForm(model);
         }
 
-        UserCreatedEvent userCreatedEvent = signUpUseCase.join(new SignUpCommand(
+        UserCreatedEvent userCreatedEvent = signUpUseCase.signup(new SignUpCommand(
                 signupForm.getName(),
                 signupForm.getPassword(),
                 signupForm.getNickname()

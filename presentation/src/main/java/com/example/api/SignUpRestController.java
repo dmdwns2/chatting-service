@@ -23,7 +23,7 @@ public class SignUpRestController {
     @Tag(name = "sign up")
     @PostMapping("/signup")
     public Response<String> signup(@RequestBody @Validated SignupForm signupForm) {
-        UserCreatedEvent userCreatedEvent = signUpUseCase.join(new SignUpCommand(
+        UserCreatedEvent userCreatedEvent = signUpUseCase.signup(new SignUpCommand(
                 signupForm.getName(),
                 signupForm.getPassword(),
                 signupForm.getNickname()

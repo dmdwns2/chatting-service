@@ -58,7 +58,7 @@ public class SignUpUseCaseImplTest {
         when(existsNicknamePort.existsNickname(command.getNickname())).thenReturn(false);
         when(currentDataTimePort.now()).thenReturn(LocalDateTime.now());
 
-        UserCreatedEvent result = signUpUseCase.join(command);
+        UserCreatedEvent result = signUpUseCase.signup(command);
 
         assertNotNull(result);
         Assertions.assertThat(command.getName()).isEqualTo(result.getName());
@@ -68,7 +68,7 @@ public class SignUpUseCaseImplTest {
     void join_InvalidName_ThrowsRuntimeException() {
         SignUpCommand command = new SignUpCommand("messssssssssssssssssssssi", "2022wc", "leo");
 
-        assertThrows(RuntimeException.class, () -> signUpUseCase.join(command));
+        assertThrows(RuntimeException.class, () -> signUpUseCase.signup(command));
     }
 
     @Test
@@ -76,14 +76,14 @@ public class SignUpUseCaseImplTest {
         SignUpCommand command = new SignUpCommand("messi", "2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022" +
                 "wcwinner2022wcwinner2022wcwinner2022wcwinner2022wcwinner2022wcwinner", "leo");
 
-        assertThrows(RuntimeException.class, () -> signUpUseCase.join(command));
+        assertThrows(RuntimeException.class, () -> signUpUseCase.signup(command));
     }
 
     @Test
     void join_InvalidNickname_ThrowsRuntimeException() {
         SignUpCommand command = new SignUpCommand("messi", "2022wc", "leoooooooooooooooooooo");
 
-        assertThrows(RuntimeException.class, () -> signUpUseCase.join(command));
+        assertThrows(RuntimeException.class, () -> signUpUseCase.signup(command));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class SignUpUseCaseImplTest {
         SignUpCommand command = new SignUpCommand("messi", "2022wc", "leo");
         when(existsNamePort.existsName(command.getName())).thenReturn(true);
 
-        assertThrows(DuplicateNameException.class, () -> signUpUseCase.join(command));
+        assertThrows(DuplicateNameException.class, () -> signUpUseCase.signup(command));
     }
 
     @Test
@@ -99,6 +99,6 @@ public class SignUpUseCaseImplTest {
         SignUpCommand command = new SignUpCommand("messi", "2022wc", "leo");
         when(existsNicknamePort.existsNickname(command.getNickname())).thenReturn(true);
 
-        assertThrows(DuplicateNicknameException.class, () -> signUpUseCase.join(command));
+        assertThrows(DuplicateNicknameException.class, () -> signUpUseCase.signup(command));
     }
 }

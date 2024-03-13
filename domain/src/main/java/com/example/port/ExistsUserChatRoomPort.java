@@ -1,5 +1,5 @@
 package com.example.port;
 
 public interface ExistsUserChatRoomPort {
-    boolean existsbyuseridandchatroomid(Long userId, Long roomId);
+    boolean existsByUserIdAndChatRoomId(Long userId, Long roomId);
 }
