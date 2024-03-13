@@ -3,9 +3,11 @@ package com.example.usecase.impl;
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomCreatedEvent;
 import com.example.exception.ExistsChatRoomException;
+import com.example.model.ChatRoom;
 import com.example.model.User;
 import com.example.port.*;
 import com.example.service.ChatRoomServiceServiceImpl;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,7 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ChatRoomServiceServiceImplTest {
@@ -48,18 +49,18 @@ class ChatRoomServiceServiceImplTest {
     private LoadNumOfUserByChatRoomPort loadNumOfUserByChatRoomPort;
 
     @Mock
-    private ExsistUserChatRoomPort exsistUserChatRoomPort;
+    private ExistsUserChatRoomPort existsUserChatRoomPort;
 
     @Mock
     private LoadUserListOfChatRoomPort loadUserListOfChatRoomPort;
 
-    private ChatRoomServiceServiceImpl chatRoomServiceService;
+    private ChatRoomServiceServiceImpl chatRoomService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        chatRoomServiceService = new ChatRoomServiceServiceImpl(
+        chatRoomService = new ChatRoomServiceServiceImpl(
                 existsChatRoomPort,
                 saveChatRoomPort,
                 loadChatRoomPort,
@@ -69,7 +70,7 @@ class ChatRoomServiceServiceImplTest {
                 deleteUserChatRoomByUserIdPort,
                 deleteChatRoomPort,
                 loadNumOfUserByChatRoomPort,
-                exsistUserChatRoomPort,
+                existsUserChatRoomPort,
                 loadUserListOfChatRoomPort
         );
     }
@@ -82,10 +83,9 @@ class ChatRoomServiceServiceImplTest {
         when(existsChatRoomPort.existsChatRoomByOwner(userId)).thenReturn(false);
         when(currentDataTimePort.now()).thenReturn(LocalDateTime.now());
         when(loadUserPort.load(userId)).thenReturn(Optional.of(
-                User.of(userId,"m","n","s",false)));
+                User.of(userId, "m", "n", "s", false)));
 
-        ChatRoomCreatedEvent result = chatRoomServiceService.create(command, userId);
-
+        ChatRoomCreatedEvent result = chatRoomService.create(command, userId);
         assertThat(command.getTitle()).isEqualTo(result.getTitle());
         assertThat(userId).isEqualTo(result.getOwner());
     }
@@ -97,12 +97,31 @@ class ChatRoomServiceServiceImplTest {
         ChatRoomCreateRequest command = new ChatRoomCreateRequest("아무나");
         when(existsChatRoomPort.existsChatRoomByOwner(userId)).thenReturn(true);
         when(loadUserPort.load(userId)).thenReturn(Optional.of(
-                User.of(userId,"m","n","s",false)));
+                User.of(userId, "m", "n", "s", false)));
 
-        assertThatThrownBy(() -> chatRoomServiceService.create(command, userId))
+        assertThatThrownBy(() -> chatRoomService.create(command, userId))
                 .isInstanceOf(ExistsChatRoomException.class)
                 .hasMessage("There is a chatroom that already exists.");
 
         verify(existsChatRoomPort, times(1)).existsChatRoomByOwner(any());
+    }
+
+    @DisplayName("채팅방 입장 성공")
+    @Test
+    void join_success() {
+        Long userId = 1L;
+        Long roomId = 1L;
+        when(existsChatRoomPort.existsChatRoomById(userId)).thenReturn(true);
+        when(existsUserChatRoomPort.existsbyuseridandchatroomid(userId,roomId)).thenReturn(false);
+        when(loadUserPort.load(userId)).thenReturn(Optional.of(
+                User.of(userId, "user", "n", "nickname", false)));
+        when(loadChatRoomPort.load(roomId)).thenReturn(Optional.of(
+                ChatRoom.of(roomId, "아무나", 2L)));
+
+        assertThatCode(() -> chatRoomService.join(userId,roomId)).doesNotThrowAnyException();
+        verify(existsChatRoomPort, times(1)).existsChatRoomById(userId);
+        verify(existsUserChatRoomPort, times(1)).existsbyuseridandchatroomid(userId, roomId);
+        verify(loadUserPort, times(1)).load(userId);
+        verify(loadChatRoomPort, times(1)).load(roomId);
     }
 }

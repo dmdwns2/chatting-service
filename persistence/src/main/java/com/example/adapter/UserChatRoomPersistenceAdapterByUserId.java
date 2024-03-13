@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class UserChatRoomPersistenceAdapterByUserId implements SaveUserChatRoomPort, DeleteUserChatRoomByUserIdPort
-        , LoadNumOfUserByChatRoomPort, ExsistUserChatRoomPort, LoadUserListOfChatRoomPort {
+        , LoadNumOfUserByChatRoomPort, ExistsUserChatRoomPort, LoadUserListOfChatRoomPort {
     private final UserChatRoomRepository userChatRoomRepository;
     private final UserChatRoomMapper userChatRoomMapper;
 
@@ -27,7 +27,7 @@ public class UserChatRoomPersistenceAdapterByUserId implements SaveUserChatRoomP
     }
 
     @Override
-    public boolean exsistByUserIdAndChatroomId(Long userId, Long roomId) {
+    public boolean existsbyuseridandchatroomid(Long userId, Long roomId) {
         return userChatRoomRepository.existsByUserIdAndChatroomId(userId, roomId);
     }
 

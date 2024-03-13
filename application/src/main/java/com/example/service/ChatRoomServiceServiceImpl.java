@@ -33,7 +33,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
     private final DeleteUserChatRoomByUserIdPort deleteUserChatRoomByUserIdPort;
     private final DeleteChatRoomPort deleteChatRoomPort;
     private final LoadNumOfUserByChatRoomPort loadNumOfUserByChatRoomPort;
-    private final ExsistUserChatRoomPort exsistUserChatRoomPort;
+    private final ExistsUserChatRoomPort existsUserChatRoomPort;
     private final LoadUserListOfChatRoomPort loadUserListOfChatRoomPort;
 
     @Transactional
@@ -65,7 +65,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         if (!existsChatRoomPort.existsChatRoomById(roomId)) {
             throw new NotExistsChatRoomException();
         }
-        if (exsistUserChatRoomPort.exsistByUserIdAndChatroomId(userId, roomId)) {
+        if (existsUserChatRoomPort.existsbyuseridandchatroomid(userId, roomId)) {
             throw new ExistsChatRoomException();
         }
         ChatRoom chatRoom = loadChatRoomPort.load(roomId)
