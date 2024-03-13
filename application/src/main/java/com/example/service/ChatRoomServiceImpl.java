@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ChatRoomServiceServiceImpl implements ChatRoomService {
+public class ChatRoomServiceImpl implements ChatRoomService {
 
     private final ExistsChatRoomPort existsChatRoomPort;
     private final SaveChatRoomPort saveChatRoomPort;

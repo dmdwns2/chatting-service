@@ -6,7 +6,7 @@ import com.example.exception.ExistsChatRoomException;
 import com.example.model.ChatRoom;
 import com.example.model.User;
 import com.example.port.*;
-import com.example.service.ChatRoomServiceServiceImpl;
+import com.example.service.ChatRoomServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ChatRoomServiceServiceImplTest {
+class ChatRoomServiceImplTest {
     @Mock
     private ExistsChatRoomPort existsChatRoomPort;
 
@@ -53,13 +53,13 @@ class ChatRoomServiceServiceImplTest {
     @Mock
     private LoadUserListOfChatRoomPort loadUserListOfChatRoomPort;
 
-    private ChatRoomServiceServiceImpl chatRoomService;
+    private ChatRoomServiceImpl chatRoomService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        chatRoomService = new ChatRoomServiceServiceImpl(
+        chatRoomService = new ChatRoomServiceImpl(
                 existsChatRoomPort,
                 saveChatRoomPort,
                 loadChatRoomPort,
