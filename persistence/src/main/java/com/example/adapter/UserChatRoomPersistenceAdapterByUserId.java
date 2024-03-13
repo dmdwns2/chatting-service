@@ -27,7 +27,7 @@ public class UserChatRoomPersistenceAdapterByUserId implements SaveUserChatRoomP
     }
 
     @Override
-    public boolean existsbyuseridandchatroomid(Long userId, Long roomId) {
+    public boolean existsByUserIdAndChatRoomId(Long userId, Long roomId) {
         return userChatRoomRepository.existsByUserIdAndChatroomId(userId, roomId);
     }
 

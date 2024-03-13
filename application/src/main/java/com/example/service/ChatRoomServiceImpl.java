@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ChatRoomServiceServiceImpl implements ChatRoomService {
+public class ChatRoomServiceImpl implements ChatRoomService {
 
     private final ExistsChatRoomPort existsChatRoomPort;
     private final SaveChatRoomPort saveChatRoomPort;
@@ -62,7 +62,7 @@ public class ChatRoomServiceServiceImpl implements ChatRoomService {
         if (!existsChatRoomPort.existsChatRoomById(roomId)) {
             throw new NotExistsChatRoomException();
         }
-        if (existsUserChatRoomPort.existsbyuseridandchatroomid(userId, roomId)) {
+        if (existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)) {
             throw new ExistsChatRoomException();
         }
         ChatRoom chatRoom = loadChatRoomPort.load(roomId)

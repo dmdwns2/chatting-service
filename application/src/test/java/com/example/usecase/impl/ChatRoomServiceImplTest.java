@@ -6,8 +6,7 @@ import com.example.exception.ExistsChatRoomException;
 import com.example.model.ChatRoom;
 import com.example.model.User;
 import com.example.port.*;
-import com.example.service.ChatRoomServiceServiceImpl;
-import org.assertj.core.api.Assertions;
+import com.example.service.ChatRoomServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ChatRoomServiceServiceImplTest {
+class ChatRoomServiceImplTest {
     @Mock
     private ExistsChatRoomPort existsChatRoomPort;
 
@@ -54,13 +53,13 @@ class ChatRoomServiceServiceImplTest {
     @Mock
     private LoadUserListOfChatRoomPort loadUserListOfChatRoomPort;
 
-    private ChatRoomServiceServiceImpl chatRoomService;
+    private ChatRoomServiceImpl chatRoomService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        chatRoomService = new ChatRoomServiceServiceImpl(
+        chatRoomService = new ChatRoomServiceImpl(
                 existsChatRoomPort,
                 saveChatRoomPort,
                 loadChatRoomPort,
@@ -112,15 +111,15 @@ class ChatRoomServiceServiceImplTest {
         Long userId = 1L;
         Long roomId = 1L;
         when(existsChatRoomPort.existsChatRoomById(userId)).thenReturn(true);
-        when(existsUserChatRoomPort.existsbyuseridandchatroomid(userId,roomId)).thenReturn(false);
+        when(existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)).thenReturn(false);
         when(loadUserPort.load(userId)).thenReturn(Optional.of(
                 User.of(userId, "user", "n", "nickname", false)));
         when(loadChatRoomPort.load(roomId)).thenReturn(Optional.of(
                 ChatRoom.of(roomId, "아무나", 2L)));
 
-        assertThatCode(() -> chatRoomService.join(userId,roomId)).doesNotThrowAnyException();
+        assertThatCode(() -> chatRoomService.join(userId, roomId)).doesNotThrowAnyException();
         verify(existsChatRoomPort, times(1)).existsChatRoomById(userId);
-        verify(existsUserChatRoomPort, times(1)).existsbyuseridandchatroomid(userId, roomId);
+        verify(existsUserChatRoomPort, times(1)).existsByUserIdAndChatRoomId(userId, roomId);
         verify(loadUserPort, times(1)).load(userId);
         verify(loadChatRoomPort, times(1)).load(roomId);
     }
