@@ -9,7 +9,6 @@ import com.example.exception.NotMatchPasswordException;
 import com.example.model.User;
 import com.example.port.LoadUserPort;
 import com.example.port.SaveUserPort;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         validatePasswordMatching(command.getPassword(), user.getPassword());
         user.setIsLogin(true);
-        saveEntryUser(user);
+        saveUserPort.save(user);
         return new UserLoggedInEvent(user.getName(), LocalDateTime.now());
     }
 
@@ -39,13 +38,8 @@ public class UserServiceImpl implements UserService {
         User user = loadUserPort.loadByName(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         user.setIsLogin(false);
-        saveEntryUser(user);
-        return new UserLoggedOutEvent(user.getName(), LocalDateTime.now());
-    }
-
-    @Transactional
-    private void saveEntryUser(User user) {
         saveUserPort.save(user);
+        return new UserLoggedOutEvent(user.getName(), LocalDateTime.now());
     }
 
     private void validateCommand(LoginCommand command) {
