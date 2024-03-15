@@ -5,7 +5,7 @@ import com.example.model.User;
 import java.util.Optional;
 
 public interface LoadUserPort {
-    Optional<User> load(Long userId);
+    Optional<User> loadById(Long userId);
 
-    Optional<User> load(String name);
+    Optional<User> loadByName(String name);
 }

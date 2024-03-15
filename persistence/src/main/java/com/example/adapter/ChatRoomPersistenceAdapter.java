@@ -31,7 +31,7 @@ public class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatR
     }
 
     @Override
-    public Optional<ChatRoom> load(Long chatRoomId) {
+    public Optional<ChatRoom> loadById(Long chatRoomId) {
         return chatRoomRepository.findChatRoomById(chatRoomId).map(chatRoomMapper::entityToModel);
     }
 
@@ -41,7 +41,7 @@ public class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatR
     }
 
     @Override
-    public Page<ChatRoom> findAll(Pageable pageable) {
+    public Page<ChatRoom> loadChatRoomPage(Pageable pageable) {
         return chatRoomRepository.findAll(pageable).map(chatRoomMapper::entityToModel);
     }
 
@@ -51,7 +51,7 @@ public class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatR
     }
 
     @Override
-    public void deleteByChatRoomId(Long roomId) {
+    public void deleteById(Long roomId) {
         chatRoomRepository.deleteChatRoomById(roomId);
     }
 }

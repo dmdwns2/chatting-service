@@ -52,9 +52,9 @@ class ChatMsgServiceImplTest {
         Long userId = 1L;
         Long roomId = 1L;
         ChatMsgRequest request = new ChatMsgRequest("안녕");
-        when(loadUserPort.load(userId)).thenReturn(Optional.of(
+        when(loadUserPort.loadById(userId)).thenReturn(Optional.of(
                 User.of(userId, "user", "n", "nickname", false)));
-        when(loadChatRoomPort.load(roomId)).thenReturn(Optional.of(
+        when(loadChatRoomPort.loadById(roomId)).thenReturn(Optional.of(
                 ChatRoom.of(roomId, "아무나", 2L)));
 
         ChatMsgResponse chatMsgResponse = chatMsgService.sendMessage(request, userId, roomId);

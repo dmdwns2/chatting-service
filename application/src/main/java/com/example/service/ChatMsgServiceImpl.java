@@ -31,9 +31,9 @@ public class ChatMsgServiceImpl implements ChatMsgService {
 
     @Override
     public ChatMsgResponse sendMessage(ChatMsgRequest message, Long userId, Long roomId) {
-        User user = loadUserPort.load(userId)
+        User user = loadUserPort.loadById(userId)
                 .orElseThrow(() -> new NotFoundUserException(userId.toString()));
-        ChatRoom chatRoom = loadChatRoomPort.load(roomId)
+        ChatRoom chatRoom = loadChatRoomPort.loadById(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
 
         ChatMsg chatMsg = ChatMsg.builder()
@@ -79,6 +79,6 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     @Override
     @Transactional(readOnly = true)
     public Long findUserIdByName(String name) {
-        return loadUserPort.load(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
+        return loadUserPort.loadByName(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
     }
 }
