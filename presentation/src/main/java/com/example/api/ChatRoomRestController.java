@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,15 +39,12 @@ public class ChatRoomRestController {
         Pageable pageable = new PageRequest(page, size, Sort.unsorted()) {
         };
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
-        StringBuilder responseBuilder = new StringBuilder();
         if (allChatRooms.size() == 0) {
             return Response.error("there is no chat room");
         }
-        for (ChatRoomDto room : allChatRooms) {
-            responseBuilder.append("title : ").append(room.getTitle())
-                    .append(" , owner : ").append(room.getOwner()).append("\n");
-        }
-        return Response.success(responseBuilder.toString());
+        return Response.success(allChatRooms.stream()
+                .map(room -> "title : " + room.getTitle() + " , owner : " + room.getOwner())
+                .collect(Collectors.joining("\n")));
     }
 
     @Tag(name = "join the chatroom")
@@ -78,13 +76,7 @@ public class ChatRoomRestController {
     @GetMapping("/rooms/users/{roomId}")
     public Response<String> getUserList(@PathVariable Long roomId) {
         List<String> userNames = chatRoomService.getUserNamesByChatRoomId(roomId);
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String name : userNames) {
-            stringBuilder.append(name).append(", ");
-        }
-        if (stringBuilder.length() > 0) {
-            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        }
-        return Response.success("current user list : " + stringBuilder);
+        return Response.success("current user list : "
+                + String.join(", ", userNames));
     }
 }
