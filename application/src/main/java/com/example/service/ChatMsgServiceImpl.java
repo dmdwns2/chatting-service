@@ -47,7 +47,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
                 .message(message.getMessage())
                 .build();
 
-        saveEntryChatMsg(chatMsg);
+        saveChatMsgPort.save(chatMsg);
         return response;
     }
 
@@ -69,11 +69,6 @@ public class ChatMsgServiceImpl implements ChatMsgService {
             }
         }
         return chatMsgDtos;
-    }
-
-    @Transactional
-    private void saveEntryChatMsg(ChatMsg chatMsg) {
-        saveChatMsgPort.save(chatMsg);
     }
 
     @Override

@@ -10,7 +10,6 @@ import com.example.port.ExistsNamePort;
 import com.example.port.ExistsNicknamePort;
 import com.example.port.SaveUserPort;
 import com.example.usecase.SignUpUseCase;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,13 +35,8 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
                 .isLogin(false)
                 .build();
 
-        saveEntryUser(user);
-        return new UserCreatedEvent(user.getName(), currentDataTimePort.now());
-    }
-
-    @Transactional
-    private void saveEntryUser(User user) {
         saveUserPort.save(user);
+        return new UserCreatedEvent(user.getName(), currentDataTimePort.now());
     }
 
     private void validate(SignUpCommand command) {
