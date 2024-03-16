@@ -5,10 +5,12 @@ import com.example.dto.ChatMsgDto;
 import com.example.dto.ChatMsgRequest;
 import com.example.dto.ChatMsgResponse;
 import com.example.exception.NotExistsChatRoomException;
+import com.example.exception.NotExistsUserInChatRoom;
 import com.example.exception.NotFoundUserException;
 import com.example.model.ChatMsg;
 import com.example.model.ChatRoom;
 import com.example.model.User;
+import com.example.port.ExistsUserChatRoomPort;
 import com.example.port.LoadChatRoomPort;
 import com.example.port.LoadUserPort;
 import com.example.port.SaveChatMsgPort;
@@ -27,9 +29,13 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     private final LoadUserPort loadUserPort;
     private final LoadChatRoomPort loadChatRoomPort;
     private final LoadChatMsgCustomPort loadChatMsgCustomPort;
+    private final ExistsUserChatRoomPort existsUserChatRoomPort;
 
     @Override
     public ChatMsgResponse sendMessage(ChatMsgRequest message, Long userId, Long roomId) {
+        if(!existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)){
+            throw new NotExistsUserInChatRoom();
+        }
         final User user = loadUserPort.loadById(userId)
                 .orElseThrow(() -> new NotFoundUserException(userId.toString()));
         final ChatRoom chatRoom = loadChatRoomPort.loadById(roomId)
@@ -53,6 +59,9 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     @Override
     @Transactional(readOnly = true)
     public List<ChatMsgDto> getChatMsgList(Long roomId, Long userId, Long lastId) {
+        if(!existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)){
+            throw new NotExistsUserInChatRoom();
+        }
         final List<ChatMsg> chatMsgsList = loadChatMsgCustomPort.findChatroomIdByChatMsg(roomId, lastId);
         List<ChatMsgDto> chatMsgDtos = new ArrayList<>();
 

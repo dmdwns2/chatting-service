@@ -5,6 +5,7 @@ import com.example.dto.ChatRoomCreatedEvent;
 import com.example.dto.ChatRoomDto;
 import com.example.exception.ExistsChatRoomException;
 import com.example.exception.NotExistsChatRoomException;
+import com.example.exception.NotExistsUserInChatRoom;
 import com.example.exception.NotFoundUserException;
 import com.example.model.ChatRoom;
 import com.example.model.User;
@@ -81,6 +82,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     @Transactional
     public void leave(Long userId, Long roomId) {
+        if(!existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)){
+            throw new NotExistsUserInChatRoom();
+        }
         final ChatRoom chatRoom = loadChatRoomPort.loadById(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
 

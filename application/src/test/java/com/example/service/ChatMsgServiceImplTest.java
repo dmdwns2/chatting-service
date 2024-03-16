@@ -5,6 +5,7 @@ import com.example.dto.ChatMsgRequest;
 import com.example.dto.ChatMsgResponse;
 import com.example.model.ChatRoom;
 import com.example.model.User;
+import com.example.port.ExistsUserChatRoomPort;
 import com.example.port.LoadChatRoomPort;
 import com.example.port.LoadUserPort;
 import com.example.port.SaveChatMsgPort;
@@ -32,7 +33,11 @@ class ChatMsgServiceImplTest {
     @Mock
     private LoadChatMsgCustomPort loadChatMsgCustomPort;
 
+    @Mock
+    private ExistsUserChatRoomPort existsUserChatRoomPort;
+
     private ChatMsgServiceImpl chatMsgService;
+
 
     @BeforeEach
     void setUp() {
@@ -42,7 +47,8 @@ class ChatMsgServiceImplTest {
                 saveChatMsgPort,
                 loadUserPort,
                 loadChatRoomPort,
-                loadChatMsgCustomPort
+                loadChatMsgCustomPort,
+                existsUserChatRoomPort
         );
     }
 
