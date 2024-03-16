@@ -1,7 +1,9 @@
 package com.example.adapter;
 
 import com.example.LoadChatMsgCustomPort;
+import com.example.data.ChatMsgMapper;
 import com.example.entity.ChatMsgJPAEntity;
+import com.example.model.ChatMsg;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
@@ -14,9 +16,10 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ChatMsgCustomPersistenceAdapterCustom implements LoadChatMsgCustomPort {
     private final EntityManager entityManager;
+    private final ChatMsgMapper chatMsgMapper;
 
     @Override
-    public List<ChatMsgJPAEntity> findChatroomIdByChatMsg(Long chatmsg, Long lastId) {
+    public List<ChatMsg> findChatroomIdByChatMsg(Long chatmsg, Long lastId) {
         String first = "select c from chatmsg c where c.chatroom.id =: chatmsg order by c.id asc";
         String paging = "select c from chatmsg c where c.chatroom.id =: chatmsg and c.id > :lastId order by c.id asc";
 
@@ -35,6 +38,9 @@ public class ChatMsgCustomPersistenceAdapterCustom implements LoadChatMsgCustomP
         }
         return query
                 .setMaxResults(10)
-                .getResultList();
+                .getResultList()
+                .stream()
+                .map(chatMsgMapper::entityToModel)
+                .toList();
     }
 }

@@ -26,7 +26,7 @@ public class SignUpUseCaseImpl implements SignUpUseCase {
     @Override
     public UserCreatedEvent signup(SignUpCommand command) {
         validate(command);
-        String hashedPassword = passwordEncoder.encode(command.getPassword());
+        final String hashedPassword = passwordEncoder.encode(command.getPassword());
 
         User user = User.builder()
                 .name(command.getName())
