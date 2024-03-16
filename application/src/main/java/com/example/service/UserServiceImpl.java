@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserLoggedInEvent login(LoginCommand command) {
         validateCommand(command);
-        User user = loadUserPort.loadByName(command.getName())
+        final User user = loadUserPort.loadByName(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         validatePasswordMatching(command.getPassword(), user.getPassword());
         user.setIsLogin(true);
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoggedOutEvent logout(LogoutCommand command) {
-        User user = loadUserPort.loadByName(command.getName())
+        final User user = loadUserPort.loadByName(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         user.setIsLogin(false);
         saveUserPort.save(user);

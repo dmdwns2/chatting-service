@@ -4,7 +4,6 @@ import com.example.LoadChatMsgCustomPort;
 import com.example.dto.ChatMsgDto;
 import com.example.dto.ChatMsgRequest;
 import com.example.dto.ChatMsgResponse;
-import com.example.entity.ChatMsgJPAEntity;
 import com.example.exception.NotExistsChatRoomException;
 import com.example.exception.NotFoundUserException;
 import com.example.model.ChatMsg;
@@ -31,9 +30,9 @@ public class ChatMsgServiceImpl implements ChatMsgService {
 
     @Override
     public ChatMsgResponse sendMessage(ChatMsgRequest message, Long userId, Long roomId) {
-        User user = loadUserPort.loadById(userId)
+        final User user = loadUserPort.loadById(userId)
                 .orElseThrow(() -> new NotFoundUserException(userId.toString()));
-        ChatRoom chatRoom = loadChatRoomPort.loadById(roomId)
+        final ChatRoom chatRoom = loadChatRoomPort.loadById(roomId)
                 .orElseThrow(NotExistsChatRoomException::new);
 
         ChatMsg chatMsg = ChatMsg.builder()
@@ -54,10 +53,10 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     @Override
     @Transactional(readOnly = true)
     public List<ChatMsgDto> getChatMsgList(Long roomId, Long userId, Long lastId) {
-        List<ChatMsgJPAEntity> chatMsgsList = loadChatMsgCustomPort.findChatroomIdByChatMsg(roomId, lastId);
+        final List<ChatMsg> chatMsgsList = loadChatMsgCustomPort.findChatroomIdByChatMsg(roomId, lastId);
         List<ChatMsgDto> chatMsgDtos = new ArrayList<>();
 
-        for (ChatMsgJPAEntity chatMsg : chatMsgsList) {
+        for (ChatMsg chatMsg : chatMsgsList) {
             ChatMsgDto build = ChatMsgDto.builder()
                     .chatMsgId(chatMsg.getId())
                     .nickname(chatMsg.getUser().getNickname())
@@ -65,7 +64,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
                     .userId(chatMsg.getUser().getId())
                     .build();
             if (Objects.isNull(lastId) || chatMsg.getId() > lastId) {
-                chatMsgDtos.add(build); // 에러 의심 구간
+                chatMsgDtos.add(build);
             }
         }
         return chatMsgDtos;
