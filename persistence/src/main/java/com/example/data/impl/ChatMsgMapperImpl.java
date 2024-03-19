@@ -5,7 +5,6 @@ import com.example.data.ChatRoomMapper;
 import com.example.data.UserMapper;
 import com.example.entity.ChatMsgJPAEntity;
 import com.example.model.ChatMsg;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +21,13 @@ public class ChatMsgMapperImpl implements ChatMsgMapper {
         entity.setMessage(chatMsg.getMessage());
         entity.setUser(userMapper.modelToEntity(chatMsg.getUser()));
         entity.setChatroom(chatRoomMapper.modelToEntity(chatMsg.getChatroom()));
+        entity.setSendTime(chatMsg.getSendTime());
         return entity;
     }
 
     @Override
     public ChatMsg entityToModel(ChatMsgJPAEntity entity) {
         return ChatMsg.of(entity.getId(), entity.getMessage(), userMapper.entityToModel(entity.getUser()),
-                chatRoomMapper.entityToModel(entity.getChatroom()));
+                chatRoomMapper.entityToModel(entity.getChatroom()), entity.getSendTime());
     }
 }

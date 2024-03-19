@@ -9,6 +9,7 @@ import com.example.port.ExistsUserChatRoomPort;
 import com.example.port.LoadChatRoomPort;
 import com.example.port.LoadUserPort;
 import com.example.port.SaveChatMsgPort;
+import com.example.port.CurrentDataTimePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,9 @@ class ChatMsgServiceImplTest {
     @Mock
     private ExistsUserChatRoomPort existsUserChatRoomPort;
 
+    @Mock
+    private CurrentDataTimePort currentDataTimePort;
+  
     private ChatMsgServiceImpl chatMsgService;
 
 
@@ -48,7 +52,8 @@ class ChatMsgServiceImplTest {
                 loadUserPort,
                 loadChatRoomPort,
                 loadChatMsgCustomPort,
-                existsUserChatRoomPort
+                existsUserChatRoomPort,
+                currentDataTimePort
         );
     }
 
