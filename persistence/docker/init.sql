@@ -23,6 +23,7 @@ CREATE TABLE `chatting`.`chatmsg` (
   `chatmsg_id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint DEFAULT NULL,
   `message` text,
+  `send_time` datetime,
   PRIMARY KEY (`chatmsg_id`),
   KEY `FK9egqjagsko4p1uidnfqol6bta` (`chatroom_id`),
   KEY `FKq6nviowmr99ttn5pcxy1xcrrt` (`user_id`),

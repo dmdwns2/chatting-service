@@ -10,10 +10,7 @@ import com.example.exception.NotFoundUserException;
 import com.example.model.ChatMsg;
 import com.example.model.ChatRoom;
 import com.example.model.User;
-import com.example.port.ExistsUserChatRoomPort;
-import com.example.port.LoadChatRoomPort;
-import com.example.port.LoadUserPort;
-import com.example.port.SaveChatMsgPort;
+import com.example.port.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +27,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     private final LoadChatRoomPort loadChatRoomPort;
     private final LoadChatMsgCustomPort loadChatMsgCustomPort;
     private final ExistsUserChatRoomPort existsUserChatRoomPort;
+    private final CurrentDataTimePort currentDataTimePort;
 
     @Override
     public ChatMsgResponse sendMessage(ChatMsgRequest message, Long userId, Long roomId) {
@@ -45,11 +43,13 @@ public class ChatMsgServiceImpl implements ChatMsgService {
                 .message(message.getMessage())
                 .user(user)
                 .chatroom(chatRoom)
+                .sendTime(currentDataTimePort.now())
                 .build();
         ChatMsgResponse response = ChatMsgResponse.builder()
                 .owner(chatRoom.getOwner())
                 .from(user.getNickname())
                 .message(message.getMessage())
+                .sendTime(chatMsg.getSendTime())
                 .build();
 
         saveChatMsgPort.save(chatMsg);
@@ -71,6 +71,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
                     .nickname(chatMsg.getUser().getNickname())
                     .message(chatMsg.getMessage())
                     .userId(chatMsg.getUser().getId())
+                    .sendTime(chatMsg.getSendTime())
                     .build();
             if (Objects.isNull(lastId) || chatMsg.getId() > lastId) {
                 chatMsgDtos.add(build);
