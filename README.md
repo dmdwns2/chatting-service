@@ -61,3 +61,6 @@ http://localhost:8080/swagger-ui/index.html
 - [ ] UI
   - [x] Swagger : SpringDoc 라이브러리 적용
 - [ ] 성능 테스트
+  - [ ] nGrinder 부하테스트 실행
+  - [ ] 성능 개선
+  - [ ] 결과
