@@ -8,6 +8,7 @@ import com.example.port.CurrentDataTimePort;
 import com.example.port.ExistsNamePort;
 import com.example.port.ExistsNicknamePort;
 import com.example.port.SaveUserPort;
+import com.example.service.SignUpServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-public class SignUpUseCaseImplTest {
+public class SignUpServiceImplTest {
     @Mock
     private ExistsNamePort existsNamePort;
 
@@ -37,13 +38,13 @@ public class SignUpUseCaseImplTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    private SignUpUseCaseImpl signUpUseCase;
+    private SignUpServiceImpl signUpUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        signUpUseCase = new SignUpUseCaseImpl(
+        signUpUseCase = new SignUpServiceImpl(
                 existsNamePort,
                 existsNicknamePort,
                 saveUserPort,

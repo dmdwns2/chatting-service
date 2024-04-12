@@ -3,7 +3,7 @@ package com.example.controller;
 import com.example.dto.SignUpCommand;
 import com.example.dto.UserCreatedEvent;
 import com.example.form.SignupForm;
-import com.example.usecase.SignUpUseCase;
+import com.example.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/chattings")
 public class SignupController {
-    private final SignUpUseCase signUpUseCase;
+    private final SignUpService signUpService;
 
     @GetMapping("/signup")
     public String signupForm(Model model) {
@@ -33,7 +33,7 @@ public class SignupController {
             return signupForm(model);
         }
 
-        UserCreatedEvent userCreatedEvent = signUpUseCase.signup(new SignUpCommand(
+        UserCreatedEvent userCreatedEvent = signUpService.signup(new SignUpCommand(
                 signupForm.getName(),
                 signupForm.getPassword(),
                 signupForm.getNickname()

@@ -1,4 +1,4 @@
-package com.example.usecase.impl;
+package com.example.service;
 
 import com.example.dto.SignUpCommand;
 import com.example.dto.UserCreatedEvent;
@@ -9,14 +9,13 @@ import com.example.port.CurrentDataTimePort;
 import com.example.port.ExistsNamePort;
 import com.example.port.ExistsNicknamePort;
 import com.example.port.SaveUserPort;
-import com.example.usecase.SignUpUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SignUpUseCaseImpl implements SignUpUseCase {
+public class SignUpServiceImpl implements SignUpService {
     private final ExistsNamePort existsNamePort;
     private final ExistsNicknamePort existsNicknamePort;
     private final SaveUserPort saveUserPort;

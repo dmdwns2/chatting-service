@@ -4,7 +4,7 @@ import com.example.dto.Response;
 import com.example.dto.SignUpCommand;
 import com.example.dto.UserCreatedEvent;
 import com.example.form.SignupForm;
-import com.example.usecase.SignUpUseCase;
+import com.example.service.SignUpService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/chattings")
 public class SignUpRestController {
 
-    private final SignUpUseCase signUpUseCase;
+    private final SignUpService signUpService;
 
     @Tag(name = "sign up")
     @PostMapping("/signup")
     public Response<String> signup(@RequestBody @Validated SignupForm signupForm) {
-        UserCreatedEvent userCreatedEvent = signUpUseCase.signup(new SignUpCommand(
+        UserCreatedEvent userCreatedEvent = signUpService.signup(new SignUpCommand(
                 signupForm.getName(),
                 signupForm.getPassword(),
                 signupForm.getNickname()
