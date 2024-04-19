@@ -2,6 +2,7 @@ package com.example.websocket;
 
 import com.example.exception.ChatErrorException;
 import com.example.exception.NotExistsClientException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketMessage;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Component
+@Slf4j
 public class SocketTextHandler extends TextWebSocketHandler {
     private final Map<Long, List<WebSocketSession>> sessions = new HashMap<>();
 
@@ -22,6 +24,7 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
         roomSessions.add(session);
         sessions.put(roomId, roomSessions);
+        log.info("client connection established. session : {} + roomId : {}", session, roomId);
     }
 
     @Override
@@ -31,7 +34,9 @@ public class SocketTextHandler extends TextWebSocketHandler {
 
         if (roomSessions != null) {
             roomSessions.remove(session);
-        }
+            log.info("client connection closed. session : {} + roomId : {}", session, roomId);
+        } else
+            log.info("failed to client connection closed. session : {} + roomId : {}", session, roomId);
     }
 
     @Override
@@ -39,9 +44,9 @@ public class SocketTextHandler extends TextWebSocketHandler {
             throws Exception {
         Long roomId = extractRoomId(session);
         List<WebSocketSession> roomSessions = sessions.get(roomId);
-        if (roomSessions != null) {
+        if (Optional.ofNullable(roomSessions).isPresent()) {
             String payload = message.getPayload().toString();
-
+            log.info("message : {} + roomId : {} + session : {}", payload, roomId, session);
             for (WebSocketSession msg : roomSessions) {
                 try {
                     msg.sendMessage(message);

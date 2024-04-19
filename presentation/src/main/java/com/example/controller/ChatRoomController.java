@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.dto.ChatRoomCreateRequest;
 import com.example.dto.ChatRoomDto;
+import com.example.log4j.LogRunningTime;
 import com.example.service.ChatRoomService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -29,6 +30,7 @@ public class ChatRoomController {
         return "createForm";
     }
 
+    @LogRunningTime
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute ChatRoomCreateRequest form, BindingResult result,
                          HttpSession session) {
@@ -41,6 +43,7 @@ public class ChatRoomController {
         return "chatroomlist";
     }
 
+    @LogRunningTime
     @PostMapping("/rooms/join/{roomId}")
     public String join(@PathVariable Long roomId, HttpSession session) {
         String name = session.getAttribute("user").toString();
@@ -49,6 +52,7 @@ public class ChatRoomController {
         return "chatroom";
     }
 
+    @LogRunningTime
     @DeleteMapping("/rooms/leave/{roomId}")
     public String leave(@PathVariable Long roomId, HttpSession session) {
         String name = session.getAttribute("user").toString();
@@ -57,6 +61,7 @@ public class ChatRoomController {
         return "redirect:/chattings/rooms";
     }
 
+    @LogRunningTime
     @GetMapping("/rooms")
     public String getList(Model model, Pageable pageable) {
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);

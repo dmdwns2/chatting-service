@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.dto.SignUpCommand;
 import com.example.dto.UserCreatedEvent;
 import com.example.form.SignupForm;
+import com.example.log4j.LogRunningTime;
 import com.example.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class SignupController {
         return "signup";
     }
 
+    @LogRunningTime
     @PostMapping("/signup")
     public String signup(@Validated SignupForm signupForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {

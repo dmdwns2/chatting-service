@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.log4j.LogRunningTime;
 import com.example.service.UserService;
 import com.example.dto.LoginCommand;
 import com.example.dto.LogoutCommand;
@@ -10,6 +11,7 @@ import com.example.security.LoginCheck;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/chattings")
@@ -31,6 +34,7 @@ public class UserController {
         return "login";
     }
 
+    @LogRunningTime
     @PostMapping("/login")
     public String login(@Valid LoginForm loginForm, BindingResult bindingResult, Model model,
                         HttpSession session) {
@@ -51,6 +55,7 @@ public class UserController {
         return "home";
     }
 
+    @LogRunningTime
     @LoginCheck
     @PostMapping("/logout")
     public String logout(HttpSession session) {
