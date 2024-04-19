@@ -3,4 +3,9 @@ spring:
     import:
       - classpath:/application-local.yml
 logging:
-  config: classpath:/log4j2.xml
+  config: classpath:log4j2.xml
+  level:
+    org:
+      springframework:
+        core:
+          LocalVariableTableParameterNameDiscoverer: error
