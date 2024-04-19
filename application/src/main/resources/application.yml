@@ -2,3 +2,5 @@ spring:
   config:
     import:
       - classpath:/application-local.yml
+logging:
+  config: classpath:/log4j2.xml
