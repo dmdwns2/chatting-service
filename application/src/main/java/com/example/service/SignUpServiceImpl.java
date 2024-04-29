@@ -23,7 +23,7 @@ public class SignUpServiceImpl implements SignUpService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserCreatedEvent signup(SignUpCommand command) {
+    public UserCreatedEvent signup(final SignUpCommand command) {
         validate(command);
         final String hashedPassword = passwordEncoder.encode(command.getPassword());
 
@@ -38,14 +38,14 @@ public class SignUpServiceImpl implements SignUpService {
         return new UserCreatedEvent(user.getName(), currentDataTimePort.now());
     }
 
-    private void validate(SignUpCommand command) {
+    private void validate(final SignUpCommand command) {
         if (command.getName().length() > 20 || command.getName().length() < 3) {
             throw new RuntimeException("The ID should be at least 3 characters and no more than 20 characters.");
         }
         if (command.getPassword().length() > 50 || command.getPassword().length() < 4) {
             throw new RuntimeException("The password should be at least 4 characters and no more than 50 characters.");
         }
-        if (command.getNickname().length() > 8 || command.getNickname().length() < 1) {
+        if (command.getNickname().length() > 8 || command.getNickname().isEmpty()) {
             throw new RuntimeException("The nickname should be at least 1 character and no more than 8 characters.");
         }
         if (existsNamePort.existsName(command.getName())) {

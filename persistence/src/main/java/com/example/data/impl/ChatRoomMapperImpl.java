@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChatRoomMapperImpl implements ChatRoomMapper {
     @Override
-    public ChatRoomJPAEntity modelToEntity(ChatRoom chatRoom) {
+    public ChatRoomJPAEntity modelToEntity(final ChatRoom chatRoom) {
         ChatRoomJPAEntity entity = new ChatRoomJPAEntity();
         entity.setId(chatRoom.getId());
         entity.setTitle(chatRoom.getTitle());
@@ -17,7 +17,7 @@ public class ChatRoomMapperImpl implements ChatRoomMapper {
     }
 
     @Override
-    public ChatRoom entityToModel(ChatRoomJPAEntity entity) {
+    public ChatRoom entityToModel(final ChatRoomJPAEntity entity) {
         return ChatRoom.of(entity.getId(), entity.getTitle(), entity.getOwner());
     }
 }

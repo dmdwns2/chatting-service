@@ -17,27 +17,27 @@ public class UserChatRoomPersistenceAdapter implements SaveUserChatRoomPort, Del
     private final UserChatRoomMapper userChatRoomMapper;
 
     @Override
-    public void save(UserChatRoom userChatRoom) {
+    public void save(final UserChatRoom userChatRoom) {
         userChatRoomRepository.save(userChatRoomMapper.modelToEntity(userChatRoom));
     }
 
     @Override
-    public void deleteByUserIdAndChatRoomId(Long userId, Long roomId) {
+    public void deleteByUserIdAndChatRoomId(final Long userId, final Long roomId) {
         userChatRoomRepository.deleteUserChatRoomByUserIdAndChatRoomId(userId, roomId);
     }
 
     @Override
-    public boolean existsByUserIdAndChatRoomId(Long userId, Long roomId) {
+    public boolean existsByUserIdAndChatRoomId(final Long userId, final Long roomId) {
         return userChatRoomRepository.existsByUserIdAndChatroomId(userId, roomId);
     }
 
     @Override
-    public int loadNumOfUsersByChatRoom(Long roomId) {
+    public int loadNumOfUsersByChatRoom(final Long roomId) {
         return userChatRoomRepository.countByChatroomId(roomId);
     }
 
     @Override
-    public List<String> loadUserNamesByChatRoomId(Long roomId) {
+    public List<String> loadUserNamesByChatRoomId(final Long roomId) {
         return userChatRoomRepository.findUserNamesByChatRoomId(roomId);
     }
 }

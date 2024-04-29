@@ -26,7 +26,7 @@ public class SignUpRestController {
     @LogRunningTime
     @Tag(name = "sign up")
     @PostMapping("/signup")
-    public Response<String> signup(@RequestBody @Validated SignupForm signupForm) {
+    public Response<String> signup(@RequestBody @Validated final SignupForm signupForm) {
         UserCreatedEvent userCreatedEvent = signUpService.signup(new SignUpCommand(
                 signupForm.getName(),
                 signupForm.getPassword(),

@@ -29,7 +29,7 @@ public class ChatRoomRestController {
     @LogRunningTime
     @Tag(name = "create chatroom")
     @PostMapping("/rooms")
-    public Response<String> create(@RequestBody @Valid ChatRoomCreateRequest chatRoomCreateRequest,
+    public Response<String> create(@RequestBody @Valid final ChatRoomCreateRequest chatRoomCreateRequest,
                                    HttpSession session) {
         String name = session.getAttribute("user").toString();
         Long userId = chatRoomService.findUserIdByName(name);
@@ -40,11 +40,11 @@ public class ChatRoomRestController {
     @LogRunningTime
     @Tag(name = "get chatroom list (default : page = 0, size > 0)")
     @GetMapping("/rooms")
-    public Response<String> getList(int page, int size) {
+    public Response<String> getList(final int page, final int size) {
         Pageable pageable = new PageRequest(page, size, Sort.unsorted()) {
         };
         List<ChatRoomDto> allChatRooms = chatRoomService.getList(pageable);
-        if (allChatRooms.size() == 0) {
+        if (allChatRooms.isEmpty()) {
             return Response.error("there is no chat room");
         }
         return Response.success(allChatRooms.stream()

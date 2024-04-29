@@ -34,7 +34,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     private final CurrentDataTimePort currentDataTimePort;
 
     @Override
-    public ChatMsgResponse sendMessage(ChatMsgRequest message, Long userId, Long roomId) {
+    public ChatMsgResponse sendMessage(final ChatMsgRequest message, final Long userId, final Long roomId) {
         if(!existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)){
             throw new NotExistsUserInChatRoom();
         }
@@ -62,7 +62,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ChatMsgDto> getChatMsgList(Long roomId, Long userId, Long lastId) {
+    public List<ChatMsgDto> getChatMsgList(final Long roomId, final Long userId, final Long lastId) {
         if(!existsUserChatRoomPort.existsByUserIdAndChatRoomId(userId, roomId)){
             throw new NotExistsUserInChatRoom();
         }
@@ -86,7 +86,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
 
     @Override
     @Transactional(readOnly = true)
-    public Long findUserIdByName(String name) {
+    public Long findUserIdByName(final String name) {
         return loadUserPort.loadByName(name).orElseThrow(() -> new NotFoundUserException(name)).getId();
     }
 }

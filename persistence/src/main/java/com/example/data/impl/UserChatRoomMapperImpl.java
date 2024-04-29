@@ -13,7 +13,7 @@ public class UserChatRoomMapperImpl implements UserChatRoomMapper {
     private final ChatRoomMapperImpl chatRoomMapper;
 
     @Override
-    public UserChatRoomJPAEntity modelToEntity(UserChatRoom userChatRoom) {
+    public UserChatRoomJPAEntity modelToEntity(final UserChatRoom userChatRoom) {
         UserChatRoomJPAEntity entity = new UserChatRoomJPAEntity();
         entity.setId(userChatRoom.getId());
         entity.setUser(userMapper.modelToEntity(userChatRoom.getUser()));
@@ -22,7 +22,7 @@ public class UserChatRoomMapperImpl implements UserChatRoomMapper {
     }
 
     @Override
-    public UserChatRoom entityToModel(UserChatRoomJPAEntity userChatroomJPAEntity) {
+    public UserChatRoom entityToModel(final UserChatRoomJPAEntity userChatroomJPAEntity) {
         return UserChatRoom.of(userChatroomJPAEntity.getId(),
                 userMapper.entityToModel(userChatroomJPAEntity.getUser()),
                 chatRoomMapper.entityToModel(userChatroomJPAEntity.getChatroom()));

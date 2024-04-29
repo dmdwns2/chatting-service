@@ -21,32 +21,32 @@ public class ChatRoomPersistenceAdapter implements ExistsChatRoomPort, SaveChatR
     private final ChatRoomMapper chatRoomMapper;
 
     @Override
-    public boolean existsChatRoomById(Long roomId) {
+    public boolean existsChatRoomById(final Long roomId) {
         return chatRoomRepository.findChatRoomById(roomId).isPresent();
     }
 
     @Override
-    public boolean existsChatRoomByOwner(Long owner) {
+    public boolean existsChatRoomByOwner(final Long owner) {
         return chatRoomRepository.findChatRoomByOwner(owner).isPresent();
     }
 
     @Override
-    public Optional<ChatRoom> loadById(Long chatRoomId) {
+    public Optional<ChatRoom> loadById(final Long chatRoomId) {
         return chatRoomRepository.findChatRoomById(chatRoomId).map(chatRoomMapper::entityToModel);
     }
 
     @Override
-    public Optional<ChatRoom> loadByOwner(Long owner) {
+    public Optional<ChatRoom> loadByOwner(final Long owner) {
         return chatRoomRepository.findChatRoomByOwner(owner).map(chatRoomMapper::entityToModel);
     }
 
     @Override
-    public Page<ChatRoom> loadChatRoomPage(Pageable pageable) {
+    public Page<ChatRoom> loadChatRoomPage(final Pageable pageable) {
         return chatRoomRepository.findAll(pageable).map(chatRoomMapper::entityToModel);
     }
 
     @Override
-    public void save(ChatRoom chatRoom) {
+    public void save(final ChatRoom chatRoom) {
         chatRoomRepository.save(chatRoomMapper.modelToEntity(chatRoom));
     }
 

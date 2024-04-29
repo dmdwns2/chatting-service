@@ -31,8 +31,7 @@ public class ChatMsgRestController {
     @PostMapping("/messages/{roomId}")
     public ResponseEntity<Object> sendChat(
             @PathVariable Long roomId,
-            @RequestBody @Valid ChatMsgRequest message,
-            HttpSession session) {
+            @RequestBody @Valid final ChatMsgRequest message, HttpSession session) {
         String name = session.getAttribute("user").toString();
         Long userId = chatMsgService.findUserIdByName(name);
         ChatMsgResponse response = chatMsgService.sendMessage(message, userId, roomId);
@@ -45,8 +44,7 @@ public class ChatMsgRestController {
     @GetMapping("/messages/{roomId}")
     public ResponseEntity<Object> getChatList(
             @PathVariable Long roomId,
-            @RequestParam(required = false) Long lastId,
-            HttpSession session) {
+            @RequestParam(required = false) Long lastId, HttpSession session) {
         String name = session.getAttribute("user").toString();
         Long userId = chatMsgService.findUserIdByName(name);
         List<ChatMsgDto> roomChatMsgList = chatMsgService.getChatMsgList(roomId, userId, lastId);

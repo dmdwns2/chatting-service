@@ -15,7 +15,7 @@ public class ChatMsgMapperImpl implements ChatMsgMapper {
     private final UserMapper userMapper;
 
     @Override
-    public ChatMsgJPAEntity modelToEntity(ChatMsg chatMsg) {
+    public ChatMsgJPAEntity modelToEntity(final ChatMsg chatMsg) {
         ChatMsgJPAEntity entity = new ChatMsgJPAEntity();
         entity.setId(chatMsg.getId());
         entity.setMessage(chatMsg.getMessage());
@@ -26,7 +26,7 @@ public class ChatMsgMapperImpl implements ChatMsgMapper {
     }
 
     @Override
-    public ChatMsg entityToModel(ChatMsgJPAEntity entity) {
+    public ChatMsg entityToModel(final ChatMsgJPAEntity entity) {
         return ChatMsg.of(entity.getId(), entity.getMessage(), userMapper.entityToModel(entity.getUser()),
                 chatRoomMapper.entityToModel(entity.getChatroom()), entity.getSendTime());
     }

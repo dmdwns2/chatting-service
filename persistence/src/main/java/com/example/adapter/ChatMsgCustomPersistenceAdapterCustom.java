@@ -19,7 +19,7 @@ public class ChatMsgCustomPersistenceAdapterCustom implements LoadChatMsgCustomP
     private final ChatMsgMapper chatMsgMapper;
 
     @Override
-    public List<ChatMsg> findChatroomIdByChatMsg(Long chatmsg, Long lastId) {
+    public List<ChatMsg> findChatroomIdByChatMsg(final Long chatmsg, final Long lastId) {
         String first = "select c from chatmsg c where c.chatroom.id =: chatmsg order by c.id asc";
         String paging = "select c from chatmsg c where c.chatroom.id =: chatmsg and c.id > :lastId order by c.id asc";
 

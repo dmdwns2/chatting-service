@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private final SaveUserPort saveUserPort;
 
     @Override
-    public UserLoggedInEvent login(LoginCommand command) {
+    public UserLoggedInEvent login(final LoginCommand command) {
         validateCommand(command);
         final User user = loadUserPort.loadByName(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserLoggedOutEvent logout(LogoutCommand command) {
+    public UserLoggedOutEvent logout(final LogoutCommand command) {
         final User user = loadUserPort.loadByName(command.getName())
                 .orElseThrow(() -> new NotFoundUserException(command.getName()));
         user.setIsLogin(false);
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         return new UserLoggedOutEvent(user.getName(), LocalDateTime.now());
     }
 
-    private void validateCommand(LoginCommand command) {
+    private void validateCommand(final LoginCommand command) {
         if (command.getName().length() > 20 || command.getName().length() < 3) {
             throw new RuntimeException("Invalid input. please try again");
         }
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void validatePasswordMatching(String rawPassword, String encodedPassword) {
+    private void validatePasswordMatching(final String rawPassword, final String encodedPassword) {
         if (passwordEncoder.matches(rawPassword, encodedPassword)) {
             return;
         }

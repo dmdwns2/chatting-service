@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 class UserMapperImpl implements UserMapper {
     @Override
-    public UserJPAEntity modelToEntity(User user) {
+    public UserJPAEntity modelToEntity(final User user) {
         UserJPAEntity entity = new UserJPAEntity();
         entity.setId(user.getId());
         entity.setName(user.getName());
@@ -19,7 +19,7 @@ class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User entityToModel(UserJPAEntity entity) {
+    public User entityToModel(final UserJPAEntity entity) {
         return User.of(
                 entity.getId(), entity.getName(), entity.getPassword(), entity.getNickname(), entity.getIsLogin());
     }

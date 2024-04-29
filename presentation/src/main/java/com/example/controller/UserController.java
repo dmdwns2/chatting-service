@@ -36,7 +36,7 @@ public class UserController {
 
     @LogRunningTime
     @PostMapping("/login")
-    public String login(@Valid LoginForm loginForm, BindingResult bindingResult, Model model,
+    public String login(@Valid final LoginForm loginForm, BindingResult bindingResult, Model model,
                         HttpSession session) {
         if (bindingResult.hasErrors()) {
             return loginForm(model);
